@@ -5,7 +5,6 @@ import Onboarding from './pages/Onboarding'
 import Login from './pages/Login'
 import StudentHome from './pages/StudentHome'
 import StoreDetail from './pages/StoreDetail'
-import OrderConfirm from './pages/OrderConfirm'
 import OrderComplete from './pages/OrderComplete'
 import ArrivalVerify from './pages/ArrivalVerify'
 import Waiting from './pages/Waiting'
@@ -20,7 +19,7 @@ function App() {
 
   // 주문 진행 상태
   // none = 주문 없음
-  // paid = 결제 완료 / 현장 인증 전
+  // paid = 선주문 완료 / 현장 인증 전
   // waiting = 현장 인증 완료 / 조리 중
   const [orderStatus, setOrderStatus] = useState('none')
 
@@ -39,15 +38,9 @@ function App() {
       return
     }
 
-    // 결제 완료 / 현장 인증 전
+    // 선주문 완료 / 현장 인증 전
     if (selectedOrder && orderStatus === 'paid') {
       setPage('orderComplete')
-      return
-    }
-
-    // 메뉴 선택 후 결제 전
-    if (selectedOrder) {
-      setPage('orderConfirm')
       return
     }
 
@@ -89,19 +82,23 @@ function App() {
         storeId={selectedStore}
         onBack={() => setPage('home')}
         onOrder={(order) => {
-          setSelectedOrder(order)
-          setOrderStatus('none')
-          setPage('orderConfirm')
-        }}
-      />
-    )
-  } else if (page === 'orderConfirm') {
-    content = (
-      <OrderConfirm
-        order={selectedOrder}
-        onBack={() => setPage('store')}
-        onPay={(order) => {
-          setSelectedOrder(order)
+          const mileage = 15000
+          const remainingMileage = mileage - order.price
+
+          // 마일리지가 부족한 경우
+          if (remainingMileage < 0) {
+            alert('마일리지가 부족합니다.')
+            return
+          }
+
+          // 선주문 버튼을 누르는 순간 마일리지 결제 처리
+          const paidOrder = {
+            ...order,
+            usedMileage: order.price,
+            remainingMileage,
+          }
+
+          setSelectedOrder(paidOrder)
           setOrderStatus('paid')
           setPage('orderComplete')
         }}

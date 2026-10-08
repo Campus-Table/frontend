@@ -3619,7 +3619,7 @@
   position: fixed;
 
   left: 50%;
-  bottom: 0;
+  bottom: 82px;
 
   width: 100%;
   max-width: 600px;
@@ -4104,4 +4104,398 @@
 .student-page-with-nav .waiting-page,
 .student-page-with-nav .temporary-notification-page {
   padding-bottom: 115px;
+}
+
+/* ========================================
+   WAITING / MY ORDER
+======================================== */
+
+.waiting-page {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: #f7f9fc;
+  color: #071022;
+  text-align: left;
+}
+
+/* 상단 내 주문 */
+.waiting-header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.waiting-header h1 {
+  margin: 0;
+  color: #071022;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+/* 전체 내용 */
+.waiting-content {
+  width: 100%;
+  padding: 30px 25px 45px;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   파란 대기번호 카드
+======================================== */
+
+.waiting-status-card {
+  width: 100%;
+  padding: 28px 28px 24px;
+  box-sizing: border-box;
+  border-radius: 32px;
+  background: #2451ed;
+  color: #ffffff;
+  box-shadow: 0 14px 30px rgba(36, 81, 237, 0.2);
+}
+
+.waiting-status-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+
+.waiting-status-top span {
+  color: #c9d7ff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.waiting-status-top strong {
+  flex-shrink: 0;
+  padding: 9px 15px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.waiting-number {
+  margin-top: 4px;
+  color: #ffffff;
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+
+.waiting-number-label {
+  margin-top: 5px;
+  color: #c9d7ff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.waiting-status-divider {
+  width: 100%;
+  height: 1px;
+  margin: 28px 0 22px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.waiting-time-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.waiting-time-row > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.waiting-time-row span {
+  color: #c9d7ff;
+  font-size: 14px;
+}
+
+.waiting-time-row strong {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.waiting-countdown {
+  flex-shrink: 0;
+  color: #ffffff;
+  font-size: 45px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+/* 진행 바 */
+.waiting-progress {
+  width: 100%;
+  height: 10px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(12, 43, 155, 0.42);
+}
+
+.waiting-progress-bar {
+  height: 100%;
+  min-width: 20px;
+  border-radius: 999px;
+  background: #ffffff;
+  transition: width 1s linear;
+}
+
+/* ========================================
+   시간 안내 카드
+======================================== */
+
+.waiting-info-card {
+  width: 100%;
+  margin-top: 22px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-sizing: border-box;
+  border: 1px solid #e5eaf2;
+  border-radius: 24px;
+  background: #ffffff;
+}
+
+.waiting-info-icon {
+  flex-shrink: 0;
+  color: #1750f4;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.waiting-info-card > div:last-child {
+  min-width: 0;
+}
+
+.waiting-info-card strong {
+  display: block;
+  margin-bottom: 7px;
+  color: #071022;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.waiting-info-card p {
+  margin: 0;
+  color: #71809a;
+  font-size: 13px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+/* ========================================
+   주문 메뉴 카드
+======================================== */
+
+.waiting-order-card {
+  width: 100%;
+  margin-top: 22px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-sizing: border-box;
+  border: 1px solid #e5eaf2;
+  border-radius: 27px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(20, 35, 70, 0.05);
+}
+
+.waiting-menu-image {
+  width: 105px;
+  height: 100px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #e4ebf6, #cad8eb);
+  font-size: 45px;
+}
+
+.waiting-menu-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.waiting-store-name {
+  display: block;
+  margin-bottom: 7px;
+  color: #2455f5;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.waiting-menu-info h2 {
+  margin: 0 0 17px;
+  color: #071022;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.3;
+  word-break: keep-all;
+}
+
+.waiting-menu-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.waiting-menu-bottom span {
+  color: #7f8da5;
+  font-size: 14px;
+}
+
+.waiting-menu-bottom strong {
+  flex-shrink: 0;
+  color: #071022;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+/* ========================================
+   주문 진행 타임라인
+======================================== */
+
+.waiting-timeline {
+  width: 100%;
+  margin-top: 28px;
+  padding: 0 3px;
+  box-sizing: border-box;
+}
+
+.waiting-timeline-item {
+  display: flex;
+  align-items: flex-start;
+  min-height: 78px;
+}
+
+.waiting-timeline-left {
+  position: relative;
+  width: 45px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.waiting-timeline-circle {
+  position: relative;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #2451ed;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.waiting-timeline-line {
+  position: absolute;
+  top: 36px;
+  left: 17px;
+  width: 2px;
+  height: 48px;
+  background: #bdd1ff;
+}
+
+.waiting-timeline-dot {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e3edff;
+}
+
+.waiting-timeline-dot span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2451ed;
+}
+
+.waiting-timeline-text {
+  padding-top: 2px;
+}
+
+.waiting-timeline-text strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #071022;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.waiting-timeline-text span {
+  display: block;
+  color: #91a0b9;
+  font-size: 13px;
+}
+
+/* 주문 없음 */
+.waiting-empty {
+  padding: 60px 25px;
+  color: #71809a;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* ========================================
+   모바일 크기 보정
+======================================== */
+
+@media (max-width: 600px) {
+  .waiting-content {
+    padding: 30px 25px 45px;
+  }
+
+  .waiting-status-card {
+    padding: 26px 25px 23px;
+    border-radius: 29px;
+  }
+
+  .waiting-number {
+    font-size: 43px;
+  }
+
+  .waiting-countdown {
+    font-size: 42px;
+  }
+
+  .waiting-menu-image {
+    width: 100px;
+    height: 95px;
+    font-size: 43px;
+  }
+
+  .waiting-menu-info h2 {
+    font-size: 18px;
+  }
 }
