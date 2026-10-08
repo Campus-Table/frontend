@@ -700,3 +700,179 @@ export const getMenuById = (storeId, menuId) => {
 
   return store.menus.find((menu) => menu.id === menuId)
 }
+
+// =====================================================
+// 관리자 페이지용 프로토타입 데이터
+// =====================================================
+
+// 가게별 주문 / 대기 현황
+// 가게명과 메뉴명은 기존 stores 데이터에서 가져오고,
+// 여기서는 관리자 화면에서 필요한 숫자만 관리
+export const adminStoreStats = [
+  {
+    storeId: '51jang',
+    todayOrders: 23,
+    waitingCount: 4,
+    topMenus: [
+      { menuId: '51jang-12', count: 11 },
+      { menuId: '51jang-14', count: 7 },
+      { menuId: '51jang-4', count: 5 },
+    ],
+  },
+  {
+    storeId: 'gaosung',
+    todayOrders: 18,
+    waitingCount: 3,
+    topMenus: [
+      { menuId: 'gaohsiung-2', count: 8 },
+      { menuId: 'gaohsiung-8', count: 6 },
+      { menuId: 'gaohsiung-5', count: 4 },
+    ],
+  },
+  {
+    storeId: 'gapjjigae',
+    todayOrders: 16,
+    waitingCount: 4,
+    topMenus: [
+      { menuId: 'gapjjigae-2', count: 7 },
+      { menuId: 'gapjjigae-4', count: 5 },
+      { menuId: 'gapjjigae-7', count: 4 },
+    ],
+  },
+  {
+    storeId: 'gyeongseong',
+    todayOrders: 25,
+    waitingCount: 6,
+    topMenus: [
+      { menuId: 'gyeongseong-2', count: 12 },
+      { menuId: 'gyeongseong-1', count: 8 },
+      { menuId: 'gyeongseong-6', count: 5 },
+    ],
+  },
+  {
+    storeId: 'gwangttuk',
+    todayOrders: 14,
+    waitingCount: 3,
+    topMenus: [
+      { menuId: 'gwangttuk-1', count: 6 },
+      { menuId: 'gwangttuk-13', count: 5 },
+      { menuId: 'gwangttuk-4', count: 3 },
+    ],
+  },
+  {
+    storeId: 'tokyoya',
+    todayOrders: 17,
+    waitingCount: 3,
+    topMenus: [
+      { menuId: 'tokyoya-1', count: 7 },
+      { menuId: 'tokyoya-5', count: 6 },
+      { menuId: 'tokyoya-3', count: 4 },
+    ],
+  },
+  {
+    storeId: 'babideundeun',
+    todayOrders: 13,
+    waitingCount: 2,
+    topMenus: [
+      { menuId: 'babodeundeun-1', count: 6 },
+      { menuId: 'babodeundeun-4', count: 4 },
+      { menuId: 'babodeundeun-8', count: 3 },
+    ],
+  },
+  {
+    storeId: 'bibigogo',
+    todayOrders: 12,
+    waitingCount: 2,
+    topMenus: [
+      { menuId: 'bibigogo-2', count: 5 },
+      { menuId: 'bibigogo-5', count: 4 },
+      { menuId: 'bibigogo-1', count: 3 },
+    ],
+  },
+  {
+    storeId: 'pokpung',
+    todayOrders: 16,
+    waitingCount: 4,
+    topMenus: [
+      { menuId: 'pokpung-10', count: 7 },
+      { menuId: 'pokpung-11', count: 5 },
+      { menuId: 'pokpung-3', count: 4 },
+    ],
+  },
+]
+
+// 현재 대기 중인 주문
+export const waitingOrders = [
+  {
+    id: 1,
+    waitingNumber: 'A-013',
+    storeId: 'gyeongseong',
+    menuId: 'gyeongseong-2',
+    startedAt: '12:32',
+    remainingTime: '6분 24초',
+    verified: true,
+  },
+  {
+    id: 2,
+    waitingNumber: 'A-012',
+    storeId: 'gyeongseong',
+    menuId: 'gyeongseong-1',
+    startedAt: '12:30',
+    remainingTime: '4분 10초',
+    verified: true,
+  },
+  {
+    id: 3,
+    waitingNumber: 'B-021',
+    storeId: 'bibigogo',
+    menuId: 'bibigogo-2',
+    startedAt: '12:29',
+    remainingTime: '3분 42초',
+    verified: true,
+  },
+  {
+    id: 4,
+    waitingNumber: 'P-018',
+    storeId: 'pokpung',
+    menuId: 'pokpung-10',
+    startedAt: '12:28',
+    remainingTime: '2분 38초',
+    verified: true,
+  },
+  {
+    id: 5,
+    waitingNumber: 'G-008',
+    storeId: 'gapjjigae',
+    menuId: 'gapjjigae-2',
+    startedAt: '12:26',
+    remainingTime: '1분 42초',
+    verified: true,
+  },
+]
+
+// 시간대별 이용 인원
+export const hourlyUsage = [
+  { hour: '09', count: 18 },
+  { hour: '10', count: 27 },
+  { hour: '11', count: 38 },
+  { hour: '12', count: 62 },
+  { hour: '13', count: 87 },
+  { hour: '14', count: 73 },
+  { hour: '15', count: 50 },
+  { hour: '16', count: 35 },
+]
+
+// 관리자용 합계 계산 함수
+export const getTotalWaitingCount = () => {
+  return adminStoreStats.reduce(
+    (sum, store) => sum + store.waitingCount,
+    0
+  )
+}
+
+export const getTodayOrderCount = () => {
+  return adminStoreStats.reduce(
+    (sum, store) => sum + store.todayOrders,
+    0
+  )
+}

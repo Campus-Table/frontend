@@ -10,10 +10,32 @@ import ArrivalVerify from './pages/ArrivalVerify'
 import Waiting from './pages/Waiting'
 import Notifications from './pages/Notifications'
 
+// =========================
+// 관리자 화면 추가
+// =========================
+import AdminDashboard from './pages/AdminDashboard'
+import AdminWaiting from './pages/AdminWaiting'
+import AdminStats from './pages/AdminStats'
+
 import BottomNav from './components/BottomNav'
 
+// 관리자 하단 네비게이션 추가
+import AdminBottomNav from './components/AdminBottomNav'
+
+// =========================
+// 관리자 화면 임시 확인용
+//
+// true  → 관리자 화면부터 시작
+// false → 기존 학생 서비스 그대로 시작
+// =========================
+const ADMIN_PREVIEW = false
+
 function App() {
-  const [page, setPage] = useState('onboarding')
+  const [page, setPage] = useState(
+    ADMIN_PREVIEW
+      ? 'adminDashboard'
+      : 'onboarding'
+  )
 
   const [selectedStore, setSelectedStore] = useState(null)
   const [selectedOrder, setSelectedOrder] = useState(null)
@@ -54,13 +76,57 @@ function App() {
   }
 
   // =========================
+  // 관리자 하단 네비게이션
+  // =========================
+
+  const goAdminDashboard = () => {
+    setPage('adminDashboard')
+  }
+
+  const goAdminWaiting = () => {
+    setPage('adminWaiting')
+  }
+
+  const goAdminStats = () => {
+    setPage('adminStats')
+  }
+
+  // =========================
   // 현재 페이지
   // =========================
 
   let content
 
+  // =========================
+  // 관리자 화면
+  // =========================
+
+  if (page === 'adminDashboard') {
+    content = (
+      <AdminDashboard
+        onWaiting={goAdminWaiting}
+      />
+    )
+  }
+
+  else if (page === 'adminWaiting') {
+    content = (
+      <AdminWaiting />
+    )
+  }
+
+  else if (page === 'adminStats') {
+    content = (
+      <AdminStats />
+    )
+  }
+
+  // =========================
+  // 학생 화면
+  // =========================
+
   // 로그인
-  if (page === 'login') {
+  else if (page === 'login') {
     content = (
       <Login
         onBack={() => setPage('onboarding')}
@@ -168,6 +234,15 @@ function App() {
   }
 
   // =========================
+  // 관리자 페이지인지 확인
+  // =========================
+
+  const isAdminPage =
+    page === 'adminDashboard' ||
+    page === 'adminWaiting' ||
+    page === 'adminStats'
+
+  // =========================
   // 로그인 이후 항상 하단바 표시
   // =========================
 
@@ -176,7 +251,7 @@ function App() {
     page !== 'login'
 
   // =========================
-  // 현재 활성화된 하단 메뉴
+  // 현재 활성화된 학생 하단 메뉴
   // =========================
 
   let activeNav = 'orders'
@@ -192,21 +267,52 @@ function App() {
   }
 
   // =========================
+  // 현재 활성화된 관리자 하단 메뉴
+  // =========================
+
+  let activeAdminNav = 'dashboard'
+
+  if (page === 'adminWaiting') {
+    activeAdminNav = 'waiting'
+  }
+
+  if (page === 'adminStats') {
+    activeAdminNav = 'stats'
+  }
+
+  // =========================
   // 화면 출력
   // =========================
 
   return (
     <>
-      <div className={showBottomNav ? 'student-page-with-nav' : ''}>
+      <div
+        className={
+          showBottomNav && !isAdminPage
+            ? 'student-page-with-nav'
+            : ''
+        }
+      >
         {content}
       </div>
 
-      {showBottomNav && (
+      {/* 기존 학생 하단 네비게이션 */}
+      {showBottomNav && !isAdminPage && (
         <BottomNav
           active={activeNav}
           onHome={goHome}
           onOrders={goOrders}
           onNotifications={goNotifications}
+        />
+      )}
+
+      {/* 관리자 하단 네비게이션 */}
+      {isAdminPage && (
+        <AdminBottomNav
+          active={activeAdminNav}
+          onDashboard={goAdminDashboard}
+          onWaiting={goAdminWaiting}
+          onStats={goAdminStats}
         />
       )}
     </>
