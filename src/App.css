@@ -1,1432 +1,2681 @@
 /* =========================
+
    전체 화면
+
    ========================= */
 
+
+
 .landing {
+
   position: relative;
 
+
+
   width: 100%;
+
   max-width: 500px;
+
   min-height: 100vh;
 
+
+
   margin: 0 auto;
+
   padding: 42px 30px 28px;
 
+
+
   display: flex;
+
   flex-direction: column;
 
+
+
   background: linear-gradient(
+
     180deg,
+
     #eef4ff 0%,
+
     #f4f7ff 60%,
+
     #ffffff 100%
+
   );
 
+
+
   overflow: hidden;
+
 }
 
 
+
+
+
 /* =========================
+
    우측 상단 학생 / 관리자
+
    ========================= */
 
+
+
 .top-menu {
+
   position: absolute;
+
   top: 22px;
+
   right: 30px;
 
+
+
   display: flex;
+
+
 
   padding: 4px;
 
+
+
   background: #edf2fa;
+
   border-radius: 12px;
+
 }
+
+
 
 .top-menu-button {
+
   padding: 8px 15px;
 
+
+
   border: none;
+
   border-radius: 9px;
 
+
+
   background: transparent;
+
   color: #758198;
 
+
+
   font-size: 14px;
+
   font-weight: 600;
 
+
+
   cursor: pointer;
+
 }
+
+
 
 .top-menu-button.active {
+
   background: #ffffff;
+
   color: #1749ed;
 
+
+
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
 }
+
+
+
 
 
 /* =========================
+
    Campus Table 로고
+
    ========================= */
 
+
+
 .brand {
+
   display: flex;
+
   align-items: center;
+
+
 
   gap: 13px;
 
+
+
   margin-top: 45px;
+
 }
+
+
 
 .brand h1 {
+
   margin: 0;
 
+
+
   font-size: 23px;
+
   line-height: 1;
 
+
+
   font-weight: 800;
+
   letter-spacing: -0.8px;
 
+
+
   color: #050505;
+
 }
 
+
+
 .brand-icon {
+
   width: 46px;
+
   height: 46px;
+
+
 
   flex-shrink: 0;
 
+
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
+
 
   border-radius: 14px;
 
+
+
   background: #1f4df1;
+
   color: #ffffff;
 
+
+
   font-size: 20px;
+
 }
 
 
+
+
+
 /* =========================
+
    혼잡도 그래프
+
    ========================= */
 
+
+
 .crowd-graphic {
+
   display: flex;
+
   justify-content: space-between;
+
   align-items: flex-end;
+
+
 
   gap: 14px;
 
+
+
   margin-top: 140px;
+
 }
 
+
+
 .bar {
+
   width: 67px;
+
   height: 145px;
+
+
 
   padding: 9px;
 
+
+
   display: flex;
+
   align-items: flex-end;
+
+
 
   background: rgba(255, 255, 255, 0.82);
 
+
+
   border: 1px solid #e5e9f2;
+
   border-radius: 28px;
 
+
+
   box-shadow: 0 2px 5px rgba(30, 50, 90, 0.06);
+
 }
 
+
+
 .fill {
+
   width: 100%;
+
+
 
   border-radius: 18px;
 
+
+
   background: #d4e3fc;
+
 }
+
+
 
 .fill-1 {
+
   height: 38%;
+
 }
+
+
 
 .fill-2 {
+
   height: 58%;
+
 }
+
+
 
 .fill-3 {
+
   height: 82%;
+
   background: #1f4df1;
+
 }
+
+
 
 .fill-4 {
+
   height: 50%;
+
 }
 
+
+
 .fill-5 {
+
   height: 66%;
+
 }
+
+
+
 
 
 /* =========================
+
    소개 문구
+
    ========================= */
 
+
+
 .intro {
+
   margin-top: 38px;
+
 }
 
+
+
 .badge {
+
   display: inline-flex;
+
   align-items: center;
+
+
 
   padding: 8px 14px;
 
+
+
   border-radius: 20px;
 
+
+
   background: #dceaff;
+
   color: #1750ed;
 
+
+
   font-size: 13px;
+
   line-height: 1;
+
   font-weight: 700;
+
 }
 
+
+
 .intro h2 {
+
   margin: 17px 0 16px;
+
+
 
   color: #050505;
 
+
+
   font-size: 35px;
+
   line-height: 1.22;
+
   font-weight: 800;
 
+
+
   letter-spacing: -1.8px;
+
 }
+
+
 
 .intro h2 span {
+
   color: #1749ed;
+
 }
 
+
+
 .intro p {
+
   margin: 0;
+
+
 
   color: #64738e;
 
+
+
   font-size: 16px;
+
   line-height: 1.65;
 
+
+
   letter-spacing: -0.3px;
+
 }
+
+
+
 
 
 /* =========================
+
    로그인 영역
+
    ========================= */
 
+
+
 .actions {
+
   margin-top: auto;
+
   padding-top: 55px;
 
+
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 
+
+
   gap: 16px;
+
 }
 
+
+
 .login-button {
+
   width: 100%;
+
   height: 58px;
+
+
 
   padding: 0;
 
+
+
   border: none;
+
   border-radius: 17px;
 
+
+
   background: #1f4df1;
+
   color: #ffffff;
 
+
+
   font-size: 17px;
+
   font-weight: 500;
 
+
+
   cursor: pointer;
+
 }
+
+
 
 .login-button:hover {
+
   background: #1742dc;
+
 }
 
+
+
 .about-button {
+
   padding: 4px 10px;
+
+
 
   border: none;
 
+
+
   background: transparent;
+
   color: #40516c;
+
+
 
   font-size: 16px;
 
+
+
   cursor: pointer;
+
 }
 
 
+
+
+
 /* =========================
+
    모달 뒤 어두운 배경
+
    ========================= */
 
+
+
 .modal-overlay {
+
   position: absolute;
 
+
+
   top: 0;
+
   left: 0;
 
+
+
   width: 100%;
+
   height: 100%;
+
+
 
   z-index: 100;
 
+
+
   display: flex;
+
   align-items: flex-end;
+
+
 
   padding: 16px;
 
+
+
   background: rgba(24, 34, 55, 0.48);
 
+
+
   backdrop-filter: blur(4px);
+
 }
+
+
+
 
 
 /* =========================
+
    하단 소개창
+
    ========================= */
 
+
+
 .about-modal {
+
   position: relative;
+
+
 
   width: 100%;
 
+
+
   padding: 25px 20px 20px;
+
+
 
   background: #ffffff;
 
+
+
   border-radius: 28px 28px 22px 22px;
 
+
+
   box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08);
+
 }
+
+
+
 
 
 /* 닫기 X */
 
+
+
 .close-button {
+
   position: absolute;
 
+
+
   top: 20px;
+
   right: 20px;
 
+
+
   width: 42px;
+
   height: 42px;
 
+
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
+
+
   border: none;
+
   border-radius: 50%;
 
+
+
   background: #f1f5fc;
+
   color: #71809a;
 
+
+
   font-size: 25px;
+
   font-weight: 300;
 
+
+
   cursor: pointer;
+
 }
+
+
+
 
 
 /* ABOUT */
 
+
+
 .about-label {
+
   margin-bottom: 7px;
+
+
 
   color: #1f4df1;
 
+
+
   font-size: 13px;
+
   font-weight: 800;
+
 }
+
+
+
 
 
 /* 제목 */
 
+
+
 .about-title {
+
   margin: 0 50px 25px 0;
+
+
 
   color: #111827;
 
+
+
   font-size: 24px;
+
   line-height: 1.3;
+
   font-weight: 800;
 
+
+
   letter-spacing: -1px;
+
 }
+
+
+
 
 
 /* =========================
+
    기능 목록
+
    ========================= */
 
+
+
 .feature-list {
+
   display: flex;
+
   flex-direction: column;
 
+
+
   gap: 18px;
+
 }
+
+
 
 .feature-item {
+
   display: flex;
+
   align-items: center;
 
+
+
   gap: 14px;
+
 }
 
+
+
 .feature-icon {
+
   width: 48px;
+
   height: 48px;
+
+
 
   flex-shrink: 0;
 
+
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
+
 
   border-radius: 13px;
 
+
+
   background: #eff5ff;
+
   color: #1450ef;
 
+
+
   font-size: 21px;
+
   font-weight: 600;
+
 }
+
+
 
 .feature-text {
+
   flex: 1;
+
 }
 
+
+
 .feature-text h3 {
+
   margin: 0 0 3px;
+
+
 
   color: #172033;
 
+
+
   font-size: 15px;
+
   line-height: 1.3;
+
   font-weight: 800;
+
 }
 
+
+
 .feature-text p {
+
   margin: 0;
+
+
 
   color: #7b8ba7;
 
+
+
   font-size: 12px;
+
   line-height: 1.4;
+
 }
 
 
+
+
+
 /* =========================
+
    시작하기 버튼
+
    ========================= */
 
+
+
 .start-button {
+
   width: 100%;
+
   height: 56px;
+
+
 
   margin-top: 25px;
 
+
+
   border: none;
+
   border-radius: 16px;
 
+
+
   background: #1f4df1;
+
   color: #ffffff;
 
+
+
   font-size: 17px;
+
   font-weight: 600;
 
+
+
   cursor: pointer;
+
 }
 
+
+
 .start-button:hover {
+
   background: #1742dc;
+
 }
+
+
+
 
 
 /* =========================
+
    모바일 화면
+
    ========================= */
+
+
 
 @media (max-width: 500px) {
 
+
+
   .landing {
+
     max-width: none;
 
+
+
     padding: 32px 25px 24px;
+
   }
+
+
 
   .top-menu {
+
     top: 18px;
+
     right: 25px;
+
   }
+
+
 
   .brand {
+
     margin-top: 42px;
+
   }
+
+
 
   .crowd-graphic {
+
     margin-top: 130px;
 
+
+
     gap: 10px;
+
   }
+
+
 
   .bar {
+
     width: 60px;
+
     height: 135px;
+
   }
+
+
 
   .intro h2 {
+
     font-size: 32px;
+
   }
+
+
 
   .modal-overlay {
+
     padding: 14px;
+
   }
+
 }
+
+
 
 /* ========================================
+
    LOGIN PAGE
-======================================== */
+
+\======================================== */
+
+
 
 .login-page {
+
   width: 100%;
+
   min-height: 100vh;
+
   box-sizing: border-box;
+
   padding: 34px 40px 50px;
+
   background: #ffffff;
+
   color: #0a1020;
+
   text-align: left;
+
 }
+
+
 
 .login-back {
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
+
 
   width: 40px;
+
   height: 40px;
 
+
+
   margin: 0 0 50px 0;
+
   padding: 0;
 
+
+
   border: none;
+
   background: transparent;
 
+
+
   color: #334155;
+
   font-size: 38px;
+
   font-weight: 300;
+
   line-height: 1;
 
+
+
   cursor: pointer;
+
 }
+
+
 
 .login-brand {
+
   display: flex;
+
   align-items: center;
+
   gap: 14px;
 
+
+
   margin-bottom: 48px;
+
 }
 
+
+
 .login-brand-icon {
+
   width: 46px;
+
   height: 46px;
 
+
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
+
+
   background: #2451ed;
+
   color: white;
+
+
 
   border-radius: 13px;
 
+
+
   font-size: 23px;
+
 }
 
+
+
 .login-brand h1 {
+
   margin: 0;
+
+
 
   color: #071022;
 
+
+
   font-size: 24px;
+
   font-weight: 800;
+
   letter-spacing: -0.7px;
+
 }
+
+
 
 .login-intro {
+
   margin-bottom: 42px;
+
 }
 
+
+
 .login-label {
+
   margin: 0 0 12px;
+
+
 
   color: #164bf3;
 
+
+
   font-size: 15px;
+
   font-weight: 800;
+
   letter-spacing: 0.4px;
+
 }
 
+
+
 .login-intro h2 {
+
   margin: 0 0 13px;
+
+
 
   color: #070b16;
 
+
+
   font-size: 37px;
+
   line-height: 1.15;
+
   font-weight: 800;
+
   letter-spacing: -1.5px;
+
 }
 
+
+
 .login-description {
+
   margin: 0;
+
+
 
   color: #66758f;
 
+
+
   font-size: 16px;
+
   line-height: 1.6;
+
 }
+
+
 
 .login-form {
+
   width: 100%;
+
 }
+
+
 
 .input-group {
+
   margin-bottom: 26px;
+
 }
 
+
+
 .input-group label {
+
   display: block;
+
+
 
   margin-bottom: 10px;
 
+
+
   color: #172033;
 
+
+
   font-size: 16px;
+
   font-weight: 700;
+
 }
 
+
+
 .input-group input {
+
   width: 100%;
+
   height: 70px;
 
+
+
   box-sizing: border-box;
+
+
 
   padding: 0 20px;
 
+
+
   border: 1px solid #dce3ee;
+
   border-radius: 20px;
+
+
 
   outline: none;
 
+
+
   background: #f8fafc;
+
   color: #172033;
 
+
+
   font-family: inherit;
+
   font-size: 17px;
 
+
+
   transition:
+
     border-color 0.2s ease,
+
     box-shadow 0.2s ease;
+
 }
+
+
 
 .input-group input::placeholder {
+
   color: #9aacc9;
+
   font-weight: 600;
+
 }
+
+
 
 .input-group input:focus {
+
   border-color: #2451ed;
+
   box-shadow: 0 0 0 3px rgba(36, 81, 237, 0.1);
+
 }
 
+
+
 .login-submit {
+
   width: 100%;
+
   height: 62px;
+
+
 
   margin-top: 14px;
 
+
+
   border: none;
+
   border-radius: 18px;
 
+
+
   background: #2451ed;
+
   color: white;
 
+
+
   font-family: inherit;
+
   font-size: 19px;
+
   font-weight: 700;
+
+
 
   cursor: pointer;
 
+
+
   box-shadow: 0 10px 25px rgba(36, 81, 237, 0.16);
+
 }
+
+
 
 .login-submit:hover {
+
   background: #1946df;
+
 }
+
+
 
 .login-submit:active {
+
   transform: scale(0.99);
+
 }
 
+
+
 .login-info {
+
   width: 100%;
+
+
 
   box-sizing: border-box;
 
+
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
+
+
   margin-top: 25px;
+
   padding: 20px 18px;
+
+
 
   border-radius: 18px;
 
+
+
   background: #f7f9fc;
+
   color: #66758f;
 
+
+
   font-size: 14px;
+
   line-height: 1.5;
+
 }
+
+
 
 .info-icon {
+
   flex-shrink: 0;
 
+
+
   color: #7186a8;
+
   font-size: 17px;
+
 }
 
+
+
 .prototype-back {
+
   display: block;
 
+
+
   margin: 27px auto 0;
+
   padding: 8px;
 
+
+
   border: none;
+
   background: transparent;
+
+
 
   color: #98a6bf;
 
+
+
   font-family: inherit;
+
   font-size: 16px;
 
+
+
   cursor: pointer;
+
 }
 
+
+
 .prototype-back:hover {
+
   color: #2451ed;
+
 }
+
+
+
 
 
 /* 작은 화면 대응 */
+
 @media (max-width: 600px) {
+
   .login-page {
+
     padding: 28px 28px 40px;
+
   }
+
+
 
   .login-back {
+
     margin-bottom: 42px;
+
   }
+
+
 
   .login-brand {
+
     margin-bottom: 42px;
+
   }
+
+
 
   .login-intro h2 {
+
     font-size: 34px;
+
   }
+
+
 
   .input-group input {
+
     height: 66px;
+
   }
+
 }
 
+
+
 /* 로그인 화면 모바일 폭 고정 */
+
 .login-page {
+
   width: 100%;
+
   max-width: 720px;
+
   min-height: 100vh;
+
   margin: 0 auto;
+
   box-sizing: border-box;
+
+
 
   padding: 34px 40px 50px;
 
+
+
   background: #ffffff;
+
   color: #0a1020;
+
   text-align: left;
+
 }
 
+
+
 /* ========================================
+
    화면 크기 최종 통일
+
    Onboarding / Login 공통 모바일 규격
-======================================== */
+
+\======================================== */
+
+
 
 .landing,
+
 .login-page {
+
   width: 100%;
+
   max-width: 600px;
+
   min-height: 100vh;
+
   margin: 0 auto;
+
   box-sizing: border-box;
+
 }
+
+
 
 /* 로그인 화면 */
+
 .login-page {
+
   padding: 28px 34px 42px;
+
 }
+
+
 
 /* 뒤로가기 */
+
 .login-back {
+
   width: 34px;
+
   height: 34px;
+
   margin-bottom: 40px;
+
   font-size: 34px;
+
 }
+
+
 
 /* 로고 영역 */
+
 .login-brand {
+
   gap: 13px;
+
   margin-bottom: 42px;
+
 }
+
+
 
 .login-brand-icon {
+
   width: 45px;
+
   height: 45px;
+
   border-radius: 12px;
+
   font-size: 20px;
+
 }
+
+
 
 .login-brand h1 {
+
   font-size: 23px;
+
 }
+
+
 
 /* WELCOME BACK + 제목 */
+
 .login-intro {
+
   margin-bottom: 36px;
+
 }
+
+
 
 .login-label {
+
   margin-bottom: 9px;
+
   font-size: 14px;
+
 }
+
+
 
 .login-intro h2 {
+
   margin-bottom: 10px;
+
   font-size: 34px;
+
 }
+
+
 
 .login-description {
+
   font-size: 15px;
+
 }
+
+
 
 /* 입력칸 */
+
 .input-group {
+
   margin-bottom: 22px;
+
 }
+
+
 
 .input-group label {
+
   margin-bottom: 9px;
+
   font-size: 15px;
+
 }
+
+
 
 .input-group input {
+
   height: 64px;
+
   padding: 0 18px;
+
   border-radius: 18px;
+
   font-size: 16px;
+
 }
+
+
 
 /* 로그인 버튼 */
+
 .login-submit {
+
   height: 60px;
+
   margin-top: 10px;
+
   border-radius: 17px;
+
   font-size: 18px;
+
 }
+
+
 
 /* 안내 박스 */
+
 .login-info {
+
   margin-top: 22px;
+
   padding: 18px 16px;
+
   border-radius: 17px;
+
   font-size: 13px;
+
 }
+
+
 
 /* 프로토타입 바로 둘러보기 */
+
 .prototype-back {
+
   margin-top: 23px;
+
   font-size: 15px;
+
 }
+
+
 
 /* ========================================
+
    STUDENT HOME
-======================================== */
+
+\======================================== */
+
+
 
 .student-home {
+
   position: relative;
+
   width: 100%;
+
   max-width: 600px;
+
   min-height: 100vh;
+
   margin: 0 auto;
+
   padding-bottom: 90px;
+
   box-sizing: border-box;
+
   background: #f8faff;
+
   color: #091126;
+
   text-align: left;
+
 }
+
+
 
 /* HEADER */
 
+
+
 .student-header {
+
   height: 105px;
+
   padding: 30px 34px 20px;
 
+
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
 
+
+
   box-sizing: border-box;
+
   background: white;
+
 }
+
+
 
 .student-brand {
+
   display: flex;
+
   align-items: center;
+
   gap: 13px;
+
 }
 
+
+
 .student-brand-icon {
+
   width: 45px;
+
   height: 45px;
 
+
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
+
 
   border-radius: 13px;
 
+
+
   background: #2451ed;
+
   color: white;
 
+
+
   font-size: 20px;
+
 }
 
+
+
 .student-brand h1 {
+
   margin: 0;
+
+
 
   color: #071022;
 
+
+
   font-size: 23px;
+
   font-weight: 800;
+
   letter-spacing: -0.7px;
+
 }
 
+
+
 .header-notification {
+
   position: relative;
 
+
+
   width: 45px;
+
   height: 45px;
 
+
+
   border: none;
+
   border-radius: 50%;
 
+
+
   background: #f5f7fb;
+
   color: #34435e;
+
+
 
   font-size: 22px;
 
+
+
   cursor: pointer;
+
 }
+
+
 
 .notification-dot {
+
   position: absolute;
 
+
+
   top: 7px;
+
   right: 7px;
 
+
+
   width: 8px;
+
   height: 8px;
 
+
+
   border: 2px solid white;
+
   border-radius: 50%;
 
+
+
   background: #2451ed;
+
 }
+
+
+
 
 
 /* CROWD STATUS */
 
+
+
 .crowd-section {
+
   margin: 0 34px;
+
   padding: 26px;
+
+
 
   border-radius: 30px;
 
+
+
   background: #020718;
+
   color: white;
+
 }
+
+
 
 .crowd-top {
+
   display: flex;
+
   justify-content: space-between;
+
   align-items: flex-start;
+
 }
 
+
+
 .crowd-small {
+
   margin: 0 0 10px;
+
+
 
   color: #9eb6ec;
 
+
+
   font-size: 13px;
+
   font-weight: 700;
+
 }
+
+
 
 .crowd-status {
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
+
+
   font-size: 23px;
+
 }
 
+
+
 .crowd-red-dot {
+
   width: 13px;
+
   height: 13px;
+
+
 
   border-radius: 50%;
 
+
+
   background: #ff3147;
 
+
+
   box-shadow: 0 0 0 5px rgba(255, 49, 71, 0.15);
+
 }
 
+
+
 .update-badge {
+
   padding: 8px 13px;
+
+
 
   border-radius: 30px;
 
+
+
   background: #171d36;
+
   color: #d8e2ff;
 
+
+
   font-size: 12px;
+
   font-weight: 700;
+
 }
 
+
+
 .crowd-divider {
+
   height: 1px;
+
+
 
   margin: 30px 0 22px;
 
+
+
   background: #252b3d;
+
 }
+
+
 
 .crowd-bottom {
+
   display: flex;
+
   align-items: flex-end;
+
   justify-content: space-between;
+
 }
 
+
+
 .crowd-bottom p {
+
   margin: 0 0 5px;
+
+
 
   color: #9eb6ec;
 
+
+
   font-size: 13px;
+
 }
+
+
 
 .crowd-bottom > div > span {
+
   color: #d8e2ff;
+
   font-size: 12px;
+
 }
+
+
 
 .crowd-number {
+
   color: #4383ff;
 
+
+
   font-size: 45px;
+
   line-height: 1;
+
   font-weight: 800;
+
 }
 
+
+
 .crowd-number span {
+
   margin-left: 4px;
+
+
 
   color: #b8c7e7;
 
+
+
   font-size: 15px;
+
 }
+
+
 
 .auto-update {
+
   padding: 15px 40px 23px;
 
+
+
   background: white;
+
   color: #9aaac5;
 
+
+
   font-size: 12px;
+
 }
+
+
+
 
 
 /* STORES */
 
+
+
 .store-section {
+
   padding: 30px 34px 110px;
+
 }
+
+
 
 .store-section-header {
+
   display: flex;
+
   align-items: flex-end;
+
   justify-content: space-between;
 
+
+
   margin-bottom: 20px;
+
 }
 
+
+
 .section-label {
+
   margin: 0 0 7px;
+
+
 
   color: #1750f4;
 
+
+
   font-size: 13px;
+
   font-weight: 800;
+
 }
 
+
+
 .store-section-header h2 {
+
   margin: 0;
+
+
 
   color: #081023;
 
+
+
   font-size: 25px;
+
   font-weight: 800;
+
   letter-spacing: -1px;
+
 }
 
+
+
 .store-count {
+
   padding-bottom: 3px;
+
+
 
   color: #9aaac7;
 
+
+
   font-size: 13px;
+
 }
+
+
 
 .store-grid {
+
   display: grid;
+
   grid-template-columns: repeat(2, 1fr);
+
   gap: 15px;
+
 }
 
+
+
 .store-card {
+
   overflow: hidden;
+
+
 
   padding: 0;
 
+
+
   border: 1px solid #e8edf5;
+
   border-radius: 24px;
+
+
 
   background: white;
 
+
+
   text-align: left;
+
   font-family: inherit;
+
+
 
   box-shadow: 0 4px 12px rgba(15, 35, 80, 0.05);
 
+
+
   cursor: pointer;
+
 }
+
+
 
 .store-image {
+
   height: 155px;
 
+
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
+
+
   background:
+
     linear-gradient(
+
       135deg,
+
       #e6edfa,
+
       #d2def3
+
     );
 
+
+
   font-size: 65px;
+
 }
+
+
 
 .store-info {
+
   padding: 17px;
+
 }
 
+
+
 .store-category {
+
   margin: 0 0 7px;
+
+
 
   color: #1750f4;
 
+
+
   font-size: 12px;
+
   font-weight: 700;
+
 }
 
+
+
 .store-info h3 {
+
   margin: 0 0 8px;
+
+
 
   color: #071022;
 
+
+
   font-size: 20px;
+
   font-weight: 800;
+
 }
 
+
+
 .store-menu {
+
   margin: 0 0 7px;
+
+
 
   color: #71809b;
 
+
+
   font-size: 13px;
+
 }
+
+
 
 .store-price {
+
   color: #071022;
 
+
+
   font-size: 16px;
+
 }
+
+
+
 
 
 /* BOTTOM NAVIGATION */
 
+
+
 .student-bottom-nav {
+
   position: fixed;
 
+
+
   left: 50%;
+
   bottom: 0;
 
+
+
   width: 100%;
+
   max-width: 600px;
+
   height: 82px;
+
+
 
   transform: translateX(-50%);
 
+
+
   display: grid;
+
   grid-template-columns: repeat(3, 1fr);
+
+
 
   border-top: 1px solid #e6ebf3;
 
+
+
   background: rgba(255, 255, 255, 0.96);
 
+
+
   z-index: 50;
+
 }
 
+
+
 .nav-item {
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
+
   gap: 3px;
+
+
 
   border: none;
 
+
+
   background: transparent;
+
   color: #9aabc7;
 
+
+
   font-family: inherit;
+
   font-size: 13px;
 
+
+
   cursor: pointer;
+
 }
+
+
 
 .nav-icon {
+
   font-size: 23px;
+
   line-height: 1;
+
 }
 
+
+
 .nav-item.active {
+
   color: #2451ed;
+
   font-weight: 700;
+
 }
+
+
+
 
 
 /* 작은 화면 */
 
+
+
 @media (max-width: 600px) {
+
   .student-header {
+
     padding-left: 25px;
+
     padding-right: 25px;
+
   }
+
+
 
   .crowd-section {
+
     margin-left: 25px;
+
     margin-right: 25px;
+
   }
+
+
 
   .store-section {
+
     padding-left: 25px;
+
     padding-right: 25px;
+
   }
 
+
+
   .store-image {
+
     height: 135px;
+
   }
+
 }
+
 
 /* ========================================
    STORE DETAIL
 ======================================== */
 
 .store-detail-page {
-  position: relative;
-
   width: 100%;
   max-width: 600px;
   min-height: 100vh;
-
   margin: 0 auto;
-  padding-bottom: 100px;
-
-  box-sizing: border-box;
-
   background: #f8faff;
   color: #071022;
-
   text-align: left;
+  overflow-x: hidden;
 }
 
-
-/* HEADER */
-
 .store-detail-header {
+  width: 100%;
   height: 78px;
-
   display: grid;
   grid-template-columns: 45px 1fr 45px;
   align-items: center;
-
   padding: 0 25px;
-
-  box-sizing: border-box;
-
   background: #ffffff;
   border-bottom: 1px solid #edf0f5;
 }
 
-.store-detail-header h1 {
+.store-detail-header h2 {
   margin: 0;
-
   text-align: center;
-
   color: #071022;
-
   font-size: 20px;
   font-weight: 800;
 }
 
-.store-detail-back {
+.back-button {
   width: 40px;
   height: 40px;
-
   padding: 0;
-
-  border: none;
-  background: transparent;
-
-  color: #34435e;
-
-  font-size: 34px;
-  line-height: 1;
-
-  cursor: pointer;
-}
-
-
-/* HERO */
-
-.store-hero {
-  position: relative;
-
-  height: 220px;
-
-  overflow: hidden;
-
-  background: #ccd8eb;
-}
-
-.store-hero-placeholder {
-  width: 100%;
-  height: 100%;
-
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 0;
+  background: transparent;
+  color: #34435e;
+  font-family: inherit;
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+}
 
-  background:
-    linear-gradient(
-      135deg,
-      #d9e2f1,
-      #b7c8e2
-    );
+.header-space {
+  width: 40px;
+  height: 40px;
+}
 
-  font-size: 100px;
+.store-hero {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #d9e2f1, #b7c8e2);
 }
 
 .store-hero::after {
-  content: '';
-
+  content: "";
   position: absolute;
   inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(3, 8, 22, 0.72),
+    transparent 65%
+  );
+}
 
-  background:
-    linear-gradient(
-      to top,
-      rgba(3, 8, 22, 0.72),
-      transparent 60%
-    );
+.store-hero-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 90px;
 }
 
 .store-hero-text {
   position: absolute;
-
   left: 27px;
   bottom: 25px;
-
   z-index: 2;
-
-  color: white;
+  color: #ffffff;
 }
 
-.store-hero-text p {
-  margin: 0 0 5px;
-
+.store-hero-text span {
+  display: block;
+  margin-bottom: 5px;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 600;
 }
 
-.store-hero-text h2 {
+.store-hero-text h1 {
   margin: 0;
-
-  color: white;
-
+  color: #ffffff;
   font-size: 28px;
   font-weight: 800;
+  letter-spacing: -0.8px;
 }
 
-
-/* MENU */
-
 .menu-section {
-  padding: 30px 25px 25px;
-
+  width: 100%;
+  padding: 30px 25px 30px;
   background: #f8faff;
 }
 
@@ -1434,191 +2683,164 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   margin-bottom: 20px;
 }
 
 .menu-section-title h2 {
   margin: 0;
-
   color: #071022;
-
   font-size: 21px;
   font-weight: 800;
 }
 
 .menu-section-title span {
   color: #9aa9c2;
-
   font-size: 13px;
 }
 
 .menu-list {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-
-/* MENU CARD */
-
 .menu-card {
   width: 100%;
   min-height: 145px;
-
   display: grid;
-  grid-template-columns: 120px 1fr 38px;
+  grid-template-columns: 120px minmax(0, 1fr) 38px;
   align-items: center;
   gap: 18px;
-
   padding: 15px;
-
-  box-sizing: border-box;
-
-  border: 1px solid #e4e9f1;
+  border: 2px solid transparent;
   border-radius: 25px;
-
-  background: white;
-
+  background: #ffffff;
   text-align: left;
   font-family: inherit;
-
   box-shadow: 0 3px 10px rgba(20, 35, 70, 0.05);
-
   cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-1px);
 }
 
 .menu-card.selected {
-  border: 2px solid #2460ff;
+  border-color: #2455f5;
+  box-shadow:
+    0 0 0 3px rgba(36, 85, 245, 0.08),
+    0 4px 12px rgba(20, 35, 70, 0.05);
 }
 
-.menu-image {
+.menu-image-placeholder {
   width: 120px;
   height: 110px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 18px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #e4ebf6,
-      #cad8eb
-    );
-
+  background: linear-gradient(135deg, #e4ebf6, #cad8eb);
   font-size: 55px;
 }
 
-.menu-content h3 {
-  margin: 0 0 6px;
+.menu-info {
+  min-width: 0;
+}
 
+.menu-info h3 {
+  margin: 0 0 12px;
   color: #071022;
-
   font-size: 18px;
   font-weight: 800;
+  line-height: 1.35;
+  word-break: keep-all;
 }
 
-.menu-content p {
-  margin: 0 0 12px;
-
-  color: #71809a;
-
-  font-size: 13px;
-}
-
-.menu-content strong {
+.menu-info strong {
   color: #071022;
-
   font-size: 17px;
   font-weight: 800;
 }
 
-
-/* RADIO */
-
-.menu-radio {
-  width: 28px;
-  height: 28px;
-
+.menu-select-circle {
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  box-sizing: border-box;
-
-  border: 2px solid #dbe3ef;
+  border: 2px solid #dbe3f0;
   border-radius: 50%;
-
-  color: white;
-
-  font-size: 14px;
+  background: #ffffff;
+  color: #ffffff;
+  font-size: 16px;
   font-weight: 800;
 }
 
-.menu-radio.selected {
-  border-color: #2451ed;
-  background: #2451ed;
+.menu-select-circle.selected {
+  border-color: #2455f5;
+  background: #2455f5;
+  color: #ffffff;
 }
 
-
-/* BOTTOM CTA */
-
+/*
+  IMPORTANT:
+  This action area stays in normal document flow.
+  No fixed/sticky/absolute positioning is used, so it shares
+  the exact same containing block as the menu cards.
+*/
 .store-order-bottom {
-  position: fixed;
-
-  left: 50%;
-  bottom: 0;
-
+  position: static;
   width: 100%;
-  max-width: 600px;
-
-  transform: translateX(-50%);
-
-  padding: 17px 25px;
-
-  box-sizing: border-box;
-
+  margin: 24px 0 0;
+  padding: 18px 0 0;
+  background: transparent;
   border-top: 1px solid #e5eaf2;
-
-  background: rgba(255, 255, 255, 0.97);
-
-  z-index: 50;
 }
 
 .preorder-button {
+  position: relative;
   width: 100%;
-  height: 62px;
-
+  height: 60px;
+  margin: 0;
+  padding: 0 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-
-  border: none;
+  border: 0;
   border-radius: 18px;
-
-  background: #2451ed;
-  color: white;
-
+  background: #2455f5;
+  color: #ffffff;
   font-family: inherit;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
-
   cursor: pointer;
-
-  box-shadow: 0 8px 20px rgba(36, 81, 237, 0.18);
+  box-shadow: 0 8px 22px rgba(36, 85, 245, 0.18);
 }
 
-.preorder-button span {
-  font-size: 27px;
+.preorder-text {
+  line-height: 1;
+}
+
+.preorder-arrow {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
   font-weight: 300;
+  line-height: 1;
 }
 
-
-/* 작은 모바일 화면 */
+.preorder-button:disabled {
+  background: #cbd5e1;
+  box-shadow: none;
+  cursor: not-allowed;
+}
 
 @media (max-width: 600px) {
   .store-hero {
@@ -1626,12 +2848,22 @@
   }
 
   .menu-card {
-    grid-template-columns: 105px 1fr 32px;
+    grid-template-columns: 105px minmax(0, 1fr) 32px;
     gap: 13px;
+    min-height: 130px;
   }
 
-  .menu-image {
+  .menu-image-placeholder {
     width: 105px;
     height: 100px;
+    font-size: 48px;
+  }
+
+  .menu-info h3 {
+    font-size: 17px;
+  }
+
+  .menu-info strong {
+    font-size: 16px;
   }
 }

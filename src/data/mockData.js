@@ -119,7 +119,7 @@ export const stores = [
   // 2. 가오슝
   // =====================================================
   {
-    id: 'gaohsiung',
+    id: 'gaosung',
     name: '가오슝',
     description: '다양한 덮밥과 면 요리',
     category: '아시안',
@@ -461,9 +461,9 @@ export const stores = [
   // 7. 바버든든
   // =====================================================
   {
-    id: 'babodeundeun',
-    name: '바버든든',
-    description: '든든하게 즐기는 덮밥',
+    id: 'babideundeun',
+    name: '바비든든',
+    description: '든든한 덮밥 한 끼',
     category: '덮밥',
     menus: [
       {
