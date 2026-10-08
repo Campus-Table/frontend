@@ -2867,3 +2867,826 @@
     font-size: 16px;
   }
 }
+/* ========================================
+   ORDER CONFIRM
+======================================== */
+
+.order-confirm-page {
+  position: relative;
+
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+  padding-bottom: 105px;
+
+  box-sizing: border-box;
+
+  background: #f8faff;
+  color: #071022;
+
+  text-align: left;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.order-confirm-header {
+  width: 100%;
+  height: 80px;
+
+  display: grid;
+  grid-template-columns: 45px 1fr 45px;
+  align-items: center;
+
+  padding: 0 25px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.order-confirm-header h2 {
+  margin: 0;
+
+  text-align: center;
+
+  color: #071022;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.order-confirm-back {
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  background: transparent;
+  color: #34435e;
+
+  font-family: inherit;
+  font-size: 34px;
+  font-weight: 300;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.order-confirm-header-space {
+  width: 40px;
+  height: 40px;
+}
+
+
+/* ========================================
+   CONTENT
+======================================== */
+
+.order-confirm-content {
+  width: 100%;
+
+  padding: 30px 25px 40px;
+
+  box-sizing: border-box;
+}
+
+.order-confirm-section {
+  margin-bottom: 34px;
+}
+
+.order-confirm-section-title {
+  margin: 0 0 16px;
+
+  color: #071022;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+
+/* ========================================
+   ORDER MENU CARD
+======================================== */
+
+.order-menu-card {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e6ebf3;
+  border-radius: 27px;
+
+  background: #ffffff;
+
+  box-shadow: 0 3px 10px rgba(20, 35, 70, 0.05);
+}
+
+.order-menu-image {
+  width: 105px;
+  height: 100px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e4ebf6,
+      #cad8eb
+    );
+
+  font-size: 48px;
+}
+
+.order-menu-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.order-store-name {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #2455f5;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.order-menu-info h4 {
+  margin: 0 0 16px;
+
+  color: #071022;
+
+  font-size: 19px;
+  font-weight: 800;
+
+  line-height: 1.3;
+
+  word-break: keep-all;
+}
+
+.order-menu-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.order-menu-bottom span {
+  color: #7f8da5;
+
+  font-size: 14px;
+}
+
+.order-menu-bottom strong {
+  flex-shrink: 0;
+
+  color: #071022;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* ========================================
+   MILEAGE
+======================================== */
+
+.mileage-card {
+  width: 100%;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e6ebf3;
+  border-radius: 27px;
+
+  background: #ffffff;
+
+  box-shadow: 0 3px 10px rgba(20, 35, 70, 0.05);
+}
+
+.mileage-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.mileage-row span {
+  color: #71809a;
+
+  font-size: 16px;
+}
+
+.mileage-row strong {
+  color: #071022;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.mileage-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 20px 0;
+
+  background: #e7ebf2;
+}
+
+.mileage-row .payment-minus {
+  color: #174ff5;
+}
+
+.remaining-mileage {
+  width: 100%;
+
+  margin-top: 25px;
+  padding: 23px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  border-radius: 20px;
+
+  background: #eaf2ff;
+}
+
+.remaining-mileage span {
+  color: #163c8c;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.remaining-mileage strong {
+  color: #174ff5;
+
+  font-size: 31px;
+  font-weight: 800;
+}
+
+.mileage-warning {
+  margin: 14px 0 0;
+
+  color: #e5484d;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* ========================================
+   NOTICE
+======================================== */
+
+.order-notice {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e6ebf3;
+  border-radius: 21px;
+
+  background: #ffffff;
+}
+
+.order-notice-icon {
+  flex-shrink: 0;
+
+  color: #2460ff;
+
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.order-notice p {
+  margin: 0;
+
+  color: #687995;
+
+  font-size: 14px;
+  line-height: 1.8;
+
+  word-break: keep-all;
+}
+
+
+/* ========================================
+   PAYMENT BUTTON
+======================================== */
+
+.order-payment-bottom {
+  position: fixed;
+
+  left: 50%;
+  bottom: 0;
+
+  width: 100%;
+  max-width: 600px;
+
+  transform: translateX(-50%);
+
+  padding: 18px 20px 22px;
+
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.97);
+  border-top: 1px solid #e6ebf3;
+
+  z-index: 50;
+}
+
+.order-payment-button {
+  width: 100%;
+  height: 60px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: #2451ed;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 22px rgba(36, 81, 237, 0.18);
+}
+
+.order-payment-button:disabled {
+  background: #cbd5e1;
+
+  box-shadow: none;
+
+  cursor: not-allowed;
+}
+
+
+/* ========================================
+   ORDER CONFIRM MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+  .order-confirm-content {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .order-menu-card {
+    gap: 16px;
+
+    padding: 18px;
+  }
+
+  .order-menu-image {
+    width: 100px;
+    height: 95px;
+
+    font-size: 45px;
+  }
+
+  .order-menu-info h4 {
+    font-size: 18px;
+  }
+
+  .remaining-mileage strong {
+    font-size: 29px;
+  }
+}
+
+/* ========================================
+   ORDER COMPLETE
+======================================== */
+
+.order-complete-page {
+  position: relative;
+
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+  padding-bottom: 105px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  color: #071022;
+
+  text-align: left;
+}
+
+
+/* ========================================
+   ORDER COMPLETE HEADER
+======================================== */
+
+.order-complete-header {
+  width: 100%;
+  height: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.order-complete-header h2 {
+  margin: 0;
+
+  color: #071022;
+
+  font-size: 21px;
+  font-weight: 800;
+}
+
+
+/* ========================================
+   CONTENT
+======================================== */
+
+.order-complete-content {
+  width: 100%;
+
+  padding: 55px 35px 40px;
+
+  box-sizing: border-box;
+}
+
+
+/* ========================================
+   COMPLETE MESSAGE
+======================================== */
+
+.complete-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+
+  margin-bottom: 38px;
+}
+
+.complete-check-wrap {
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 30px;
+
+  border-radius: 50%;
+
+  background: #edf4ff;
+}
+
+.complete-check {
+  width: 60px;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #2451ed;
+  color: #ffffff;
+
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.complete-message h1 {
+  margin: 0 0 10px;
+
+  color: #071022;
+
+  font-size: 29px;
+  font-weight: 800;
+
+  letter-spacing: -1px;
+}
+
+.complete-message p {
+  margin: 0;
+
+  color: #71809a;
+
+  font-size: 17px;
+}
+
+
+/* ========================================
+   ORDER CARD
+======================================== */
+
+.complete-order-card {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e5eaf2;
+  border-radius: 27px;
+
+  background: #ffffff;
+
+  box-shadow: 0 3px 10px rgba(20, 35, 70, 0.05);
+}
+
+.complete-menu-image {
+  width: 105px;
+  height: 100px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 20px;
+
+  background: linear-gradient(
+    135deg,
+    #e4ebf6,
+    #cad8eb
+  );
+
+  font-size: 48px;
+}
+
+.complete-menu-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.complete-store-name {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #2455f5;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.complete-menu-info h3 {
+  margin: 0 0 16px;
+
+  color: #071022;
+
+  font-size: 19px;
+  font-weight: 800;
+
+  line-height: 1.3;
+
+  word-break: keep-all;
+}
+
+.complete-menu-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.complete-menu-bottom span {
+  color: #7f8da5;
+
+  font-size: 14px;
+}
+
+.complete-menu-bottom strong {
+  flex-shrink: 0;
+
+  color: #071022;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+
+/* ========================================
+   COOKING NOTICE
+======================================== */
+
+.cooking-notice-card {
+  width: 100%;
+
+  margin-top: 20px;
+  padding: 24px 26px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #9bc4ff;
+  border-radius: 25px;
+
+  background: #eef5ff;
+}
+
+.cooking-notice-top {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+}
+
+.cooking-clock {
+  color: #1750f4;
+
+  font-size: 27px;
+  line-height: 1;
+}
+
+.cooking-notice-top strong {
+  color: #123270;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  line-height: 1.4;
+}
+
+.cooking-notice-card p {
+  margin: 13px 0 0 40px;
+
+  color: #5572a6;
+
+  font-size: 14px;
+  line-height: 1.75;
+
+  word-break: keep-all;
+}
+
+
+/* ========================================
+   VISIT NOTICE
+======================================== */
+
+.visit-notice {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin-top: 28px;
+}
+
+.visit-notice-icon {
+  flex-shrink: 0;
+
+  color: #71809a;
+
+  font-size: 17px;
+}
+
+.visit-notice p {
+  margin: 0;
+
+  color: #71809a;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  word-break: keep-all;
+}
+
+
+/* ========================================
+   COMPLETE BOTTOM BUTTON
+======================================== */
+
+.complete-bottom {
+  position: fixed;
+
+  left: 50%;
+  bottom: 0;
+
+  width: 100%;
+  max-width: 600px;
+
+  transform: translateX(-50%);
+
+  padding: 18px 20px 22px;
+
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.97);
+  border-top: 1px solid #e6ebf3;
+
+  z-index: 50;
+}
+
+.complete-verify-button {
+  width: 100%;
+  height: 60px;
+
+  border: none;
+  border-radius: 18px;
+
+  background: #2451ed;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 22px rgba(36, 81, 237, 0.18);
+}
+
+
+/* ========================================
+   ORDER COMPLETE MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+  .order-complete-content {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+  .complete-message {
+    margin-bottom: 34px;
+  }
+
+  .complete-message h1 {
+    font-size: 27px;
+  }
+
+  .complete-order-card {
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .complete-menu-image {
+    width: 100px;
+    height: 95px;
+
+    font-size: 45px;
+  }
+
+  .complete-menu-info h3 {
+    font-size: 18px;
+  }
+}

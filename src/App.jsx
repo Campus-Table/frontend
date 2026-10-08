@@ -5,10 +5,14 @@ import Onboarding from './pages/Onboarding'
 import Login from './pages/Login'
 import StudentHome from './pages/StudentHome'
 import StoreDetail from './pages/StoreDetail'
+import OrderConfirm from './pages/OrderConfirm'
+import OrderComplete from './pages/OrderComplete'
 
 function App() {
   const [page, setPage] = useState('onboarding')
+
   const [selectedStore, setSelectedStore] = useState(null)
+  const [selectedOrder, setSelectedOrder] = useState(null)
 
   if (page === 'login') {
     return (
@@ -41,8 +45,33 @@ function App() {
       <StoreDetail
         storeId={selectedStore}
         onBack={() => setPage('home')}
-        onOrder={(menu) => {
-          console.log('선택한 메뉴:', menu)
+        onOrder={(order) => {
+          setSelectedOrder(order)
+          setPage('orderConfirm')
+        }}
+      />
+    )
+  }
+
+  if (page === 'orderConfirm') {
+    return (
+      <OrderConfirm
+        order={selectedOrder}
+        onBack={() => setPage('store')}
+        onPay={(order) => {
+          setSelectedOrder(order)
+          setPage('orderComplete')
+        }}
+      />
+    )
+  }
+
+  if (page === 'orderComplete') {
+    return (
+      <OrderComplete
+        order={selectedOrder}
+        onVerify={() => {
+          console.log('현장 인증하기')
         }}
       />
     )
