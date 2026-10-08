@@ -8,6 +8,7 @@ import StoreDetail from './pages/StoreDetail'
 import OrderComplete from './pages/OrderComplete'
 import ArrivalVerify from './pages/ArrivalVerify'
 import Waiting from './pages/Waiting'
+import Notifications from './pages/Notifications'
 
 import BottomNav from './components/BottomNav'
 
@@ -58,6 +59,7 @@ function App() {
 
   let content
 
+  // 로그인
   if (page === 'login') {
     content = (
       <Login
@@ -65,7 +67,10 @@ function App() {
         onLogin={() => setPage('home')}
       />
     )
-  } else if (page === 'home') {
+  }
+
+  // 홈
+  else if (page === 'home') {
     content = (
       <StudentHome
         onStore={(storeId) => {
@@ -76,7 +81,10 @@ function App() {
         onNotifications={goNotifications}
       />
     )
-  } else if (page === 'store') {
+  }
+
+  // 가게 상세 / 메뉴 선택
+  else if (page === 'store') {
     content = (
       <StoreDetail
         storeId={selectedStore}
@@ -104,7 +112,10 @@ function App() {
         }}
       />
     )
-  } else if (page === 'orderComplete') {
+  }
+
+  // 선주문 완료
+  else if (page === 'orderComplete') {
     content = (
       <OrderComplete
         order={selectedOrder}
@@ -113,7 +124,10 @@ function App() {
         }}
       />
     )
-  } else if (page === 'arrivalVerify') {
+  }
+
+  // 현장 도착 인증
+  else if (page === 'arrivalVerify') {
     content = (
       <ArrivalVerify
         onBack={() => setPage('orderComplete')}
@@ -123,20 +137,29 @@ function App() {
         }}
       />
     )
-  } else if (page === 'waiting') {
+  }
+
+  // 대기번호 / 조리 중
+  else if (page === 'waiting') {
     content = (
       <Waiting
         order={selectedOrder}
       />
     )
-  } else if (page === 'notifications') {
+  }
+
+  // 알림
+  else if (page === 'notifications') {
     content = (
-      <div className="temporary-notification-page">
-        <h1>알림</h1>
-        <p>알림 화면을 다음 단계에서 연결할게요.</p>
-      </div>
+      <Notifications
+        order={selectedOrder}
+        orderStatus={orderStatus}
+      />
     )
-  } else {
+  }
+
+  // 처음 실행 → 온보딩
+  else {
     content = (
       <Onboarding
         onLogin={() => setPage('login')}
@@ -152,16 +175,25 @@ function App() {
     page !== 'onboarding' &&
     page !== 'login'
 
-  // 현재 활성화할 하단 메뉴
+  // =========================
+  // 현재 활성화된 하단 메뉴
+  // =========================
+
   let activeNav = 'orders'
 
+  // 홈 / 가게 상세
   if (page === 'home' || page === 'store') {
     activeNav = 'home'
   }
 
+  // 알림
   if (page === 'notifications') {
     activeNav = 'notifications'
   }
+
+  // =========================
+  // 화면 출력
+  // =========================
 
   return (
     <>
