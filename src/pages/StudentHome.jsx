@@ -1,41 +1,88 @@
+const stores = [
+  {
+    id: "51jang",
+    name: "51장국밥",
+    category: "든든한 국밥과 한식 메뉴",
+    menu: "고기만국밥",
+    price: "1,000원~",
+    emoji: "🍚",
+  },
+  {
+    id: "gaosung",
+    name: "가오슝",
+    category: "다양한 덮밥과 면 요리",
+    menu: "갈비튀김덮밥",
+    price: "5,900원~",
+    emoji: "🍜",
+  },
+  {
+    id: "gapjjigae",
+    name: "값찌개",
+    category: "따뜻하고 든든한 찌개",
+    menu: "공기밥",
+    price: "1,000원~",
+    emoji: "🍲",
+  },
+  {
+    id: "gyeongseong",
+    name: "경성카츠",
+    category: "바삭한 한 끼",
+    menu: "고구마치즈돈카츠",
+    price: "4,900원~",
+    emoji: "🍱",
+  },
+  {
+    id: "gwangttuk",
+    name: "광뚝",
+    category: "불고기와 뚝배기 한식",
+    menu: "물만두",
+    price: "1,900원~",
+    emoji: "🥘",
+  },
+  {
+    id: "tokyoya",
+    name: "도쿄야",
+    category: "오므라이스와 함박스테이크",
+    menu: "음료",
+    price: "0원~",
+    emoji: "🍛",
+  },
+  {
+    id: "babideundeun",
+    name: "바비든든",
+    category: "든든한 덮밥 한 끼",
+    menu: "고기든든",
+    price: "3,900원~",
+    emoji: "🍖",
+  },
+  {
+    id: "bibigogo",
+    name: "비비고고",
+    category: "카레와 비빔밥",
+    menu: "기본카레",
+    price: "4,900원~",
+    emoji: "🍛",
+  },
+  {
+    id: "pokpung",
+    name: "폭풍분식",
+    category: "라면·김밥·분식",
+    menu: "폭풍라면",
+    price: "3,500원~",
+    emoji: "🍜",
+  },
+];
+
 function StudentHome({ onStore, onOrders, onNotifications }) {
-  const stores = [
-    {
-      id: 'popo420',
-      category: '든든한 덮밥',
-      name: '포포420',
-      menu: '불고기 마요 덮밥',
-      price: '5,900원~',
-      emoji: '🍚',
-    },
-    {
-      id: 'gapjjigae',
-      category: '따뜻한 한식',
-      name: '값찌개',
-      menu: '돼지 김치찌개',
-      price: '6,000원~',
-      emoji: '🍲',
-    },
-    {
-      id: 'gyeongseong',
-      category: '바삭한 한 끼',
-      name: '경성카츠',
-      menu: '등심카츠',
-      price: '6,500원~',
-      emoji: '🍛',
-    },
-    {
-      id: 'bibigogo',
-      category: '가볍고 맛있게',
-      name: '비비고고',
-      menu: '비빔밥',
-      price: '5,500원~',
-      emoji: '🥗',
-    },
-  ]
+
+  const handleStoreClick = (storeId) => {
+    if (onStore) {
+      onStore(storeId);
+    }
+  };
 
   return (
-    <main className="student-home">
+    <div className="student-home">
 
       {/* 상단 Campus Table */}
       <header className="student-header">
@@ -47,16 +94,14 @@ function StudentHome({ onStore, onOrders, onNotifications }) {
         <button
           className="header-notification"
           onClick={onNotifications}
-          aria-label="알림"
         >
           ♧
           <span className="notification-dot"></span>
         </button>
       </header>
 
-      {/* 전체 혼잡도 */}
+      {/* 혼잡도 */}
       <section className="crowd-section">
-
         <div className="crowd-top">
           <div>
             <p className="crowd-small">
@@ -82,18 +127,18 @@ function StudentHome({ onStore, onOrders, onNotifications }) {
             <span>좌석 120석 기준</span>
           </div>
 
-          <div className="crowd-number">
+          <strong className="crowd-number">
             87<span>명</span>
-          </div>
+          </strong>
         </div>
-
       </section>
 
+      {/* 자동 업데이트 안내 */}
       <div className="auto-update">
         ⓘ &nbsp; 이용 인원과 혼잡도는 자동으로 갱신돼요.
       </div>
 
-      {/* 가게 목록 */}
+      {/* 식당 목록 */}
       <section className="store-section">
 
         <div className="store-section-header">
@@ -103,7 +148,7 @@ function StudentHome({ onStore, onOrders, onNotifications }) {
           </div>
 
           <span className="store-count">
-            4개 가게
+            {stores.length}개 가게
           </span>
         </div>
 
@@ -111,11 +156,12 @@ function StudentHome({ onStore, onOrders, onNotifications }) {
           {stores.map((store) => (
             <button
               key={store.id}
+              type="button"
               className="store-card"
-              onClick={() => onStore?.(store.id)}
+              onClick={() => handleStoreClick(store.id)}
             >
-              <div className={`store-image ${store.id}`}>
-                <span>{store.emoji}</span>
+              <div className="store-image">
+                {store.emoji}
               </div>
 
               <div className="store-info">
@@ -136,18 +182,21 @@ function StudentHome({ onStore, onOrders, onNotifications }) {
             </button>
           ))}
         </div>
-
       </section>
 
-      {/* 하단 네비게이션 */}
+      {/* 하단 메뉴 */}
       <nav className="student-bottom-nav">
 
-        <button className="nav-item active">
+        <button
+          type="button"
+          className="nav-item active"
+        >
           <span className="nav-icon">⌂</span>
           <span>홈</span>
         </button>
 
         <button
+          type="button"
           className="nav-item"
           onClick={onOrders}
         >
@@ -156,6 +205,7 @@ function StudentHome({ onStore, onOrders, onNotifications }) {
         </button>
 
         <button
+          type="button"
           className="nav-item"
           onClick={onNotifications}
         >
@@ -165,8 +215,8 @@ function StudentHome({ onStore, onOrders, onNotifications }) {
 
       </nav>
 
-    </main>
-  )
+    </div>
+  );
 }
 
-export default StudentHome
+export default StudentHome;

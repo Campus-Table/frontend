@@ -1,121 +1,85 @@
-import { useState } from 'react'
+import { getStoreById, formatPrice } from '../data/mockData'
 
-function StoreDetail({ storeId, onBack, onOrder }) {
-  const [selectedMenu, setSelectedMenu] = useState('pork-cutlet')
+function StoreDetail({
+  storeId,
+  onBack,
+  onOrder,
+}) {
+  const store = getStoreById(storeId)
 
-  const menus = [
-    {
-      id: 'pork-cutlet',
-      name: '경성 등심카츠',
-      description: '두툼한 등심과 수제 소스',
-      price: 6500,
-      emoji: '🍛',
-    },
-    {
-      id: 'cheese-cutlet',
-      name: '치즈 카츠',
-      description: '고소한 모짜렐라 치즈',
-      price: 7200,
-      emoji: '🧀',
-    },
-    {
-      id: 'katsudon',
-      name: '카츠동',
-      description: '부드러운 달걀 카츠 덮밥',
-      price: 6800,
-      emoji: '🍚',
-    },
-  ]
-
-  const selected = menus.find((menu) => menu.id === selectedMenu)
+  if (!store) {
+    return (
+      <div className="store-detail-page">
+        <button onClick={onBack}>←</button>
+        <h2>가게를 찾을 수 없습니다.</h2>
+      </div>
+    )
+  }
 
   return (
-    <main className="store-detail-page">
-
+    <div className="store-detail-page">
       {/* 상단 */}
       <header className="store-detail-header">
         <button
-          className="store-detail-back"
+          type="button"
+          className="back-button"
           onClick={onBack}
-          aria-label="뒤로가기"
         >
           ‹
         </button>
 
-        <h1>경성카츠</h1>
+        <h2>{store.name}</h2>
 
         <div className="header-space"></div>
       </header>
 
-      {/* 가게 대표 이미지 */}
+      {/* 가게 대표 영역 */}
       <section className="store-hero">
-        <div className="store-hero-placeholder">
-          🍛
+        <div className="store-hero-icon">
+          🍽️
         </div>
 
         <div className="store-hero-text">
-          <p>바삭한 한 끼</p>
-          <h2>경성카츠</h2>
+          <span>{store.description}</span>
+          <h1>{store.name}</h1>
         </div>
       </section>
 
-      {/* 메뉴 선택 */}
+      {/* 메뉴 */}
       <section className="menu-section">
-
         <div className="menu-section-title">
           <h2>메뉴를 선택해주세요</h2>
-          <span>단일 선택</span>
+          <span>{store.menus.length}개 메뉴</span>
         </div>
 
         <div className="menu-list">
-          {menus.map((menu) => {
-            const isSelected = selectedMenu === menu.id
+          {store.menus.map((menu) => (
+            <button
+              type="button"
+              key={menu.id}
+              className="menu-card"
+              onClick={() => onOrder(store.id, menu.id)}
+            >
+              <div className="menu-image-placeholder">
+                🍽️
+              </div>
 
-            return (
-              <button
-                key={menu.id}
-                className={`menu-card ${isSelected ? 'selected' : ''}`}
-                onClick={() => setSelectedMenu(menu.id)}
-              >
-                <div className="menu-image">
-                  {menu.emoji}
-                </div>
+              <div className="menu-info">
+                <h3>{menu.name}</h3>
 
-                <div className="menu-content">
-                  <h3>{menu.name}</h3>
+                <strong>
+                  {formatPrice(menu.price)}
+                </strong>
+              </div>
 
-                  <p>{menu.description}</p>
-
-                  <strong>
-                    {menu.price.toLocaleString()}원
-                  </strong>
-                </div>
-
-                <div
-                  className={`menu-radio ${
-                    isSelected ? 'selected' : ''
-                  }`}
-                >
-                  {isSelected && '✓'}
-                </div>
-              </button>
-            )
-          })}
+              <div className="menu-select-circle">
+                ›
+              </div>
+            </button>
+          ))}
         </div>
       </section>
-
-      {/* 하단 주문 버튼 */}
-      <div className="store-order-bottom">
-        <button
-          className="preorder-button"
-          onClick={() => onOrder?.(selected)}
-        >
-          선주문하기
-          <span>›</span>
-        </button>
-      </div>
-
-    </main>
+    </div>
   )
 }
 
