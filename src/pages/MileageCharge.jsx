@@ -1,13 +1,46 @@
-import { useState } from 'react'
+import {
+  useEffect,
+  useState,
+} from 'react'
+
+import {
+  getMileage,
+} from '../api/mileageApi'
 
 function MileageCharge({
-  currentMileage = 4500,
+  currentMileage = 0,
   onBack,
   onCharge,
 }) {
-  const [selectedAmount, setSelectedAmount] = useState(10000)
-  const [customAmount, setCustomAmount] = useState('')
-  const [isCustom, setIsCustom] = useState(false)
+  const [
+    mileage,
+    setMileage,
+  ] = useState(currentMileage)
+
+  const [
+    selectedAmount,
+    setSelectedAmount,
+  ] = useState(10000)
+
+  const [
+    customAmount,
+    setCustomAmount,
+  ] = useState('')
+
+  const [
+    isCustom,
+    setIsCustom,
+  ] = useState(false)
+
+  const [
+    isLoading,
+    setIsLoading,
+  ] = useState(true)
+
+  const [
+    error,
+    setError,
+  ] = useState('')
 
   const amounts = [
     1000,
@@ -16,6 +49,71 @@ function MileageCharge({
     20000,
     30000,
   ]
+
+  // ======================================================
+  // 현재 마일리지 조회
+  // ======================================================
+
+  useEffect(() => {
+    let cancelled = false
+
+    const loadMileage = async () => {
+      try {
+        setIsLoading(true)
+        setError('')
+
+        const data =
+          await getMileage()
+
+        if (cancelled) {
+          return
+        }
+
+        setMileage(
+          Number(data?.balance ?? 0)
+        )
+      } catch (error) {
+        if (cancelled) {
+          return
+        }
+
+        console.error(
+          '마일리지 조회 실패:',
+          error
+        )
+
+        // 백엔드 연결 전에는
+        // App에서 전달받은 값을 유지
+        setMileage(currentMileage)
+
+        if (
+          error.code === 'UNAUTHORIZED'
+        ) {
+          setError(
+            '로그인이 필요합니다.'
+          )
+        } else {
+          setError(
+            '현재 잔액을 불러오지 못했습니다.'
+          )
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    loadMileage()
+
+    return () => {
+      cancelled = true
+    }
+  }, [currentMileage])
+
+  // ======================================================
+  // 금액 선택
+  // ======================================================
 
   const handleAmountClick = (amount) => {
     setSelectedAmount(amount)
@@ -29,7 +127,12 @@ function MileageCharge({
   }
 
   const handleCustomChange = (e) => {
-    const value = e.target.value.replace(/[^0-9]/g, '')
+    const value =
+      e.target.value.replace(
+        /[^0-9]/g,
+        ''
+      )
+
     setCustomAmount(value)
   }
 
@@ -41,11 +144,27 @@ function MileageCharge({
     finalAmount >= 1000 &&
     finalAmount <= 100000
 
+  // ======================================================
+  // 결제 화면으로 이동
+  // ======================================================
+
+  const handleCharge = () => {
+    if (!isValidAmount) {
+      return
+    }
+
+    if (onCharge) {
+      onCharge(finalAmount)
+    }
+  }
+
   return (
     <main className="mileage-charge-page">
 
       {/* 뒤로가기 */}
+
       <header className="charge-header">
+
         <button
           type="button"
           className="charge-back"
@@ -54,21 +173,34 @@ function MileageCharge({
         >
           ‹
         </button>
+
       </header>
 
       {/* 현재 잔액 */}
+
       <section className="charge-balance-card">
+
         <p>현재 잔액</p>
 
         <strong>
-          {currentMileage.toLocaleString()}P
+          {isLoading
+            ? '조회 중'
+            : `${mileage.toLocaleString()}P`}
         </strong>
+
+        {error && (
+          <p>{error}</p>
+        )}
+
       </section>
 
       {/* 충전 금액 선택 */}
+
       <section className="charge-section">
 
-        <h2>충전 금액 선택</h2>
+        <h2>
+          충전 금액 선택
+        </h2>
 
         <div className="charge-amount-grid">
 
@@ -77,11 +209,14 @@ function MileageCharge({
               key={amount}
               type="button"
               className={
-                !isCustom && selectedAmount === amount
+                !isCustom &&
+                selectedAmount === amount
                   ? 'charge-amount-button selected'
                   : 'charge-amount-button'
               }
-              onClick={() => handleAmountClick(amount)}
+              onClick={() =>
+                handleAmountClick(amount)
+              }
             >
               {amount.toLocaleString()}P
             </button>
@@ -101,18 +236,21 @@ function MileageCharge({
 
         </div>
 
-        {/* 직접 입력 */}
         {isCustom && (
           <div className="custom-charge-area">
+
             <input
               type="text"
               inputMode="numeric"
               value={customAmount}
-              onChange={handleCustomChange}
+              onChange={
+                handleCustomChange
+              }
               placeholder="충전 금액 입력"
             />
 
             <span>P</span>
+
           </div>
         )}
 
@@ -122,22 +260,25 @@ function MileageCharge({
 
       </section>
 
-      {/* 하단 충전 버튼 */}
+      {/* 충전 버튼 */}
+
       <div className="charge-bottom">
+
         <button
           type="button"
           className="charge-submit"
           disabled={!isValidAmount}
-          onClick={() => onCharge(finalAmount)}
+          onClick={handleCharge}
         >
           {finalAmount > 0
             ? `${finalAmount.toLocaleString()}P 토스로 충전하기`
             : '충전 금액을 선택해주세요'}
         </button>
+
       </div>
 
     </main>
   )
 }
 
-export default MileageCharge  
+export default MileageCharge

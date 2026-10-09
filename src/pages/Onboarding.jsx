@@ -11,17 +11,6 @@ function Onboarding({ onLogin }) {
   return (
     <main className="landing">
 
-      {/* 우측 상단 학생 / 관리자 선택 */}
-      <div className="top-menu">
-        <button className="top-menu-button active">
-          학생
-        </button>
-
-        <button className="top-menu-button">
-          관리자
-        </button>
-      </div>
-
       {/* Campus Table 로고 */}
       <header className="brand">
         <div className="brand-icon">♙</div>
@@ -97,7 +86,6 @@ function Onboarding({ onLogin }) {
             className="about-modal"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* 닫기 */}
             <button
               className="close-button"
               onClick={() => setShowAbout(false)}
@@ -169,5 +157,4 @@ function Onboarding({ onLogin }) {
   )
 }
 
-export default Onboarding 
-
+export default Onboarding

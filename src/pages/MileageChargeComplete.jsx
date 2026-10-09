@@ -1,11 +1,8 @@
 function MileageChargeComplete({
-  previousMileage = 4500,
   chargeAmount,
+  balance,
   onConfirm,
 }) {
-  const newMileage =
-    previousMileage + chargeAmount
-
   return (
     <main className="charge-complete-page">
 
@@ -22,21 +19,33 @@ function MileageChargeComplete({
         <div className="charge-result-card">
 
           <div className="charge-result-row">
-            <span>충전 금액</span>
+
+            <span>
+              충전 금액
+            </span>
 
             <strong className="charge-plus">
-              +{chargeAmount.toLocaleString()}P
+              +{Number(
+                chargeAmount || 0
+              ).toLocaleString()}P
             </strong>
+
           </div>
 
-          <div className="charge-result-divider"></div>
+          <div className="charge-result-divider" />
 
           <div className="charge-result-row">
-            <span>충전 후 잔액</span>
+
+            <span>
+              충전 후 잔액
+            </span>
 
             <strong>
-              {newMileage.toLocaleString()}P
+              {Number(
+                balance || 0
+              ).toLocaleString()}P
             </strong>
+
           </div>
 
         </div>
@@ -55,5 +64,4 @@ function MileageChargeComplete({
   )
 }
 
-export default MileageChargeComplete  
-
+export default MileageChargeComplete 

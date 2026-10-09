@@ -1,22 +1,31 @@
-function OrderCancelComplete({ refundMileage, onHome }) {
+function OrderCancelComplete({
+  refundMileage,
+  onHome,
+}) {
   return (
     <main className="order-cancel-complete-page">
+
       <section className="cancel-complete-content">
 
         <div className="cancel-complete-icon">
           ▤
         </div>
 
-        <h1>주문이 취소됐어요</h1>
+        <h1>
+          주문이 취소됐어요
+        </h1>
 
         <p className="cancel-complete-description">
-          결제 금액의 50%인{' '}
-          {Number(refundMileage).toLocaleString()}P가
+          결제한 마일리지{' '}
+          {Number(
+            refundMileage || 0
+          ).toLocaleString()}P가
           <br />
-          마일리지로 환불됐습니다.
+          100% 환불됐습니다.
         </p>
 
         <button
+          type="button"
           className="cancel-complete-home-button"
           onClick={onHome}
         >
@@ -24,9 +33,9 @@ function OrderCancelComplete({ refundMileage, onHome }) {
         </button>
 
       </section>
+
     </main>
   )
 }
 
-export default OrderCancelComplete  
-
+export default OrderCancelComplete 
