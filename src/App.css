@@ -5646,3 +5646,1138 @@
     gap: 11px 14px;
   }
 }
+
+/* ========================================
+   New account
+======================================== */
+.signup-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.signup-link button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: #2f55eb;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.signup-link button:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   로그인 - 회원가입 링크
+========================= */
+
+.signup-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.signup-link button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: #2f55eb;
+  cursor: pointer;
+}
+
+.signup-link button:hover {
+  text-decoration: underline;
+}
+/* =========================
+   회원가입
+========================= */
+
+.signup-login-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 6px;
+  margin-top: 24px;
+
+  font-size: 16px;
+  color: #64748b;
+}
+
+.signup-login-link button {
+  border: none;
+  background: transparent;
+
+  padding: 0;
+
+  color: #2f55eb;
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.signup-login-link button:hover {
+  text-decoration: underline;
+}  
+
+/* =========================
+   로그인 - 비밀번호 찾기
+========================= */
+
+.forgot-password-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -12px;
+  margin-bottom: 10px;
+}
+
+.forgot-password-button {
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  color: #5574c8;
+  font-size: 16px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.forgot-password-button:hover {
+  color: #2f55eb;
+  text-decoration: underline;
+}
+
+/* =========================
+   로그인 - 회원가입 안내
+========================= */
+
+.signup-guide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 28px;
+
+  font-size: 17px;
+  line-height: 1;
+  color: #64748b;
+}
+
+.signup-guide span {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.signup-link {
+  display: inline-flex;
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: none;
+
+  color: #2f55eb;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+/* ========================================
+   Campus Table 소개 모달
+======================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(15, 23, 42, 0.42);
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  z-index: 9999;
+}
+
+
+/* 흰색 팝업 */
+
+.about-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 740px;
+
+  background: #ffffff;
+
+  border-radius: 28px;
+
+  padding: 34px 30px 26px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 -4px 30px rgba(15, 23, 42, 0.08),
+    0 15px 40px rgba(15, 23, 42, 0.18);
+
+  animation: aboutSlideUp 0.25s ease-out;
+}
+
+
+/* 아래에서 올라오는 효과 */
+
+@keyframes aboutSlideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+/* 닫기 버튼 */
+
+.close-button {
+  position: absolute;
+
+  top: 20px;
+  right: 20px;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f1f5f9;
+
+  color: #94a3b8;
+
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+/* ABOUT */
+
+.about-label {
+  margin: 0 0 8px;
+
+  color: #3155ee;
+
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+
+/* 제목 */
+
+.about-title {
+  margin: 0 0 28px;
+
+  color: #0f172a;
+
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+
+/* 기능 목록 */
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+
+  margin-bottom: 30px;
+}
+
+
+/* 기능 한 줄 */
+
+.feature-item {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+}
+
+
+/* 아이콘 */
+
+.feature-icon {
+  flex-shrink: 0;
+
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #f2f5ff;
+
+  color: #3155ee;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+
+/* 기능 설명 */
+
+.feature-text {
+  flex: 1;
+}
+
+.feature-text h3 {
+  margin: 0 0 4px;
+
+  color: #172033;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.feature-text p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+
+/* 시작하기 */
+
+.start-button {
+  width: 100%;
+  height: 58px;
+
+  border: none;
+  border-radius: 15px;
+
+  background: #3155ee;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(49, 85, 238, 0.2);
+}
+
+.start-button:active {
+  transform: scale(0.99);
+}
+
+/* ========================================
+   회원가입 / 비밀번호 재설정 공통 화면
+======================================== */
+
+.auth-flow-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  padding: 46px 40px 60px;
+
+  background: #ffffff;
+}
+
+
+/* 뒤로가기 */
+
+.auth-back {
+  width: 40px;
+  height: 40px;
+
+  margin: 0 0 45px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #475569;
+
+  font-size: 38px;
+  font-family: inherit;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+/* 상단 진행바 */
+
+.auth-progress {
+  display: flex;
+  gap: 8px;
+
+  width: 100%;
+
+  margin-bottom: 32px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 5px;
+
+  border-radius: 999px;
+
+  background: #edf0f7;
+}
+
+.progress-bar.active {
+  background: #3b50e6;
+}
+
+
+/* STEP */
+
+.auth-step {
+  width: 100%;
+}
+
+.auth-step-label {
+  margin: 0 0 10px;
+
+  color: #3b50e6;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.auth-step h1 {
+  margin: 0 0 15px;
+
+  color: #111827;
+
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.auth-description {
+  margin: 0 0 42px;
+
+  color: #8490a5;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* 입력창 */
+
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-bottom: 22px;
+}
+
+.auth-input-group label {
+  color: #1e293b;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.auth-input-group input,
+.verification-code-input {
+  width: 100%;
+  height: 62px;
+
+  box-sizing: border-box;
+
+  padding: 0 18px;
+
+  border: 1px solid #e1e6ef;
+  border-radius: 15px;
+
+  outline: none;
+
+  background: #f8fafc;
+
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.auth-input-group input::placeholder,
+.verification-code-input::placeholder {
+  color: #aab4c5;
+}
+
+.auth-input-group input:focus,
+.verification-code-input:focus {
+  border-color: #3b50e6;
+  background: #ffffff;
+}
+
+
+/* 메인 버튼 */
+
+.auth-main-button {
+  width: 100%;
+  height: 58px;
+
+  margin-top: 8px;
+
+  border: none;
+  border-radius: 15px;
+
+  background: #3b50e6;
+
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 22px rgba(59, 80, 230, 0.15);
+}
+
+
+/* 인증번호 */
+
+.verification-code-input {
+  margin-top: 10px;
+}
+
+.verification-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 12px 0 20px;
+}
+
+.remaining-time {
+  color: #ef5350;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.resend-button {
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #8b95a7;
+
+  font-family: inherit;
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+
+/* 작은 화면 대응 */
+
+@media (max-width: 500px) {
+  .auth-flow-page {
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .auth-step h1 {
+    font-size: 25px;
+  }
+} 
+
+/* =========================================================
+   주문 결제 화면
+========================================================= */
+
+.order-payment-page {
+  min-height: 100vh;
+  background: #ffffff;
+  padding-bottom: 110px;
+  box-sizing: border-box;
+}
+
+/* 상단 */
+
+.payment-header {
+  height: 72px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.payment-back {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: transparent;
+  font-size: 34px;
+  line-height: 1;
+  color: #344054;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* 공통 제목 */
+
+.payment-section-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #101828;
+}
+
+/* =========================================================
+   주문 메뉴
+========================================================= */
+
+.payment-order-section {
+  padding: 12px 28px 26px;
+}
+
+.payment-menu-card {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid #e8ecf3;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.payment-menu-left {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.payment-menu-image,
+.payment-menu-placeholder {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.payment-menu-placeholder {
+  background: #f3f5f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+}
+
+.payment-menu-info {
+  min-width: 0;
+}
+
+.payment-store-name {
+  display: block;
+  margin-bottom: 4px;
+  color: #3155ee;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.payment-menu-info h3 {
+  margin: 0 0 7px;
+  color: #101828;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.payment-menu-info p {
+  margin: 0;
+  color: #98a2b3;
+  font-size: 13px;
+}
+
+.payment-menu-price {
+  margin-left: 12px;
+  flex-shrink: 0;
+  color: #101828;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   마일리지
+========================================================= */
+
+.mileage-payment-section {
+  padding: 12px 28px;
+}
+
+.mileage-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mileage-charge-link {
+  border: none;
+  background: transparent;
+  padding: 5px;
+  color: #3155ee;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mileage-card {
+  margin-top: 18px;
+  padding: 22px 18px 18px;
+  border: 1px solid #e8ecf3;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.mileage-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.mileage-row span {
+  color: #98a2b3;
+  font-size: 14px;
+}
+
+.mileage-row strong {
+  color: #101828;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.mileage-row .payment-minus {
+  color: #3155ee;
+}
+
+.payment-divider {
+  height: 1px;
+  margin-bottom: 14px;
+  background: #eef0f4;
+}
+
+.mileage-row.payment-result {
+  margin-bottom: 18px;
+  padding: 16px 14px;
+  border-radius: 14px;
+  background: #fff3f2;
+}
+
+.mileage-row.payment-result span {
+  color: #b42318;
+  font-weight: 700;
+}
+
+.mileage-row.payment-result strong {
+  color: #d92d20;
+  font-size: 21px;
+}
+
+/* 부족 경고 */
+
+.mileage-error {
+  min-height: 48px;
+  padding: 0 14px;
+  margin-bottom: 12px;
+  border-radius: 13px;
+  background: #fff4f2;
+  color: #d92d20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.mileage-error-icon {
+  font-size: 15px;
+}
+
+.mileage-charge-button {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: #f0f4ff;
+  color: #3155ee;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================================================
+   결제 안내
+========================================================= */
+
+.payment-notice {
+  margin: 22px 28px;
+  padding: 18px;
+  border: 1px solid #edf0f5;
+  border-radius: 16px;
+  display: flex;
+  gap: 10px;
+  background: #ffffff;
+}
+
+.payment-notice-icon {
+  color: #3155ee;
+  flex-shrink: 0;
+}
+
+.payment-notice p {
+  margin: 0;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   화면 하단 결제 버튼
+========================================================= */
+
+.payment-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  padding: 14px 24px 20px;
+  background: #ffffff;
+  border-top: 1px solid #eef0f4;
+}
+
+.payment-submit {
+  width: 100%;
+  max-width: 760px;
+  height: 58px;
+  margin: 0 auto;
+  display: block;
+  border: none;
+  border-radius: 16px;
+  background: #3155ee;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.payment-submit:disabled {
+  background: #aeb8f8;
+  color: #ffffff;
+  cursor: not-allowed;
+}  
+
+/* =========================================================
+   마일리지 충전
+========================================================= */
+
+.mileage-charge-page,
+.mileage-payment-page,
+.charge-complete-page {
+  min-height: 100vh;
+  background: #f8f9fb;
+  box-sizing: border-box;
+}
+
+.charge-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 26px;
+  background: #ffffff;
+}
+
+.charge-back {
+  border: none;
+  background: transparent;
+  font-size: 32px;
+  color: #344054;
+  cursor: pointer;
+}
+
+.charge-balance-card {
+  margin: 24px 28px;
+  padding: 20px;
+  border-radius: 18px;
+  background: #414de4;
+  color: #ffffff;
+}
+
+.charge-balance-card p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.charge-balance-card strong {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.charge-section {
+  padding: 0 28px;
+}
+
+.charge-section h2 {
+  margin: 30px 0 16px;
+  font-size: 17px;
+  color: #101828;
+}
+
+.charge-amount-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.charge-amount-button {
+  height: 56px;
+  border: 1px solid #e4e7ec;
+  border-radius: 14px;
+  background: #ffffff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.charge-amount-button.selected {
+  border: 2px solid #3155ee;
+  background: #f4f6ff;
+  color: #3155ee;
+}
+
+.custom-charge-area {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 55px;
+  border: 1px solid #3155ee;
+  border-radius: 14px;
+  background: white;
+}
+
+.custom-charge-area input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.charge-limit {
+  color: #98a2b3;
+  font-size: 12px;
+  margin-top: 14px;
+}
+
+.charge-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 24px 20px;
+  background: #ffffff;
+}
+
+.charge-submit {
+  width: 100%;
+  height: 58px;
+  border: none;
+  border-radius: 15px;
+  background: #414de4;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.charge-submit:disabled {
+  background: #b8bff2;
+}
+
+/* 토스 결제 */
+
+.toss-payment-card {
+  margin: 20px 28px;
+  padding: 60px 24px 30px;
+  border-radius: 20px;
+  background: white;
+  text-align: center;
+}
+
+.payment-loading-circle {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 30px;
+  border: 4px solid #e6eaff;
+  border-top-color: #3155ee;
+  border-radius: 50%;
+}
+
+.toss-payment-card h2 {
+  font-size: 18px;
+  color: #101828;
+}
+
+.toss-payment-card p {
+  color: #98a2b3;
+  font-size: 13px;
+  margin-bottom: 28px;
+}
+
+.payment-demo-button {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 13px;
+  background: #414de4;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.payment-cancel-button {
+  margin-top: 15px;
+  border: none;
+  background: transparent;
+  color: #98a2b3;
+  cursor: pointer;
+}
+
+/* 충전 완료 */
+
+.charge-complete-content {
+  padding: 135px 28px 0;
+  text-align: center;
+}
+
+.charge-check {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 30px;
+  border-radius: 50%;
+  background: #414de4;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.charge-complete-content h1 {
+  margin-bottom: 30px;
+  font-size: 23px;
+  color: #101828;
+}
+
+.charge-result-card {
+  padding: 22px;
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.charge-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.charge-result-row span {
+  color: #98a2b3;
+}
+
+.charge-result-row strong {
+  color: #101828;
+}
+
+.charge-result-row .charge-plus {
+  color: #3155ee;
+}
+
+.charge-result-divider {
+  height: 1px;
+  background: #eeeeee;
+  margin: 20px 0;
+}
+
+.charge-confirm-button {
+  width: 100%;
+  height: 56px;
+  margin-top: 24px;
+  border: none;
+  border-radius: 14px;
+  background: #414de4;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}  
+

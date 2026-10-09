@@ -3,6 +3,11 @@ import { useState } from 'react'
 function Onboarding({ onLogin }) {
   const [showAbout, setShowAbout] = useState(false)
 
+  const handleStart = () => {
+    setShowAbout(false)
+    onLogin()
+  }
+
   return (
     <main className="landing">
 
@@ -92,16 +97,18 @@ function Onboarding({ onLogin }) {
             className="about-modal"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* 닫기 */}
             <button
               className="close-button"
               onClick={() => setShowAbout(false)}
+              aria-label="닫기"
             >
               ×
             </button>
 
-            <div className="about-label">
+            <p className="about-label">
               ABOUT
-            </div>
+            </p>
 
             <h2 className="about-title">
               식당 앞에서 기다리지 마세요
@@ -149,7 +156,7 @@ function Onboarding({ onLogin }) {
 
             <button
               className="start-button"
-              onClick={() => setShowAbout(false)}
+              onClick={handleStart}
             >
               시작하기
             </button>
@@ -162,4 +169,5 @@ function Onboarding({ onLogin }) {
   )
 }
 
-export default Onboarding
+export default Onboarding 
+

@@ -1,4 +1,9 @@
-function Login({ onBack, onLogin }) {
+function Login({
+  onBack,
+  onLogin,
+  onSignup,
+  onForgotPassword
+}) {
   return (
     <main className="login-page">
 
@@ -21,26 +26,17 @@ function Login({ onBack, onLogin }) {
       <section className="login-intro">
         <p className="login-label">WELCOME BACK</p>
 
-        <h2>학교 구성원 인증</h2>
+        <h2>학교 구성원 로그인</h2>
 
         <p className="login-description">
-          학교 이메일과 학번으로 간편하게 확인할게요.
+          학번과 비밀번호를 입력해주세요.
         </p>
       </section>
 
       {/* 입력 영역 */}
       <section className="login-form">
 
-        <div className="input-group">
-          <label htmlFor="email">학교 이메일</label>
-
-          <input
-            id="email"
-            type="email"
-            placeholder="example@dankook.ac.kr"
-          />
-        </div>
-
+        {/* 학번 */}
         <div className="input-group">
           <label htmlFor="student-number">학번</label>
 
@@ -53,26 +49,58 @@ function Login({ onBack, onLogin }) {
           />
         </div>
 
+        {/* 비밀번호 */}
+        <div className="input-group">
+          <label htmlFor="password">비밀번호</label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+          />
+        </div>
+
+        {/* 비밀번호 찾기 */}
+        <div className="forgot-password-row">
+          <button
+            type="button"
+            className="forgot-password-button"
+            onClick={onForgotPassword}
+          >
+            비밀번호를 잊으셨나요?
+          </button>
+        </div>
+
+        {/* 로그인 */}
         <button
+          type="button"
           className="login-submit"
           onClick={onLogin}
         >
           로그인
         </button>
 
+        {/* 안내 */}
         <div className="login-info">
           <span className="info-icon">ⓘ</span>
+
           <span>
-            학교 이메일과 학번을 통해 재학생 여부를 확인합니다.
+            학번과 비밀번호를 입력하여 로그인해주세요.
           </span>
         </div>
 
-        <button
-          className="prototype-back"
-          onClick={onBack}
-        >
-          프로토타입 바로 둘러보기
-        </button>
+        {/* 회원가입 */}
+        <div className="signup-guide">
+          <span>계정이 없으신가요?</span>
+
+          <button
+            type="button"
+            className="signup-link"
+            onClick={onSignup}
+          >
+            회원가입
+          </button>
+        </div>
 
       </section>
 
@@ -80,4 +108,4 @@ function Login({ onBack, onLogin }) {
   )
 }
 
-export default Login
+export default Login  
