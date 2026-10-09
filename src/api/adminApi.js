@@ -1,14 +1,16 @@
 import { apiFetch } from './client'
 
 // ========================================
-// 학식당
-// 현재 서비스는 식당 1개이므로 첫 번째 식당 사용
+// 학식당 ID 조회
+// 현재 서비스는 학식당 1개이므로
+// 첫 번째 식당 사용
 // ========================================
 
 export async function getPrimaryCafeteriaId() {
-  const cafeterias = await apiFetch(
-    '/api/cafeterias'
-  )
+  const cafeterias =
+    await apiFetch(
+      '/api/cafeterias'
+    )
 
   if (
     !Array.isArray(cafeterias) ||
@@ -24,7 +26,28 @@ export async function getPrimaryCafeteriaId() {
 
 
 // ========================================
+// 학식당 현재 혼잡도
+// currentPeople
+// waitingPeople
+// usageRate
+// congestionLevel
+// ========================================
+
+export function getCafeteriaStatus(
+  cafeteriaId
+) {
+  return apiFetch(
+    `/api/cafeterias/${cafeteriaId}/status`
+  )
+}
+
+
+// ========================================
 // 관리자 대시보드
+// currentPeople
+// seatCount
+// waitingPeople
+// todayOrders
 // ========================================
 
 export function getAdminDashboard(
@@ -37,7 +60,7 @@ export function getAdminDashboard(
 
 
 // ========================================
-// 가게별 통계
+// 가게별 주문 현황
 // ========================================
 
 export function getAdminStoreStats(
@@ -50,7 +73,7 @@ export function getAdminStoreStats(
 
 
 // ========================================
-// 현재 대기 목록
+// 현재 대기 현황
 // ========================================
 
 export function getAdminWaitings(
@@ -63,7 +86,7 @@ export function getAdminWaitings(
 
 
 // ========================================
-// 시간대별 이용 현황
+// 시간대별 이용 인원
 // ========================================
 
 export function getHourlyUsage(
@@ -76,7 +99,13 @@ export function getHourlyUsage(
 
 
 // ========================================
-// 오늘의 현장 번호
+// 오늘의 현장 번호 조회
+// Response:
+// {
+//   cafeteriaId,
+//   date,
+//   code
+// }
 // ========================================
 
 export function getArrivalCode(
@@ -89,7 +118,7 @@ export function getArrivalCode(
 
 
 // ========================================
-// 현장 번호 재발급
+// 오늘의 현장 번호 재발급
 // ========================================
 
 export function regenerateArrivalCode(
@@ -105,7 +134,7 @@ export function regenerateArrivalCode(
 
 
 // ========================================
-// 인원 기록
+// 인원 기록 조회
 // ========================================
 
 export function getOccupancyHistory(
@@ -126,9 +155,13 @@ export function analyzeOccupancy(
   cafeteriaId,
   file
 ) {
-  const formData = new FormData()
+  const formData =
+    new FormData()
 
-  formData.append('image', file)
+  formData.append(
+    'image',
+    file
+  )
 
   return apiFetch(
     `/api/admin/cafeterias/${cafeteriaId}/occupancy/analyze`,
@@ -142,6 +175,9 @@ export function analyzeOccupancy(
 
 // ========================================
 // 관리자 직접 인원 입력
+//
+// source를 생략하면 SIMULATION이므로
+// 직접 입력 화면에서는 MANUAL 명시
 // ========================================
 
 export function saveManualOccupancy(
@@ -155,6 +191,7 @@ export function saveManualOccupancy(
 
       body: JSON.stringify({
         currentPeople,
+        source: 'MANUAL',
       }),
     }
   )

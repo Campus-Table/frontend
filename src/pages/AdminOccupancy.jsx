@@ -57,27 +57,46 @@ import {
       setErrorMessage,
     ] = useState('')
   
-    useEffect(() => {
-      const load = async () => {
-        try {
-          const id =
-            await getPrimaryCafeteriaId()
+    // =========================
+    // 식당 ID
+    // =========================
   
-          setCafeteriaId(id)
-        } catch (error) {
-          setErrorMessage(
-            error.message ||
-              '학식당 정보를 불러오지 못했습니다.'
-          )
+    useEffect(() => {
+      const load =
+        async () => {
+          try {
+            const id =
+              await getPrimaryCafeteriaId()
+  
+            setCafeteriaId(id)
+          } catch (error) {
+            setErrorMessage(
+              error.message ||
+                '학식당 정보를 불러오지 못했습니다.'
+            )
+          }
         }
-      }
   
       load()
     }, [])
   
-    // ========================================
-    // 이미지 선택
-    // ========================================
+    // =========================
+    // 이미지 URL 정리
+    // =========================
+  
+    useEffect(() => {
+      return () => {
+        if (previewUrl) {
+          URL.revokeObjectURL(
+            previewUrl
+          )
+        }
+      }
+    }, [previewUrl])
+  
+    // =========================
+    // 사진 선택
+    // =========================
   
     const handleFileChange = (
       event
@@ -95,7 +114,9 @@ import {
       ]
   
       if (
-        !allowedTypes.includes(file.type)
+        !allowedTypes.includes(
+          file.type
+        )
       ) {
         setErrorMessage(
           'JPEG 또는 PNG 이미지만 업로드할 수 있습니다.'
@@ -113,64 +134,112 @@ import {
         return
       }
   
-      setErrorMessage('')
-      setMessage('')
-      setAnalysisResult(null)
-  
-      setSelectedFile(file)
-  
       if (previewUrl) {
         URL.revokeObjectURL(
           previewUrl
         )
       }
   
+      setSelectedFile(file)
+  
       setPreviewUrl(
-        URL.createObjectURL(file)
+        URL.createObjectURL(
+          file
+        )
       )
+  
+      setAnalysisResult(null)
+      setMessage('')
+      setErrorMessage('')
     }
   
-    // ========================================
-    // CLOVA 분석
-    // ========================================
+    // =========================
+    // CLOVA 인원 분석
+    // =========================
   
-    const handleAnalyze = async () => {
-      if (
-        !selectedFile ||
-        !cafeteriaId
-      ) {
-        return
-      }
+    const handleAnalyze =
+      async () => {
+        if (
+          !selectedFile ||
+          !cafeteriaId
+        ) {
+          return
+        }
   
-      try {
-        setAnalyzing(true)
-        setErrorMessage('')
-        setMessage('')
+        try {
+          setAnalyzing(true)
+          setErrorMessage('')
+          setMessage('')
   
-        const result =
-          await analyzeOccupancy(
-            cafeteriaId,
-            selectedFile
+          const result =
+            await analyzeOccupancy(
+              cafeteriaId,
+              selectedFile
+            )
+  
+          setAnalysisResult(
+            result
           )
   
-        setAnalysisResult(result)
+          setMessage(
+            '인원 분석이 완료되었습니다.'
+          )
+        } catch (error) {
+          console.error(
+            '인원 분석 실패:',
+            error
+          )
   
-        setMessage(
-          '인원 분석이 완료되었습니다.'
-        )
-      } catch (error) {
-        setErrorMessage(
-          error.message ||
-            '이미지 분석에 실패했습니다.'
-        )
-      } finally {
-        setAnalyzing(false)
+          if (
+            error.status === 401
+          ) {
+            window.location.href =
+              '/'
+            return
+          }
+  
+          if (
+            error.code ===
+            'CLOVA_NOT_CONFIGURED'
+          ) {
+            setErrorMessage(
+              'CLOVA 분석 기능이 아직 설정되지 않았습니다.'
+            )
+            return
+          }
+  
+          if (
+            error.code ===
+            'IMAGE_TOO_LARGE'
+          ) {
+            setErrorMessage(
+              '이미지 크기는 2MB 이하여야 합니다.'
+            )
+            return
+          }
+  
+          if (
+            error.code ===
+            'INVALID_IMAGE'
+          ) {
+            setErrorMessage(
+              '올바른 이미지 파일을 선택해주세요.'
+            )
+            return
+          }
+  
+          setErrorMessage(
+            error.message ||
+              '이미지 분석에 실패했습니다.'
+          )
+        } finally {
+          setAnalyzing(false)
+        }
       }
-    }
   
-    // ========================================
+    // =========================
     // 직접 입력
-    // ========================================
+    // =========================
   
     const handleManualSave =
       async () => {
@@ -179,11 +248,16 @@ import {
   
         if (
           !Number.isInteger(count) ||
-          count < 0
+          count < 0 ||
+          count > 10000
         ) {
           setErrorMessage(
-            '0 이상의 인원 수를 입력해주세요.'
+            '0명에서 10,000명 사이의 정수를 입력해주세요.'
           )
+          return
+        }
+  
+        if (!cafeteriaId) {
           return
         }
   
@@ -192,15 +266,41 @@ import {
           setErrorMessage('')
           setMessage('')
   
-          await saveManualOccupancy(
-            cafeteriaId,
-            count
+          const result =
+            await saveManualOccupancy(
+              cafeteriaId,
+              count
+            )
+  
+          // 실제 응답:
+          // peopleCount
+          setCurrentPeople(
+            String(
+              result?.peopleCount ??
+                count
+            )
           )
   
           setMessage(
-            `현재 이용 인원을 ${count}명으로 저장했습니다.`
+            `현재 이용 인원을 ${
+              result?.peopleCount ??
+              count
+            }명으로 저장했습니다.`
           )
         } catch (error) {
+          console.error(
+            '직접 인원 저장 실패:',
+            error
+          )
+  
+          if (
+            error.status === 401
+          ) {
+            window.location.href =
+              '/'
+            return
+          }
+  
           setErrorMessage(
             error.message ||
               '인원 정보를 저장하지 못했습니다.'
@@ -210,10 +310,10 @@ import {
         }
       }
   
+    // CLOVA 분석 응답 명세 확정 전
+    // peopleCount가 있으면 표시
     const analyzedPeople =
-      analysisResult?.currentPeople ??
-      analysisResult?.estimatedPeople ??
-      analysisResult?.count ??
+      analysisResult?.peopleCount ??
       null
   
     return (
@@ -251,20 +351,25 @@ import {
   
           </section>
   
-          {/* 이미지 업로드 */}
+          {/* =====================
+              사진 분석
+          ===================== */}
   
           <section className="occupancy-upload-card">
   
             <label className="occupancy-upload-area">
   
               {previewUrl ? (
+  
                 <img
                   src={previewUrl}
-                  alt="업로드 미리보기"
+                  alt="업로드 이미지"
                   className="occupancy-preview-image"
                 />
+  
               ) : (
                 <>
+  
                   <span className="occupancy-upload-icon">
                     ▣
                   </span>
@@ -276,16 +381,17 @@ import {
                   <small>
                     JPEG / PNG · 최대 2MB
                   </small>
+  
                 </>
               )}
   
               <input
                 type="file"
                 accept="image/jpeg,image/png"
+                hidden
                 onChange={
                   handleFileChange
                 }
-                hidden
               />
   
             </label>
@@ -293,10 +399,12 @@ import {
             <button
               type="button"
               className="occupancy-analyze-button"
-              onClick={handleAnalyze}
               disabled={
                 !selectedFile ||
                 analyzing
+              }
+              onClick={
+                handleAnalyze
               }
             >
               {analyzing
@@ -304,7 +412,8 @@ import {
                 : '인원 분석하기'}
             </button>
   
-            {analyzedPeople !== null && (
+            {analyzedPeople !==
+              null && (
               <div className="occupancy-analysis-result">
   
                 <span>
@@ -321,7 +430,9 @@ import {
   
           </section>
   
-          {/* 직접 인원 입력 */}
+          {/* =====================
+              직접 입력
+          ===================== */}
   
           <section className="occupancy-manual-section">
   
@@ -341,22 +452,23 @@ import {
             <input
               type="number"
               min="0"
+              max="10000"
               value={currentPeople}
+              placeholder="예: 87"
               onChange={(event) =>
                 setCurrentPeople(
                   event.target.value
                 )
               }
-              placeholder="예: 87"
             />
   
             <button
               type="button"
               className="occupancy-save-button"
+              disabled={saving}
               onClick={
                 handleManualSave
               }
-              disabled={saving}
             >
               {saving
                 ? '저장 중...'

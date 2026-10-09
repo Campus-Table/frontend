@@ -5,6 +5,7 @@ import {
 
 import {
   getPrimaryCafeteriaId,
+  getCafeteriaStatus,
   getAdminDashboard,
   getAdminStoreStats,
   getHourlyUsage,
@@ -12,8 +13,15 @@ import {
 } from '../api/adminApi'
 
 function AdminStats() {
-  const [dashboard, setDashboard] =
-    useState(null)
+  const [
+    dashboard,
+    setDashboard,
+  ] = useState(null)
+
+  const [
+    cafeteriaStatus,
+    setCafeteriaStatus,
+  ] = useState(null)
 
   const [
     storeStats,
@@ -30,13 +38,19 @@ function AdminStats() {
     setDataSource,
   ] = useState(null)
 
-  const [loading, setLoading] =
-    useState(true)
+  const [
+    loading,
+    setLoading,
+  ] = useState(true)
 
   const [
     errorMessage,
     setErrorMessage,
   ] = useState('')
+
+  // =========================
+  // 오늘 날짜
+  // =========================
 
   const today =
     new Intl.DateTimeFormat(
@@ -50,151 +64,200 @@ function AdminStats() {
       }
     ).format(new Date())
 
-  const todayApiDate = (() => {
-    const formatter =
-      new Intl.DateTimeFormat(
-        'en-CA',
-        {
-          timeZone: 'Asia/Seoul',
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }
-      )
+  const todayApiDate =
+    new Intl.DateTimeFormat(
+      'en-CA',
+      {
+        timeZone: 'Asia/Seoul',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      }
+    ).format(new Date())
 
-    return formatter.format(
-      new Date()
-    )
-  })()
+  // =========================
+  // 데이터 조회
+  // =========================
 
   useEffect(() => {
     let cancelled = false
 
-    const load = async () => {
-      try {
-        setLoading(true)
+    const loadStats =
+      async () => {
+        try {
+          setLoading(true)
+          setErrorMessage('')
 
-        const cafeteriaId =
-          await getPrimaryCafeteriaId()
+          const cafeteriaId =
+            await getPrimaryCafeteriaId()
 
-        const [
-          dashboardData,
-          storesData,
-          hourlyData,
-          historyData,
-        ] = await Promise.all([
-          getAdminDashboard(
-            cafeteriaId
-          ),
+          const [
+            dashboardData,
+            statusData,
+            storesData,
+            hourlyData,
+            historyData,
+          ] = await Promise.all([
+            getAdminDashboard(
+              cafeteriaId
+            ),
 
-          getAdminStoreStats(
-            cafeteriaId
-          ),
+            getCafeteriaStatus(
+              cafeteriaId
+            ),
 
-          getHourlyUsage(
-            cafeteriaId
-          ),
+            getAdminStoreStats(
+              cafeteriaId
+            ),
 
-          getOccupancyHistory(
-            cafeteriaId,
-            todayApiDate
-          ).catch(() => []),
-        ])
+            getHourlyUsage(
+              cafeteriaId
+            ),
 
-        if (cancelled) {
-          return
-        }
+            getOccupancyHistory(
+              cafeteriaId,
+              todayApiDate
+            ).catch(() => []),
+          ])
 
-        setDashboard(
-          dashboardData
-        )
+          if (cancelled) {
+            return
+          }
 
-        setStoreStats(
-          Array.isArray(storesData)
-            ? storesData
-            : []
-        )
-
-        const allHours =
-          Array.isArray(hourlyData)
-            ? hourlyData
-            : []
-
-        // 디자인대로 09~16시만 표시
-        setHourlyUsage(
-          allHours.filter(
-            (item) => {
-              const hour =
-                Number(item.hour)
-
-              return (
-                hour >= 9 &&
-                hour <= 16
-              )
-            }
+          setDashboard(
+            dashboardData
           )
-        )
 
-        const historyItems =
-          Array.isArray(historyData)
-            ? historyData
-            : historyData?.items ??
-              []
-
-        if (
-          historyItems.length > 0
-        ) {
-          setDataSource(
-            historyItems[0]
-              ?.source ?? null
+          setCafeteriaStatus(
+            statusData
           )
-        }
-      } catch (error) {
-        if (cancelled) {
-          return
-        }
 
-        if (
-          error.status === 401
-        ) {
-          window.location.href =
-            '/'
-          return
-        }
+          setStoreStats(
+            Array.isArray(
+              storesData
+            )
+              ? storesData
+              : []
+          )
 
-        setErrorMessage(
-          error.message ||
-            '이용 현황을 불러오지 못했습니다.'
-        )
-      } finally {
-        if (!cancelled) {
-          setLoading(false)
+          // 0~23시 중
+          // 디자인에 필요한 09~16시만
+          const allHours =
+            Array.isArray(
+              hourlyData
+            )
+              ? hourlyData
+              : []
+
+          setHourlyUsage(
+            allHours.filter(
+              (item) => {
+                const hour =
+                  Number(
+                    item.hour
+                  )
+
+                return (
+                  hour >= 9 &&
+                  hour <= 16
+                )
+              }
+            )
+          )
+
+          // =========================
+          // 가장 최근 스냅샷 source
+          // =========================
+
+          const historyItems =
+            Array.isArray(
+              historyData
+            )
+              ? historyData
+              : historyData?.items ||
+                []
+
+          if (
+            historyItems.length >
+            0
+          ) {
+            const latest =
+              [...historyItems].sort(
+                (a, b) =>
+                  new Date(
+                    b.recordedAt
+                  ) -
+                  new Date(
+                    a.recordedAt
+                  )
+              )[0]
+
+            setDataSource(
+              latest?.source ||
+                null
+            )
+          }
+        } catch (error) {
+          if (cancelled) {
+            return
+          }
+
+          console.error(
+            '관리자 이용 현황 조회 실패:',
+            error
+          )
+
+          if (
+            error.status === 401
+          ) {
+            window.location.href =
+              '/'
+            return
+          }
+
+          if (
+            error.status === 403
+          ) {
+            setErrorMessage(
+              '관리자 권한이 없습니다.'
+            )
+            return
+          }
+
+          setErrorMessage(
+            error.message ||
+              '이용 현황을 불러오지 못했습니다.'
+          )
+        } finally {
+          if (!cancelled) {
+            setLoading(false)
+          }
         }
       }
-    }
 
-    load()
+    loadStats()
 
     return () => {
       cancelled = true
     }
   }, [todayApiDate])
 
-  // ========================================
-  // 혼잡도
-  // ========================================
+  // =========================
+  // 혼잡도 텍스트
+  // =========================
 
   const congestionText = {
     RELAXED: '여유',
     NORMAL: '보통',
     CROWDED: '혼잡',
-    VERY_CROWDED: '매우 혼잡',
+    VERY_CROWDED:
+      '매우 혼잡',
   }
 
-  // ========================================
-  // 시간대 그래프
-  // peakPeople 사용
-  // ========================================
+  // =========================
+  // 시간대별 그래프
+  // peakPeople 기준
+  // =========================
 
   const maxPeople =
     Math.max(
@@ -207,9 +270,9 @@ function AdminStats() {
       1
     )
 
-  // ========================================
-  // 주문 비율
-  // ========================================
+  // =========================
+  // 가게별 주문 비중
+  // =========================
 
   const totalOrders =
     storeStats.reduce(
@@ -230,15 +293,15 @@ function AdminStats() {
 
     return Math.round(
       (
-        Number(orders) /
+        (Number(orders) || 0) /
         totalOrders
       ) * 100
     )
   }
 
-  // ========================================
-  // 데이터 출처
-  // ========================================
+  // =========================
+  // 스냅샷 출처
+  // =========================
 
   const sourceLabel = {
     CLOVA: 'CLOVA 분석',
@@ -297,6 +360,10 @@ function AdminStats() {
           !errorMessage && (
             <>
 
+              {/* =====================
+                  SUMMARY
+              ===================== */}
+
               <section className="stats-summary-grid">
 
                 <article className="stats-summary-card">
@@ -306,20 +373,25 @@ function AdminStats() {
                   </p>
 
                   <strong>
-                    {dashboard?.currentPeople ?? 0}
+                    {cafeteriaStatus?.currentPeople ??
+                      0}
                     <span>명</span>
                   </strong>
 
                   <small className="stats-red">
-                    {congestionText[
-                      dashboard?.congestionLevel
-                    ] || '정보 없음'}
 
-                    {dashboard?.usageRate !==
+                    {congestionText[
+                      cafeteriaStatus
+                        ?.congestionLevel
+                    ] ||
+                      '정보 없음'}
+
+                    {cafeteriaStatus?.usageRate !==
                       undefined &&
                       ` · 좌석의 ${Math.round(
-                        dashboard.usageRate
+                        cafeteriaStatus.usageRate
                       )}%`}
+
                   </small>
 
                 </article>
@@ -331,7 +403,9 @@ function AdminStats() {
                   </p>
 
                   <strong>
-                    {dashboard?.waitingPeople ?? 0}
+                    {dashboard?.waitingPeople ??
+                      cafeteriaStatus?.waitingPeople ??
+                      0}
                     <span>명</span>
                   </strong>
 
@@ -343,7 +417,9 @@ function AdminStats() {
 
               </section>
 
-              {/* 시간대별 이용자 */}
+              {/* =====================
+                  시간대별 이용 인원
+              ===================== */}
 
               <section className="stats-card">
 
@@ -434,7 +510,9 @@ function AdminStats() {
 
               </section>
 
-              {/* 가게별 주문 비중 */}
+              {/* =====================
+                  가게별 주문 비중
+              ===================== */}
 
               <section className="store-share-section">
 
@@ -444,7 +522,8 @@ function AdminStats() {
 
                 <div className="store-share-card">
 
-                  {totalOrders === 0 ? (
+                  {totalOrders ===
+                  0 ? (
 
                     <div className="stats-empty">
                       오늘 주문 데이터가
@@ -464,8 +543,7 @@ function AdminStats() {
 
                             <div
                               key={
-                                store.storeId ??
-                                index
+                                store.storeId
                               }
                               className={`share-segment share-${
                                 index % 4
@@ -493,8 +571,7 @@ function AdminStats() {
 
                             <div
                               key={
-                                store.storeId ??
-                                index
+                                store.storeId
                               }
                               className="share-item"
                             >
@@ -506,8 +583,7 @@ function AdminStats() {
                               />
 
                               <span>
-                                {store.storeName ??
-                                  store.name ??
+                                {store.storeName ||
                                   '가게'}
                               </span>
 

@@ -9,11 +9,15 @@ import {
 } from '../api/adminApi'
 
 function AdminWaiting() {
-  const [waitings, setWaitings] =
-    useState([])
+  const [
+    waitings,
+    setWaitings,
+  ] = useState([])
 
-  const [loading, setLoading] =
-    useState(true)
+  const [
+    loading,
+    setLoading,
+  ] = useState(true)
 
   const [
     errorMessage,
@@ -32,9 +36,9 @@ function AdminWaiting() {
       }
     ).format(new Date())
 
-  // ========================================
+  // =========================
   // 대기번호
-  // ========================================
+  // =========================
 
   const formatWaitingNumber = (
     number
@@ -52,13 +56,21 @@ function AdminWaiting() {
     )
   }
 
-  // ========================================
+  // =========================
   // 남은 시간
-  // ========================================
+  // =========================
 
   const formatRemainingTime = (
-    seconds
+    seconds,
+    status
   ) => {
+    if (
+      status === 'READY' ||
+      status === 'RECEIVED'
+    ) {
+      return '준비 완료'
+    }
+
     const safeSeconds =
       Math.max(
         Number(seconds) || 0,
@@ -70,15 +82,15 @@ function AdminWaiting() {
         safeSeconds / 60
       )
 
-    const remaining =
+    const remainingSeconds =
       safeSeconds % 60
 
-    return `${minutes}분 ${remaining}초`
+    return `${minutes}분 ${remainingSeconds}초`
   }
 
-  // ========================================
+  // =========================
   // 도착 시각
-  // ========================================
+  // =========================
 
   const formatTime = (
     dateTime
@@ -111,23 +123,13 @@ function AdminWaiting() {
     )
   }
 
-  // ========================================
-  // 메뉴명
-  // ========================================
+  // =========================
+  // 메뉴 표시
+  // =========================
 
-  const getItemName = (item) => {
-    if (typeof item === 'string') {
-      return item
-    }
-
-    return (
-      item?.menuName ??
-      item?.name ??
-      '메뉴'
-    )
-  }
-
-  const formatItems = (items) => {
+  const formatItems = (
+    items
+  ) => {
     if (
       !Array.isArray(items) ||
       items.length === 0
@@ -135,21 +137,27 @@ function AdminWaiting() {
       return '메뉴 정보 없음'
     }
 
-    const firstName =
-      getItemName(items[0])
+    const firstMenu =
+      items[0]?.menuName ||
+      items[0]?.name ||
+      '메뉴'
 
     if (items.length === 1) {
-      return firstName
+      return firstMenu
     }
 
-    return `${firstName} 외 ${
+    return `${firstMenu} 외 ${
       items.length - 1
     }개`
   }
 
-  // ========================================
-  // 상태
-  // ========================================
+  // =========================
+  // 관리자 상태
+  //
+  // READY:
+  // 예상 준비시간은 지났지만
+  // 아직 RECEIVED 처리 전
+  // =========================
 
   const getStatusText = (
     status
@@ -158,101 +166,121 @@ function AdminWaiting() {
       return '조리 중'
     }
 
-    // handoff 일부에는 READY,
-    // 주문 상태 표에는 RECEIVED가 존재
-    // 둘 다 대응
-    if (
-      status === 'READY' ||
-      status === 'RECEIVED'
-    ) {
+    if (status === 'READY') {
       return '준비 완료'
+    }
+
+    if (status === 'RECEIVED') {
+      return '수령 안내'
     }
 
     return status || '진행 중'
   }
 
-  // ========================================
-  // 7초 폴링
-  // ========================================
+  // =========================
+  // 대기 목록
+  // 7초마다 polling
+  // =========================
 
   useEffect(() => {
     let cancelled = false
     let intervalId = null
 
-    const start = async () => {
-      try {
-        const cafeteriaId =
-          await getPrimaryCafeteriaId()
+    const startPolling =
+      async () => {
+        try {
+          const cafeteriaId =
+            await getPrimaryCafeteriaId()
 
-        const load = async (
-          initial = false
-        ) => {
-          try {
-            if (initial) {
-              setLoading(true)
+          const loadWaitings =
+            async (
+              initial = false
+            ) => {
+              try {
+                if (initial) {
+                  setLoading(true)
+                }
+
+                const data =
+                  await getAdminWaitings(
+                    cafeteriaId
+                  )
+
+                if (cancelled) {
+                  return
+                }
+
+                setWaitings(
+                  Array.isArray(data)
+                    ? data
+                    : []
+                )
+
+                setErrorMessage('')
+              } catch (error) {
+                if (cancelled) {
+                  return
+                }
+
+                console.error(
+                  '관리자 대기 현황 조회 실패:',
+                  error
+                )
+
+                if (
+                  error.status === 401
+                ) {
+                  window.location.href =
+                    '/'
+                  return
+                }
+
+                if (
+                  error.status === 403
+                ) {
+                  setErrorMessage(
+                    '관리자 권한이 없습니다.'
+                  )
+                  return
+                }
+
+                setErrorMessage(
+                  error.message ||
+                    '대기 현황을 불러오지 못했습니다.'
+                )
+              } finally {
+                if (
+                  initial &&
+                  !cancelled
+                ) {
+                  setLoading(false)
+                }
+              }
             }
 
-            const data =
-              await getAdminWaitings(
-                cafeteriaId
-              )
+          await loadWaitings(true)
 
-            if (cancelled) {
-              return
-            }
-
-            setWaitings(
-              Array.isArray(data)
-                ? data
-                : []
+          intervalId =
+            setInterval(
+              () =>
+                loadWaitings(
+                  false
+                ),
+              7000
             )
-
-            setErrorMessage('')
-          } catch (error) {
-            if (cancelled) {
-              return
-            }
-
-            if (
-              error.status === 401
-            ) {
-              window.location.href =
-                '/'
-              return
-            }
+        } catch (error) {
+          if (!cancelled) {
+            setLoading(false)
 
             setErrorMessage(
               error.message ||
-                '대기 현황을 불러오지 못했습니다.'
+                '학식당 정보를 불러오지 못했습니다.'
             )
-          } finally {
-            if (
-              initial &&
-              !cancelled
-            ) {
-              setLoading(false)
-            }
           }
         }
-
-        await load(true)
-
-        intervalId =
-          setInterval(
-            () => load(false),
-            7000
-          )
-      } catch (error) {
-        setLoading(false)
-
-        setErrorMessage(
-          error.message ||
-            '학식당 정보를 불러오지 못했습니다.'
-        )
       }
-    }
 
-    start()
+    startPolling()
 
     return () => {
       cancelled = true
@@ -298,7 +326,7 @@ function AdminWaiting() {
 
       <main className="admin-content">
 
-        <section className="waiting-summary">
+        <section className="admin-waiting-summary">
 
           <div>
 
@@ -312,7 +340,7 @@ function AdminWaiting() {
 
           </div>
 
-          <span className="live-badge">
+          <span className="admin-live-badge">
             ● 실시간 갱신
           </span>
 
@@ -335,12 +363,12 @@ function AdminWaiting() {
           !errorMessage &&
           waitings.length === 0 && (
             <div className="admin-state-card">
-              현재 대기 중인
-              주문이 없습니다.
+              현재 대기 중인 주문이
+              없습니다.
             </div>
           )}
 
-        <section className="waiting-list">
+        <section className="admin-waiting-list">
 
           {waitings.map(
             (waiting) => (
@@ -350,19 +378,19 @@ function AdminWaiting() {
                   waiting.orderId ??
                   waiting.id
                 }
-                className="waiting-card"
+                className="admin-waiting-card"
               >
 
-                <div className="waiting-card-top">
+                <div className="admin-waiting-card-top">
 
-                  <strong className="waiting-number">
+                  <strong className="admin-waiting-number">
                     {formatWaitingNumber(
                       waiting.waitingNumber
                     )}
                     번
                   </strong>
 
-                  <span className="verified-badge">
+                  <span className="admin-verified-badge">
                     인증 완료 ·{' '}
                     {getStatusText(
                       waiting.status
@@ -380,9 +408,9 @@ function AdminWaiting() {
                   )}
                 </h3>
 
-                <div className="waiting-card-divider" />
+                <div className="admin-waiting-divider" />
 
-                <div className="waiting-time-grid">
+                <div className="admin-waiting-time-grid">
 
                   <div>
 
@@ -406,7 +434,8 @@ function AdminWaiting() {
 
                     <strong>
                       {formatRemainingTime(
-                        waiting.remainingSeconds
+                        waiting.remainingSeconds,
+                        waiting.status
                       )}
                     </strong>
 

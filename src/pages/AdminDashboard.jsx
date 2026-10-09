@@ -15,23 +15,35 @@ function AdminDashboard({
   onWaiting,
   onOccupancy,
 }) {
-  const [cafeteriaId, setCafeteriaId] =
-    useState(null)
+  const [
+    cafeteriaId,
+    setCafeteriaId,
+  ] = useState(null)
 
-  const [dashboard, setDashboard] =
-    useState(null)
+  const [
+    dashboard,
+    setDashboard,
+  ] = useState(null)
 
-  const [storeStats, setStoreStats] =
-    useState([])
+  const [
+    storeStats,
+    setStoreStats,
+  ] = useState([])
 
-  const [arrivalCode, setArrivalCode] =
-    useState('')
+  const [
+    arrivalCode,
+    setArrivalCode,
+  ] = useState('')
 
-  const [loading, setLoading] =
-    useState(true)
+  const [
+    loading,
+    setLoading,
+  ] = useState(true)
 
-  const [errorMessage, setErrorMessage] =
-    useState('')
+  const [
+    errorMessage,
+    setErrorMessage,
+  ] = useState('')
 
   const [
     showRegenerateModal,
@@ -43,9 +55,9 @@ function AdminDashboard({
     setRegenerating,
   ] = useState(false)
 
-  // ========================================
+  // =========================
   // 오늘 날짜
-  // ========================================
+  // =========================
 
   const today =
     new Intl.DateTimeFormat(
@@ -59,102 +71,98 @@ function AdminDashboard({
       }
     ).format(new Date())
 
-  // ========================================
-  // 현장 번호 응답에서 코드 꺼내기
-  // ========================================
-
-  const getCodeValue = (data) => {
-    if (!data) {
-      return ''
-    }
-
-    return (
-      data.code ??
-      data.arrivalCode ??
-      ''
-    )
-  }
-
-  // ========================================
-  // 데이터 조회
-  // ========================================
+  // =========================
+  // 관리자 데이터 조회
+  // =========================
 
   useEffect(() => {
     let cancelled = false
 
-    const loadDashboard = async () => {
-      try {
-        setLoading(true)
-        setErrorMessage('')
+    const loadDashboard =
+      async () => {
+        try {
+          setLoading(true)
+          setErrorMessage('')
 
-        const id =
-          await getPrimaryCafeteriaId()
+          // 1. 식당 ID
+          const id =
+            await getPrimaryCafeteriaId()
 
-        if (cancelled) {
-          return
-        }
+          if (cancelled) {
+            return
+          }
 
-        setCafeteriaId(id)
+          setCafeteriaId(id)
 
-        const [
-          dashboardData,
-          storeStatsData,
-          arrivalCodeData,
-        ] = await Promise.all([
-          getAdminDashboard(id),
-          getAdminStoreStats(id),
-          getArrivalCode(id),
-        ])
+          // 2. 관리자 데이터 병렬 호출
+          const [
+            dashboardData,
+            storeStatsData,
+            arrivalCodeData,
+          ] = await Promise.all([
+            getAdminDashboard(id),
+            getAdminStoreStats(id),
+            getArrivalCode(id),
+          ])
 
-        if (cancelled) {
-          return
-        }
+          if (cancelled) {
+            return
+          }
 
-        setDashboard(dashboardData)
-
-        setStoreStats(
-          Array.isArray(storeStatsData)
-            ? storeStatsData
-            : []
-        )
-
-        setArrivalCode(
-          getCodeValue(
-            arrivalCodeData
+          setDashboard(
+            dashboardData
           )
-        )
-      } catch (error) {
-        if (cancelled) {
-          return
-        }
 
-        console.error(
-          '관리자 대시보드 조회 실패:',
-          error
-        )
+          setStoreStats(
+            Array.isArray(
+              storeStatsData
+            )
+              ? storeStatsData
+              : []
+          )
 
-        if (error.status === 401) {
-          window.location.href = '/'
-          return
-        }
+          // API 명세 확정:
+          // 오늘 현장 번호 필드 = code
+          setArrivalCode(
+            arrivalCodeData?.code || ''
+          )
+        } catch (error) {
+          if (cancelled) {
+            return
+          }
 
-        if (error.status === 403) {
+          console.error(
+            '관리자 대시보드 조회 실패:',
+            error
+          )
+
+          if (
+            error.status === 401
+          ) {
+            window.location.href =
+              '/'
+            return
+          }
+
+          if (
+            error.status === 403
+          ) {
+            setErrorMessage(
+              '관리자 권한이 없습니다.'
+            )
+            return
+          }
+
           setErrorMessage(
-            '관리자 권한이 없습니다.'
+            error.message ||
+              '학식당 현황을 불러오지 못했습니다.'
           )
-          return
-        }
-
-        setErrorMessage(
-          error.message ||
-            '데이터를 불러오지 못했습니다.'
-        )
-      } finally {
-        if (!cancelled) {
-          setLoading(false)
+        } finally {
+          if (!cancelled) {
+            setLoading(false)
+          }
         }
       }
-    }
 
     loadDashboard()
 
@@ -163,84 +171,100 @@ function AdminDashboard({
     }
   }, [])
 
-  // ========================================
+  // =========================
   // 현장 번호 재발급
-  // ========================================
+  // =========================
 
-  const handleRegenerate = async () => {
-    if (!cafeteriaId) {
-      return
-    }
+  const handleRegenerate =
+    async () => {
+      if (!cafeteriaId) {
+        return
+      }
 
-    try {
-      setRegenerating(true)
+      try {
+        setRegenerating(true)
 
-      const result =
-        await regenerateArrivalCode(
-          cafeteriaId
-        )
-
-      let newCode =
-        getCodeValue(result)
-
-      // 재발급 응답에 번호가 없을 경우
-      // 현재 번호 다시 조회
-      if (!newCode) {
-        const refreshed =
-          await getArrivalCode(
+        const result =
+          await regenerateArrivalCode(
             cafeteriaId
           )
 
-        newCode =
-          getCodeValue(refreshed)
+        // 재발급 응답에 code가 있으면 사용
+        if (result?.code) {
+          setArrivalCode(
+            result.code
+          )
+        }
+
+        // 혹시 재발급 응답에서 code를
+        // 내려주지 않는 경우 다시 조회
+        else {
+          const refreshed =
+            await getArrivalCode(
+              cafeteriaId
+            )
+
+          setArrivalCode(
+            refreshed?.code || ''
+          )
+        }
+
+        setShowRegenerateModal(
+          false
+        )
+      } catch (error) {
+        alert(
+          error.message ||
+            '현장 번호를 재발급하지 못했습니다.'
+        )
+      } finally {
+        setRegenerating(false)
       }
-
-      setArrivalCode(newCode)
-
-      setShowRegenerateModal(false)
-    } catch (error) {
-      alert(
-        error.message ||
-          '현장 번호를 재발급하지 못했습니다.'
-      )
-    } finally {
-      setRegenerating(false)
     }
-  }
 
-  // ========================================
+  // =========================
+  // 공통 Header
+  // =========================
+
+  const header = (
+    <header className="admin-header">
+
+      <div className="admin-brand">
+
+        <div className="admin-brand-icon">
+          ♙
+        </div>
+
+        <strong>
+          Campus Table
+        </strong>
+
+        <span className="admin-badge">
+          관리자
+        </span>
+
+      </div>
+
+      <p className="admin-date">
+        {today}
+      </p>
+
+      <h1>
+        학식당 현황
+      </h1>
+
+    </header>
+  )
+
+  // =========================
   // 로딩
-  // ========================================
+  // =========================
 
   if (loading) {
     return (
       <div className="admin-page">
 
-        <header className="admin-header">
-          <div className="admin-brand">
-
-            <div className="admin-brand-icon">
-              ♙
-            </div>
-
-            <strong>
-              Campus Table
-            </strong>
-
-            <span className="admin-badge">
-              관리자
-            </span>
-
-          </div>
-
-          <p className="admin-date">
-            {today}
-          </p>
-
-          <h1>
-            학식당 현황
-          </h1>
-        </header>
+        {header}
 
         <main className="admin-content">
 
@@ -255,41 +279,15 @@ function AdminDashboard({
     )
   }
 
-  // ========================================
+  // =========================
   // 오류
-  // ========================================
+  // =========================
 
   if (errorMessage) {
     return (
       <div className="admin-page">
 
-        <header className="admin-header">
-
-          <div className="admin-brand">
-
-            <div className="admin-brand-icon">
-              ♙
-            </div>
-
-            <strong>
-              Campus Table
-            </strong>
-
-            <span className="admin-badge">
-              관리자
-            </span>
-
-          </div>
-
-          <p className="admin-date">
-            {today}
-          </p>
-
-          <h1>
-            학식당 현황
-          </h1>
-
-        </header>
+        {header}
 
         <main className="admin-content">
 
@@ -306,43 +304,13 @@ function AdminDashboard({
   return (
     <div className="admin-page">
 
-      {/* =====================================
-          HEADER
-      ===================================== */}
-
-      <header className="admin-header">
-
-        <div className="admin-brand">
-
-          <div className="admin-brand-icon">
-            ♙
-          </div>
-
-          <strong>
-            Campus Table
-          </strong>
-
-          <span className="admin-badge">
-            관리자
-          </span>
-
-        </div>
-
-        <p className="admin-date">
-          {today}
-        </p>
-
-        <h1>
-          학식당 현황
-        </h1>
-
-      </header>
+      {header}
 
       <main className="admin-content">
 
-        {/* =====================================
+        {/* =========================
             SUMMARY
-        ===================================== */}
+        ========================= */}
 
         <section className="admin-summary-grid">
 
@@ -362,7 +330,9 @@ function AdminDashboard({
             </strong>
 
             <small className="summary-blue">
-              좌석 {dashboard?.seatCount ?? 0}석
+              좌석{' '}
+              {dashboard?.seatCount ?? 0}
+              석
             </small>
 
           </article>
@@ -411,9 +381,9 @@ function AdminDashboard({
 
         </section>
 
-        {/* =====================================
-            TODAY ARRIVAL CODE
-        ===================================== */}
+        {/* =========================
+            오늘 현장 번호
+        ========================= */}
 
         <section className="arrival-code-card">
 
@@ -437,7 +407,9 @@ function AdminDashboard({
             type="button"
             className="arrival-code-button"
             onClick={() =>
-              setShowRegenerateModal(true)
+              setShowRegenerateModal(
+                true
+              )
             }
           >
             재발급
@@ -445,9 +417,9 @@ function AdminDashboard({
 
         </section>
 
-        {/* =====================================
-            OCCUPANCY MANAGEMENT
-        ===================================== */}
+        {/* =========================
+            인원 현황 관리
+        ========================= */}
 
         <button
           type="button"
@@ -477,9 +449,9 @@ function AdminDashboard({
 
         </button>
 
-        {/* =====================================
-            STORE STATS
-        ===================================== */}
+        {/* =========================
+            가게별 주문 현황
+        ========================= */}
 
         <section className="admin-store-section">
 
@@ -509,78 +481,78 @@ function AdminDashboard({
 
           <div className="admin-store-list">
 
-            {storeStats.map((stat) => (
+            {storeStats.map(
+              (stat) => (
 
-              <article
-                key={
-                  stat.storeId ??
-                  stat.id ??
-                  stat.storeName
-                }
-                className="admin-store-card"
-              >
+                <article
+                  key={stat.storeId}
+                  className="admin-store-card"
+                >
 
-                <div className="admin-store-top">
+                  <div className="admin-store-top">
 
-                  <div className="admin-store-name">
+                    <div className="admin-store-name">
 
-                    <span className="admin-store-dot" />
+                      <span className="admin-store-dot" />
 
-                    <strong>
-                      {stat.storeName ??
-                        stat.name ??
-                        '가게'}
-                    </strong>
+                      <strong>
+                        {stat.storeName ||
+                          '가게'}
+                      </strong>
+
+                    </div>
+
+                    <span>
+                      오늘{' '}
+                      {stat.todayOrders ?? 0}
+                      건
+                    </span>
 
                   </div>
 
-                  <span>
-                    오늘 {stat.todayOrders ?? 0}건
-                  </span>
+                  <p className="admin-store-wait-label">
+                    현재 대기
+                  </p>
 
-                </div>
+                  <div className="admin-store-wait">
 
-                <p className="admin-store-wait-label">
-                  현재 대기
-                </p>
+                    <strong>
+                      {stat.waitingCount ?? 0}
+                      <span>건</span>
+                    </strong>
 
-                <div className="admin-store-wait">
+                    <button
+                      type="button"
+                      onClick={onWaiting}
+                    >
+                      ›
+                    </button>
 
-                  <strong>
-                    {stat.waitingCount ?? 0}
-                    <span>건</span>
-                  </strong>
+                  </div>
 
-                  <button
-                    type="button"
-                    onClick={onWaiting}
-                  >
-                    ›
-                  </button>
+                  <div className="admin-card-divider" />
 
-                </div>
+                  <p className="admin-menu-summary">
 
-                <div className="admin-card-divider" />
+                    {Array.isArray(
+                      stat.topMenus
+                    ) &&
+                    stat.topMenus.length >
+                      0
+                      ? stat.topMenus
+                          .map(
+                            (menu) =>
+                              `${menu.menuName} ${menu.count}`
+                          )
+                          .join(' · ')
+                      : '오늘 주문 데이터가 없습니다.'}
 
-                <p className="admin-menu-summary">
+                  </p>
 
-                  {Array.isArray(
-                    stat.topMenus
-                  ) &&
-                  stat.topMenus.length > 0
-                    ? stat.topMenus
-                        .map(
-                          (menu) =>
-                            `${menu.menuName} ${menu.count}`
-                        )
-                        .join(' · ')
-                    : '오늘 주문 데이터가 없습니다.'}
+                </article>
 
-                </p>
-
-              </article>
-
-            ))}
+              )
+            )}
 
           </div>
 
@@ -588,9 +560,9 @@ function AdminDashboard({
 
       </main>
 
-      {/* =====================================
-          REGENERATE MODAL
-      ===================================== */}
+      {/* =========================
+          현장 번호 재발급 모달
+      ========================= */}
 
       {showRegenerateModal && (
 
@@ -599,11 +571,13 @@ function AdminDashboard({
           <div className="admin-confirm-modal">
 
             <h2>
-              현장 번호를 재발급하시겠어요?
+              현장 번호를
+              재발급하시겠어요?
             </h2>
 
             <p>
-              아직 도착 인증하지 않은 사용자는
+              아직 도착 인증하지 않은
+              사용자는
               <br />
               새 번호를 입력해야 합니다.
             </p>
@@ -613,10 +587,12 @@ function AdminDashboard({
               <button
                 type="button"
                 className="admin-modal-cancel"
-                onClick={() =>
-                  setShowRegenerateModal(false)
-                }
                 disabled={regenerating}
+                onClick={() =>
+                  setShowRegenerateModal(
+                    false
+                  )
+                }
               >
                 취소
               </button>
@@ -624,10 +600,10 @@ function AdminDashboard({
               <button
                 type="button"
                 className="admin-modal-confirm"
+                disabled={regenerating}
                 onClick={
                   handleRegenerate
                 }
-                disabled={regenerating}
               >
                 {regenerating
                   ? '재발급 중...'
