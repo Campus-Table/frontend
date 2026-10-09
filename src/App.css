@@ -6781,3 +6781,1774 @@
   cursor: pointer;
 }  
 
+/* =========================================
+   선주문 완료 화면
+========================================= */
+
+.order-complete-page {
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.order-complete-content {
+  flex: 1;
+  padding: 70px 24px 150px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================
+   완료 아이콘 / 제목
+========================================= */
+
+.complete-message {
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.complete-check-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.complete-check {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #4052e8;
+  color: #ffffff;
+
+  font-size: 27px;
+  font-weight: 700;
+
+  box-shadow:
+    0 0 0 12px rgba(64, 82, 232, 0.08);
+}
+
+.complete-message h1 {
+  margin: 0;
+
+  font-size: 25px;
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.6px;
+}
+
+.complete-message p {
+  margin: 9px 0 0;
+
+  font-size: 14px;
+  color: #8a94a6;
+}
+
+
+/* =========================================
+   주문 메뉴 카드
+========================================= */
+
+.complete-order-card {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 16px;
+
+  border: 1px solid #e6eaf1;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 3px 10px rgba(17, 24, 39, 0.04);
+
+  margin-bottom: 15px;
+}
+
+.complete-menu-image {
+  width: 72px;
+  height: 72px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+
+  border-radius: 15px;
+}
+
+.complete-menu-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f3f5f9;
+
+  font-size: 32px;
+}
+
+.complete-menu-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.complete-store-name {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 12px;
+  font-weight: 700;
+  color: #4052e8;
+}
+
+.complete-menu-info h3 {
+  margin: 0 0 9px;
+
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.complete-menu-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.complete-menu-bottom span {
+  font-size: 12px;
+  color: #9aa3b2;
+}
+
+.complete-menu-bottom strong {
+  font-size: 14px;
+  color: #111827;
+}
+
+
+/* =========================================
+   조리 시작 전 안내
+========================================= */
+
+.cooking-notice-card {
+  padding: 17px;
+
+  border: 1px solid #dce4ff;
+  border-radius: 18px;
+
+  background: #f5f8ff;
+
+  margin-bottom: 18px;
+}
+
+.cooking-notice-top {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 9px;
+}
+
+.cooking-clock {
+  color: #4052e8;
+  font-size: 17px;
+}
+
+.cooking-notice-top strong {
+  font-size: 15px;
+  font-weight: 800;
+  color: #28344f;
+}
+
+.cooking-notice-card p {
+  margin: 0 0 0 26px;
+
+  font-size: 12px;
+  line-height: 1.65;
+  color: #71809a;
+}
+
+
+/* =========================================
+   방문 안내
+========================================= */
+
+.visit-notice {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 8px;
+
+  padding: 0 4px;
+}
+
+.visit-notice-icon {
+  color: #73809a;
+  font-size: 13px;
+}
+
+.visit-notice p {
+  margin: 0;
+
+  font-size: 12px;
+  line-height: 1.5;
+  color: #8a94a6;
+}
+
+
+/* =========================================
+   하단 버튼
+========================================= */
+
+.complete-bottom {
+  position: fixed;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding:
+    12px
+    24px
+    calc(16px + env(safe-area-inset-bottom));
+
+  background: #ffffff;
+
+  border-top: 1px solid #f0f1f5;
+
+  z-index: 20;
+}
+
+.complete-cancel-button {
+  display: block;
+
+  margin: 0 auto 18px;
+
+  border: 0;
+  background: transparent;
+
+  color: #98a1b3;
+
+  font-size: 14px;
+  text-decoration: underline;
+
+  cursor: pointer;
+}
+
+.complete-verify-button {
+  width: 100%;
+  height: 58px;
+
+  border: 0;
+  border-radius: 14px;
+
+  background: #4052e8;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(64, 82, 232, 0.2);
+}
+
+.complete-verify-button:active {
+  transform: scale(0.99);
+}
+
+
+/* =========================================
+   주문 없음
+========================================= */
+
+.order-complete-empty {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  font-size: 15px;
+  color: #8a94a6;
+
+  text-align: center;
+}
+
+/* =========================================================
+   주문 / 마일리지 / 주문완료 화면 공통 모바일 레이아웃 수정
+   ========================================================= */
+
+.order-payment-page,
+.mileage-charge-page,
+.mileage-complete-page,
+.order-complete-page {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: #ffffff;
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* =========================================================
+   주문 결제 화면
+   ========================================================= */
+
+.order-payment-page {
+  padding: 0 20px 110px;
+}
+
+.payment-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.payment-back {
+  border: none;
+  background: transparent;
+  font-size: 30px;
+  color: #334155;
+  padding: 0;
+  cursor: pointer;
+}
+
+.payment-order-section {
+  margin-top: 5px;
+}
+
+.payment-section-title {
+  margin: 0 0 14px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.payment-menu-card {
+  width: 100%;
+  min-height: 104px;
+  padding: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.payment-menu-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.payment-menu-image,
+.payment-menu-placeholder {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.payment-menu-placeholder {
+  background: #f3f5f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+
+.payment-menu-info {
+  min-width: 0;
+}
+
+.payment-store-name {
+  color: #3157f5;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.payment-menu-info h3 {
+  margin: 5px 0;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.payment-menu-info p {
+  margin: 0;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.payment-menu-price {
+  font-size: 15px;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.mileage-payment-section {
+  margin-top: 32px;
+}
+
+.mileage-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.mileage-title-row .payment-section-title {
+  margin: 0;
+}
+
+.mileage-charge-link {
+  border: none;
+  background: transparent;
+  color: #3157f5;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mileage-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 18px 16px;
+  box-sizing: border-box;
+}
+
+.mileage-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 42px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.mileage-row strong {
+  color: #0f172a;
+}
+
+.mileage-row .payment-minus {
+  color: #3157f5;
+}
+
+.payment-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 4px 0 12px;
+}
+
+.payment-result {
+  background: #fff1f1;
+  padding: 0 14px;
+  border-radius: 12px;
+  color: #d92d20;
+  font-weight: 700;
+}
+
+.payment-result strong {
+  font-size: 20px;
+  color: #d92d20;
+}
+
+.mileage-error {
+  margin-top: 14px;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #fff1f1;
+  color: #e5484d;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.mileage-charge-button {
+  width: 100%;
+  height: 48px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #eef3ff;
+  color: #3157f5;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.payment-notice {
+  margin-top: 28px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  display: flex;
+  gap: 10px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.payment-notice p {
+  margin: 0;
+}
+
+.payment-notice-icon {
+  color: #3157f5;
+}
+
+.payment-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  padding: 12px 20px 16px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-top: 1px solid #eef0f4;
+  z-index: 20;
+}
+
+.payment-submit {
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: #3157f5;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.payment-submit:disabled {
+  background: #aebaf8;
+  cursor: default;
+}
+
+
+/* =========================================================
+   마일리지 충전 금액 선택 화면
+   ========================================================= */
+
+.mileage-charge-page {
+  padding: 0 20px 100px;
+  background: #f8f9fb;
+}
+
+.mileage-charge-page header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.mileage-charge-page .payment-back {
+  font-size: 30px;
+}
+
+.charge-balance-card {
+  background: #3f4ee8;
+  border-radius: 18px;
+  padding: 20px;
+  color: white;
+  margin-bottom: 28px;
+}
+
+.charge-balance-card span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 7px;
+}
+
+.charge-balance-card strong {
+  font-size: 28px;
+}
+
+.charge-section-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0 0 14px;
+  color: #111827;
+}
+
+.charge-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.charge-option {
+  height: 56px;
+  border: 1px solid #e1e5ec;
+  border-radius: 13px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.charge-option.selected {
+  border: 2px solid #3157f5;
+  color: #3157f5;
+  background: #f5f7ff;
+}
+
+.charge-range {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.charge-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  box-sizing: border-box;
+  padding: 12px 20px 16px;
+  background: white;
+  z-index: 20;
+}
+
+.charge-submit {
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: #3f4ee8;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   마일리지 충전 완료
+   ========================================================= */
+
+.mileage-complete-page {
+  padding: 90px 20px 30px;
+  background: #f8f9fb;
+}
+
+.mileage-complete-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mileage-complete-check {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #3f4ee8;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  margin-bottom: 26px;
+}
+
+.mileage-complete-content h1 {
+  margin: 0 0 30px;
+  font-size: 22px;
+  color: #0f172a;
+  text-align: center;
+}
+
+.mileage-complete-card {
+  width: 100%;
+  background: white;
+  border-radius: 18px;
+  padding: 10px 16px;
+  box-sizing: border-box;
+}
+
+.mileage-complete-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 54px;
+  font-size: 14px;
+}
+
+.mileage-complete-row + .mileage-complete-row {
+  border-top: 1px solid #e5e7eb;
+}
+
+.mileage-complete-row span {
+  color: #94a3b8;
+}
+
+.mileage-complete-row strong {
+  color: #0f172a;
+}
+
+.mileage-complete-row .charge-plus {
+  color: #3157f5;
+}
+
+.mileage-complete-confirm {
+  width: 100%;
+  height: 54px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 14px;
+  background: #3f4ee8;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   선주문 완료 화면
+   ========================================================= */
+
+.order-complete-page {
+  padding: 0 20px 170px;
+}
+
+.order-complete-header {
+  display: none;
+}
+
+.order-complete-content {
+  width: 100%;
+  padding-top: 65px;
+  box-sizing: border-box;
+}
+
+.complete-message {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.complete-check-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.complete-check {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #3f4ee8;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  box-shadow: 0 0 0 10px #eef2ff;
+  margin-bottom: 28px;
+}
+
+.complete-message h1 {
+  font-size: 22px;
+  margin: 0 0 8px;
+  color: #0f172a;
+}
+
+.complete-message p {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.complete-order-card {
+  width: 100%;
+  min-height: 100px;
+  padding: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.complete-menu-image {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #f3f5f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+}
+
+.complete-menu-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.complete-store-name {
+  color: #3157f5;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.complete-menu-info h3 {
+  margin: 4px 0 8px;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.complete-menu-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.complete-menu-bottom span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.complete-menu-bottom strong {
+  font-size: 14px;
+}
+
+.cooking-notice-card {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px solid #dbe4ff;
+  border-radius: 16px;
+  background: #f2f6ff;
+}
+
+.cooking-notice-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.cooking-clock {
+  color: #3157f5;
+}
+
+.cooking-notice-card p {
+  margin: 10px 0 0 25px;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.visit-notice {
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.visit-notice p {
+  margin: 0;
+}
+
+.complete-bottom {
+  position: fixed;
+  bottom: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  padding: 8px 20px;
+  box-sizing: border-box;
+  background: white;
+  z-index: 25;
+}
+
+.complete-verify-button {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 13px;
+  background: #3f4ee8;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   주문 취소 버튼
+   ========================================================= */
+
+.complete-cancel-button {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 145px;
+
+  width: 100%;
+  max-width: 390px;
+
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+
+  z-index: 26;
+}
+
+
+/* =========================================================
+   모바일에서는 전체 폭 사용
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .order-payment-page,
+  .mileage-charge-page,
+  .mileage-complete-page,
+  .order-complete-page {
+    max-width: none;
+  }
+
+  .payment-bottom,
+  .charge-bottom,
+  .complete-bottom {
+    max-width: none;
+  }
+} 
+/* =========================================================
+   OrderComplete 하단 버튼 최종 위치 수정
+   ========================================================= */
+
+.complete-bottom-area {
+  position: fixed;
+  left: 50%;
+  bottom: 76px;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 430px;
+
+  background: #ffffff;
+  box-sizing: border-box;
+
+  padding: 10px 20px 12px;
+
+  z-index: 30;
+}
+
+/* 주문 취소 */
+
+.complete-cancel-button {
+  position: static;
+  transform: none;
+
+  display: block;
+
+  width: 100%;
+  max-width: none;
+
+  margin: 0 0 10px;
+
+  border: none;
+  background: transparent;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  text-align: center;
+  text-decoration: underline;
+
+  cursor: pointer;
+}
+
+/* 현장 인증 버튼 영역 */
+
+.complete-bottom {
+  position: static;
+  transform: none;
+
+  width: 100%;
+  max-width: none;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+}
+
+/* 현장 인증 버튼 */
+
+.complete-verify-button {
+  width: 100%;
+  height: 52px;
+
+  border: none;
+  border-radius: 13px;
+
+  background: #3f4ee8;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* 모바일 */
+
+@media (max-width: 430px) {
+  .complete-bottom-area {
+    max-width: none;
+  }
+} 
+
+/* =========================================================
+   주문 취소 확인 모달
+   ========================================================= */
+
+.cancel-modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  background: rgba(15, 23, 42, 0.48);
+
+  z-index: 9999;
+}
+
+/* 하단 모달 */
+
+.cancel-modal {
+  width: calc(100% - 32px);
+  max-width: 390px;
+
+  margin-bottom: 16px;
+  padding: 24px 20px 16px;
+
+  background: #ffffff;
+
+  border-radius: 24px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 -4px 20px rgba(15, 23, 42, 0.08),
+    0 10px 30px rgba(15, 23, 42, 0.12);
+
+  animation: cancelModalUp 0.22s ease-out;
+}
+
+/* 제목 영역 */
+
+.cancel-modal-text {
+  margin-bottom: 20px;
+}
+
+.cancel-modal-text h2 {
+  margin: 0 0 10px;
+
+  color: #0f172a;
+
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.cancel-modal-text p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* 계속 주문하기 */
+
+.cancel-continue-button {
+  width: 100%;
+  height: 48px;
+
+  margin-bottom: 8px;
+
+  border: none;
+  border-radius: 13px;
+
+  background: #f1f5ff;
+
+  color: #5264d9;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+/* 실제 취소 */
+
+.cancel-confirm-button {
+  width: 100%;
+  height: 44px;
+
+  border: none;
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+/* 눌렀을 때 */
+
+.cancel-continue-button:active,
+.cancel-confirm-button:active {
+  opacity: 0.7;
+}
+
+/* 아래에서 올라오는 효과 */
+
+@keyframes cancelModalUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}  
+
+/* =========================================================
+   주문 취소 완료
+   ========================================================= */
+
+.order-cancel-complete-page {
+  width: 100%;
+  min-height: calc(100vh - 76px);
+
+  background: #ffffff;
+
+  display: flex;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+.cancel-complete-content {
+  width: 100%;
+  max-width: 430px;
+
+  padding: 125px 24px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+}
+
+/* 아이콘 */
+
+.cancel-complete-icon {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 28px;
+
+  border-radius: 50%;
+
+  background: #f0f3f8;
+
+  color: #718096;
+
+  font-size: 30px;
+  font-weight: 600;
+}
+
+/* 제목 */
+
+.cancel-complete-content h1 {
+  margin: 0 0 12px;
+
+  color: #0f172a;
+
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.3;
+
+  text-align: center;
+}
+
+/* 환불 설명 */
+
+.cancel-complete-description {
+  margin: 0;
+
+  color: #7c8ba1;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.65;
+
+  text-align: center;
+}
+
+/* 홈으로 버튼 */
+
+.cancel-complete-home-button {
+  width: 100%;
+  height: 56px;
+
+  margin-top: 38px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #4453e8;
+
+  color: #ffffff;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(68, 83, 232, 0.18);
+}
+
+.cancel-complete-home-button:active {
+  transform: scale(0.99);
+} 
+
+/* ========================================
+   주문 취소 완료 화면
+   ======================================== */
+
+.order-cancel-complete-page {
+  width: 100%;
+  min-height: calc(100vh - 76px);
+
+  display: flex;
+  justify-content: center;
+
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.cancel-complete-content {
+  width: 100%;
+  max-width: 430px;
+
+  padding: 125px 24px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+}
+
+
+/* 취소 완료 아이콘 */
+
+.cancel-complete-icon {
+  width: 72px;
+  height: 72px;
+
+  margin-bottom: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f0f3f8;
+  color: #718096;
+
+  font-size: 30px;
+  font-weight: 600;
+}
+
+
+/* 주문이 취소됐어요 */
+
+.cancel-complete-content h1 {
+  margin: 0 0 12px;
+
+  color: #0f172a;
+
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.3;
+
+  text-align: center;
+}
+
+
+/* 환불 안내 */
+
+.cancel-complete-description {
+  margin: 0;
+
+  color: #7c8ba1;
+
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.65;
+
+  text-align: center;
+}
+
+
+/* 홈으로 버튼 */
+
+.cancel-complete-home-button {
+  width: 100%;
+  height: 56px;
+
+  margin-top: 38px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #4453e8;
+  color: #ffffff;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 20px rgba(68, 83, 232, 0.18);
+}
+
+.cancel-complete-home-button:active {
+  transform: scale(0.99);
+} 
+
+/* =========================================================
+   학생 주문 / 마일리지 전체 화면 폭 최종 통일
+   ========================================================= */
+
+.order-payment-page,
+.mileage-charge-page,
+.mileage-payment-page,
+.mileage-complete-page,
+.charge-complete-page,
+.order-complete-page,
+.order-cancel-complete-page,
+.arrival-verify-page,
+.waiting-page {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+
+  margin: 0 auto;
+
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   마일리지 결제 화면
+   ========================================================= */
+
+.mileage-payment-page {
+  background: #f8f9fb;
+}
+
+
+/* =========================================================
+   마일리지 충전 완료 화면
+   ========================================================= */
+
+.mileage-complete-page,
+.charge-complete-page {
+  background: #f8f9fb;
+}
+
+
+/* =========================================================
+   모바일에서는 기기 화면 전체 폭 사용
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+  .order-payment-page,
+  .mileage-charge-page,
+  .mileage-payment-page,
+  .mileage-complete-page,
+  .charge-complete-page,
+  .order-complete-page,
+  .order-cancel-complete-page,
+  .arrival-verify-page,
+  .waiting-page {
+    max-width: none;
+  }
+
+} 
+
+/* =========================================================
+   음식 준비 완료 화면
+   ========================================================= */
+
+.food-ready-page {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+
+  margin: 0 auto;
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.food-ready-content {
+  width: 100%;
+
+  padding: 72px 24px 120px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* =========================================================
+   준비 완료 메시지
+   ========================================================= */
+
+.food-ready-message {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+
+/* 아이콘 바깥 영역 */
+
+.food-ready-icon-wrap {
+  width: 78px;
+  height: 78px;
+
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eef3ff;
+}
+
+
+/* 아이콘 */
+
+.food-ready-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #3154e8;
+
+  font-size: 34px;
+  font-weight: 700;
+}
+
+
+/* READY TO PICK UP */
+
+.food-ready-label {
+  display: inline-flex;
+
+  margin-bottom: 10px;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  background: #eef3ff;
+  color: #3154e8;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+/* 음식이 나왔어요 */
+
+.food-ready-message h1 {
+  margin: 0 0 12px;
+
+  color: #111827;
+
+  font-size: 29px;
+  line-height: 1.3;
+  font-weight: 800;
+
+  letter-spacing: -0.8px;
+}
+
+
+/* 설명 */
+
+.food-ready-message p {
+  margin: 0;
+
+  color: #7b879b;
+
+  font-size: 15px;
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   대기번호 카드
+   ========================================================= */
+
+.food-ready-number-card {
+  width: 100%;
+
+  margin-top: 36px;
+  padding: 24px 24px 22px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e8ecf3;
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.05);
+}
+
+
+/* 가게명 */
+
+.food-ready-store {
+  margin-bottom: 22px;
+
+  color: #64748b;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* 대기번호 글씨 */
+
+.food-ready-number-label {
+  margin-bottom: 5px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* 013번 */
+
+.food-ready-number {
+  color: #3154e8;
+
+  font-size: 52px;
+  line-height: 1.15;
+  font-weight: 800;
+
+  letter-spacing: -1px;
+}
+
+.food-ready-number span {
+  margin-left: 4px;
+
+  color: #3154e8;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
+/* 구분선 */
+
+.food-ready-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 22px 0 18px;
+
+  background: #edf0f5;
+}
+
+
+/* 메뉴 */
+
+.food-ready-menu {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.food-ready-menu span {
+  color: #94a3b8;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.food-ready-menu strong {
+  color: #1e293b;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   수령대 안내
+   ========================================================= */
+
+.food-ready-guide {
+  width: 100%;
+
+  margin-top: 16px;
+  padding: 16px 18px;
+
+  box-sizing: border-box;
+
+  border-radius: 14px;
+
+  background: #f5f7ff;
+  color: #5365d9;
+
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   홈으로 돌아가기
+   ========================================================= */
+
+.food-ready-home-button {
+  width: 100%;
+  height: 56px;
+
+  margin-top: 26px;
+
+  border: none;
+  border-radius: 15px;
+
+  background: #3154e8;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(49, 84, 232, 0.18);
+}
+
+.food-ready-home-button:active {
+  transform: scale(0.99);
+}
+
+
+/* =========================================================
+   모바일
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+  .food-ready-page {
+    max-width: none;
+  }
+
+  .food-ready-content {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+} 
+
+
