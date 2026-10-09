@@ -65,10 +65,20 @@ function App() {
   // ========================================
 
   const [
-    page,
-    setPage,
-  ] = useState('onboarding')
+  page,
+  setPage,
+] = useState(() => {
+  const pathname = window.location.pathname
 
+  if (
+    pathname === '/mileage/success' ||
+    pathname === '/mileage/fail'
+  ) {
+    return 'mileagePayment'
+  }
+
+  return 'onboarding'
+})
   // ========================================
   // 로그인 사용자
   // ========================================
