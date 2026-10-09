@@ -1,25 +1,76 @@
 function FoodReady({
   order,
-  waitingNumber = 'A-013',
   onHome,
 }) {
+  // ========================================
+  // 주문 정보 없음
+  // ========================================
   if (!order) {
     return (
       <main className="food-ready-page">
+
         <div className="food-ready-empty">
           주문 정보를 불러올 수 없습니다.
         </div>
+
       </main>
     )
   }
 
+  // ========================================
+  // 가게 이름
+  // ========================================
   const storeName =
-    order.storeName || '경성카츠'
+    order.storeName ??
+    '가게'
 
-  const menuName =
-    order.menuName ||
-    order.name ||
-    '선택 메뉴'
+  // ========================================
+  // 서버 대기번호
+  //
+  // 서버:
+  // 2
+  //
+  // 화면:
+  // 002
+  // ========================================
+  const waitingNumber =
+    order.waitingNumber != null
+      ? String(
+          order.waitingNumber
+        ).padStart(
+          3,
+          '0'
+        )
+      : '---'
+
+  // ========================================
+  // 주문 메뉴
+  // ========================================
+  const items =
+    Array.isArray(
+      order.items
+    )
+      ? order.items
+      : []
+
+  const firstItem =
+    items[0]
+
+  const firstMenuName =
+    firstItem?.menuName ??
+    '주문 메뉴'
+
+  // ========================================
+  // 여러 메뉴일 경우
+  //
+  // 제육볶음 외 2개
+  // ========================================
+  const menuDisplayName =
+    items.length > 1
+      ? `${firstMenuName} 외 ${
+          items.length - 1
+        }개`
+      : firstMenuName
 
   return (
     <main className="food-ready-page">
@@ -32,9 +83,11 @@ function FoodReady({
         <section className="food-ready-message">
 
           <div className="food-ready-icon-wrap">
+
             <div className="food-ready-icon">
               ♧
             </div>
+
           </div>
 
           <span className="food-ready-label">
@@ -67,8 +120,13 @@ function FoodReady({
           </span>
 
           <div className="food-ready-number">
-            {waitingNumber.replace('A-', '')}
-            <span>번</span>
+
+            {waitingNumber}
+
+            <span>
+              번
+            </span>
+
           </div>
 
           <div className="food-ready-divider" />
@@ -80,7 +138,7 @@ function FoodReady({
             </span>
 
             <strong>
-              {menuName}
+              {menuDisplayName}
             </strong>
 
           </div>
@@ -91,7 +149,11 @@ function FoodReady({
             수령 안내
         ===================================== */}
         <div className="food-ready-guide">
-          {storeName} 수령대에서 대기번호를 보여주세요.
+
+          {storeName} 수령대에서
+          대기번호 {waitingNumber}번을
+          확인해주세요.
+
         </div>
 
         {/* =====================================
