@@ -1,10 +1,10 @@
-
 import { useState } from 'react'
 import './App.css'
 
 // ========================================
 // 학생 화면
 // ========================================
+
 import Onboarding from './pages/Onboarding'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -20,6 +20,7 @@ import Notifications from './pages/Notifications'
 // ========================================
 // 마일리지 충전 화면
 // ========================================
+
 import MileageCharge from './pages/MileageCharge'
 import MileagePayment from './pages/MileagePayment'
 import MileageChargeComplete from './pages/MileageChargeComplete'
@@ -27,6 +28,7 @@ import MileageChargeComplete from './pages/MileageChargeComplete'
 // ========================================
 // 관리자 화면
 // ========================================
+
 import AdminDashboard from './pages/AdminDashboard'
 import AdminWaiting from './pages/AdminWaiting'
 import AdminStats from './pages/AdminStats'
@@ -35,6 +37,7 @@ import AdminOccupancy from './pages/AdminOccupancy'
 // ========================================
 // 하단 네비게이션
 // ========================================
+
 import BottomNav from './components/BottomNav'
 import AdminBottomNav from './components/AdminBottomNav'
 
@@ -47,13 +50,14 @@ import AdminBottomNav from './components/AdminBottomNav'
 // 추후 로그인 권한(USER / ADMIN)에 따라
 // 자동 분기하도록 변경 예정
 // ========================================
-const ADMIN_PREVIEW = false
+
+const ADMIN_PREVIEW = true
 
 function App() {
-
   // ========================================
   // 현재 페이지
   // ========================================
+
   const [page, setPage] = useState(
     ADMIN_PREVIEW
       ? 'adminDashboard'
@@ -63,6 +67,7 @@ function App() {
   // ========================================
   // 선택한 가게 / 주문
   // ========================================
+
   const [selectedStore, setSelectedStore] = useState(null)
   const [selectedOrder, setSelectedOrder] = useState(null)
 
@@ -72,6 +77,7 @@ function App() {
   // 현재는 화면 구현을 위한 임시 데이터
   // 추후 서버 API 값으로 교체
   // ========================================
+
   const [mileage, setMileage] = useState(4500)
 
   // 사용자가 선택한 충전 금액
@@ -84,17 +90,18 @@ function App() {
   // paid    = 결제 완료 / 현장 인증 전
   // waiting = 현장 인증 완료 / 조리 중
   // ========================================
+
   const [orderStatus, setOrderStatus] = useState('none')
 
   // ========================================
   // 학생 하단 네비게이션
   // ========================================
+
   const goHome = () => {
     setPage('home')
   }
 
   const goOrders = () => {
-
     // 현장 인증 완료 / 대기번호 확인
     if (
       selectedOrder &&
@@ -124,6 +131,7 @@ function App() {
   // ========================================
   // 관리자 하단 네비게이션
   // ========================================
+
   const goAdminDashboard = () => {
     setPage('adminDashboard')
   }
@@ -138,8 +146,8 @@ function App() {
 
   // ========================================
   // 관리자 인원 현황 관리
-  // GitHub 팀원 코드 추가
   // ========================================
+
   const goAdminOccupancy = () => {
     setPage('adminOccupancy')
   }
@@ -147,11 +155,13 @@ function App() {
   // ========================================
   // 현재 페이지 렌더링
   // ========================================
+
   let content
 
   // ========================================
   // 관리자 대시보드
   // ========================================
+
   if (page === 'adminDashboard') {
     content = (
       <AdminDashboard
@@ -164,6 +174,7 @@ function App() {
   // ========================================
   // 관리자 웨이팅
   // ========================================
+
   else if (page === 'adminWaiting') {
     content = (
       <AdminWaiting />
@@ -173,6 +184,7 @@ function App() {
   // ========================================
   // 관리자 통계
   // ========================================
+
   else if (page === 'adminStats') {
     content = (
       <AdminStats />
@@ -181,8 +193,8 @@ function App() {
 
   // ========================================
   // 관리자 인원 현황
-  // GitHub 팀원 코드 추가
   // ========================================
+
   else if (page === 'adminOccupancy') {
     content = (
       <AdminOccupancy
@@ -194,6 +206,7 @@ function App() {
   // ========================================
   // 로그인
   // ========================================
+
   else if (page === 'login') {
     content = (
       <Login
@@ -208,6 +221,7 @@ function App() {
   // ========================================
   // 회원가입
   // ========================================
+
   else if (page === 'signup') {
     content = (
       <Signup
@@ -220,6 +234,7 @@ function App() {
   // ========================================
   // 비밀번호 찾기 / 재설정
   // ========================================
+
   else if (page === 'forgotPassword') {
     content = (
       <ForgotPassword
@@ -232,6 +247,7 @@ function App() {
   // ========================================
   // 학생 홈
   // ========================================
+
   else if (page === 'home') {
     content = (
       <StudentHome
@@ -248,6 +264,7 @@ function App() {
   // ========================================
   // 가게 상세 / 메뉴 선택
   // ========================================
+
   else if (page === 'store') {
     content = (
       <StoreDetail
@@ -258,12 +275,13 @@ function App() {
         }}
 
         onOrder={(order) => {
-
           // 여기서는 결제하지 않음
           // 선택한 메뉴만 저장
+
           setSelectedOrder(order)
 
           // 주문 결제 화면으로 이동
+
           setPage('orderPayment')
         }}
       />
@@ -273,6 +291,7 @@ function App() {
   // ========================================
   // 주문 마일리지 결제
   // ========================================
+
   else if (page === 'orderPayment') {
     content = (
       <OrderPayment
@@ -280,18 +299,20 @@ function App() {
         mileage={mileage}
 
         // 뒤로가기 -> 가게 상세
+
         onBack={() => {
           setPage('store')
         }}
 
         // 마일리지 충전하기
+
         onCharge={() => {
           setPage('mileageCharge')
         }}
 
         // 주문 결제
-        onPayment={() => {
 
+        onPayment={() => {
           if (!selectedOrder) {
             return
           }
@@ -300,21 +321,25 @@ function App() {
             Number(selectedOrder.price || 0)
 
           // 마일리지 부족
+
           if (mileage < price) {
             alert('마일리지가 부족합니다.')
             return
           }
 
           // 마일리지 차감
+
           setMileage(
             (previousMileage) =>
               previousMileage - price
           )
 
           // 주문 상태 변경
+
           setOrderStatus('paid')
 
           // 주문 완료 화면
+
           setPage('orderComplete')
         }}
       />
@@ -324,23 +349,27 @@ function App() {
   // ========================================
   // 마일리지 충전 금액 선택
   // ========================================
+
   else if (page === 'mileageCharge') {
     content = (
       <MileageCharge
         currentMileage={mileage}
 
         // 뒤로가기 -> 주문 결제
+
         onBack={() => {
           setPage('orderPayment')
         }}
 
         // 충전 금액 선택 완료
-        onCharge={(amount) => {
 
+        onCharge={(amount) => {
           // 선택한 금액 저장
+
           setChargeAmount(amount)
 
           // 토스 결제 화면으로 이동
+
           setPage('mileagePayment')
         }}
       />
@@ -350,6 +379,7 @@ function App() {
   // ========================================
   // 토스 결제 진행
   // ========================================
+
   else if (page === 'mileagePayment') {
     content = (
       <MileagePayment
@@ -358,19 +388,22 @@ function App() {
 
         // 현재는 실제 토스 연동 전
         // 결제 성공을 화면상으로 시연
-        onPaymentComplete={() => {
 
+        onPaymentComplete={() => {
           // 마일리지 충전
+
           setMileage(
             (previousMileage) =>
               previousMileage + chargeAmount
           )
 
           // 충전 완료 화면
+
           setPage('mileageChargeComplete')
         }}
 
         // 결제 취소 / 실패
+
         onCancel={() => {
           setPage('mileageCharge')
         }}
@@ -381,11 +414,12 @@ function App() {
   // ========================================
   // 마일리지 충전 완료
   // ========================================
+
   else if (page === 'mileageChargeComplete') {
     content = (
       <MileageChargeComplete
-
         // 충전 전 마일리지
+
         previousMileage={
           mileage - chargeAmount
         }
@@ -393,6 +427,7 @@ function App() {
         chargeAmount={chargeAmount}
 
         // 확인 -> 원래 주문 결제 화면
+
         onConfirm={() => {
           setPage('orderPayment')
         }}
@@ -403,6 +438,7 @@ function App() {
   // ========================================
   // 주문 완료
   // ========================================
+
   else if (page === 'orderComplete') {
     content = (
       <OrderComplete
@@ -418,6 +454,7 @@ function App() {
   // ========================================
   // 현장 방문 인증
   // ========================================
+
   else if (page === 'arrivalVerify') {
     content = (
       <ArrivalVerify
@@ -426,7 +463,6 @@ function App() {
         }}
 
         onSuccess={() => {
-
           setOrderStatus('waiting')
 
           setPage('waiting')
@@ -438,6 +474,7 @@ function App() {
   // ========================================
   // 대기번호 / 조리 중
   // ========================================
+
   else if (page === 'waiting') {
     content = (
       <Waiting
@@ -449,6 +486,7 @@ function App() {
   // ========================================
   // 알림
   // ========================================
+
   else if (page === 'notifications') {
     content = (
       <Notifications
@@ -461,6 +499,7 @@ function App() {
   // ========================================
   // 처음 실행 -> 온보딩
   // ========================================
+
   else {
     content = (
       <Onboarding
@@ -474,6 +513,7 @@ function App() {
   // ========================================
   // 관리자 페이지인지 확인
   // ========================================
+
   const isAdminPage =
     page === 'adminDashboard' ||
     page === 'adminWaiting' ||
@@ -493,6 +533,7 @@ function App() {
   // - 토스 결제
   // - 충전 완료
   // ========================================
+
   const showBottomNav =
     page !== 'onboarding' &&
     page !== 'login' &&
@@ -508,6 +549,7 @@ function App() {
   //
   // 관리자 인원 현황 화면에서는 숨김
   // ========================================
+
   const showAdminBottomNav =
     isAdminPage &&
     page !== 'adminOccupancy'
@@ -515,9 +557,11 @@ function App() {
   // ========================================
   // 학생 하단 네비게이션 활성 메뉴
   // ========================================
+
   let activeNav = 'orders'
 
   // 홈 / 가게 상세
+
   if (
     page === 'home' ||
     page === 'store'
@@ -526,11 +570,13 @@ function App() {
   }
 
   // 알림
+
   if (page === 'notifications') {
     activeNav = 'notifications'
   }
 
   // 주문 관련 화면
+
   if (
     page === 'orderPayment' ||
     page === 'mileageCharge' ||
@@ -546,6 +592,7 @@ function App() {
   // ========================================
   // 관리자 하단 네비게이션 활성 메뉴
   // ========================================
+
   let activeAdminNav = 'dashboard'
 
   if (page === 'adminWaiting') {
@@ -559,6 +606,7 @@ function App() {
   // ========================================
   // 최종 화면 출력
   // ========================================
+
   return (
     <>
       <div
@@ -595,5 +643,3 @@ function App() {
 }
 
 export default App
-
-
