@@ -16,10 +16,11 @@ import Notifications from './pages/Notifications'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminWaiting from './pages/AdminWaiting'
 import AdminStats from './pages/AdminStats'
+import AdminOccupancy from './pages/AdminOccupancy'
 
 import BottomNav from './components/BottomNav'
 
-// 관리자 하단 네비게이션 추가
+// 관리자 하단 네비게이션
 import AdminBottomNav from './components/AdminBottomNav'
 
 // =========================
@@ -27,8 +28,10 @@ import AdminBottomNav from './components/AdminBottomNav'
 //
 // true  → 관리자 화면부터 시작
 // false → 기존 학생 서비스 그대로 시작
+//
+// 실제 role 로그인 연동 후 제거 예정
 // =========================
-const ADMIN_PREVIEW = false
+const ADMIN_PREVIEW = true
 
 function App() {
   const [page, setPage] = useState(
@@ -92,6 +95,14 @@ function App() {
   }
 
   // =========================
+  // 관리자 인원 현황 관리
+  // =========================
+
+  const goAdminOccupancy = () => {
+    setPage('adminOccupancy')
+  }
+
+  // =========================
   // 현재 페이지
   // =========================
 
@@ -105,6 +116,7 @@ function App() {
     content = (
       <AdminDashboard
         onWaiting={goAdminWaiting}
+        onOccupancy={goAdminOccupancy}
       />
     )
   }
@@ -121,8 +133,17 @@ function App() {
     )
   }
 
+  else if (page === 'adminOccupancy') {
+    content = (
+      <AdminOccupancy
+        onBack={() => setPage('adminDashboard')}
+      />
+    )
+  }
+
   // =========================
   // 학생 화면
+  // 아래부터 기존 코드 그대로
   // =========================
 
   // 로그인
@@ -240,7 +261,20 @@ function App() {
   const isAdminPage =
     page === 'adminDashboard' ||
     page === 'adminWaiting' ||
-    page === 'adminStats'
+    page === 'adminStats' ||
+    page === 'adminOccupancy'
+
+  // =========================
+  // 관리자 하단 네비게이션 표시 여부
+  //
+  // AdminOccupancy는 디자인상
+  // 뒤로가기 중심의 별도 화면이므로
+  // 하단 네비게이션을 숨김
+  // =========================
+
+  const showAdminBottomNav =
+    isAdminPage &&
+    page !== 'adminOccupancy'
 
   // =========================
   // 로그인 이후 항상 하단바 표시
@@ -307,7 +341,7 @@ function App() {
       )}
 
       {/* 관리자 하단 네비게이션 */}
-      {isAdminPage && (
+      {showAdminBottomNav && (
         <AdminBottomNav
           active={activeAdminNav}
           onDashboard={goAdminDashboard}
