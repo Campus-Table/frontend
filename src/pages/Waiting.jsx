@@ -14,7 +14,7 @@ function Waiting({
   // 예상 준비시간
   // 8분 = 480초
   // ========================================
-  const totalSeconds = 8 * 60
+  const totalSeconds = 10
 
   const [remainingSeconds, setRemainingSeconds] =
     useState(totalSeconds)
