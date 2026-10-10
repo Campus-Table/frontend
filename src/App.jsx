@@ -16,6 +16,7 @@ import StoreDetail from './pages/StoreDetail'
 
 import OrderConfirm from './pages/OrderConfirm'
 import OrderComplete from './pages/OrderComplete'
+import MyOrders from './pages/MyOrders'
 import OrderCancelComplete from './pages/OrderCancelComplete'
 
 import ArrivalVerify from './pages/ArrivalVerify'
@@ -147,88 +148,88 @@ function App() {
   // 로컬 상태가 아니라 서버에서
   // 현재 진행 중인 주문을 다시 조회
   // ========================================
-
   const goOrders = async () => {
-    try {
-      const currentOrder =
-        await getCurrentOrder()
+  try {
+    const currentOrder =
+      await getCurrentOrder()
 
-      // 진행 중 주문 없음
-      if (!currentOrder) {
-        setSelectedOrder(null)
-        setPage('home')
-        return
-      }
-
-      setSelectedOrder(
-        currentOrder
-      )
-
-      // ====================================
-      // 결제 완료 / 현장 인증 전
-      // ====================================
-
-      if (
-        currentOrder.status ===
-        'PAID'
-      ) {
-        setPage(
-          'orderComplete'
-        )
-        return
-      }
-
-      // ====================================
-      // 도착 인증 완료 / 조리 중
-      // ====================================
-
-      if (
-        currentOrder.status ===
-        'COOKING'
-      ) {
-        setPage('waiting')
-        return
-      }
-
-      // ====================================
-      // 혹시 서버에서 RECEIVED가 반환된 경우
-      // ====================================
-
-      if (
-        currentOrder.status ===
-        'RECEIVED'
-      ) {
-        setPage('foodReady')
-        return
-      }
-
-      setPage('home')
-    } catch (error) {
-      console.error(
-        '현재 주문 조회 실패:',
-        error
-      )
-
-      if (
-        error.code ===
-        'UNAUTHORIZED'
-      ) {
-        alert(
-          '로그인이 만료되었습니다. 다시 로그인해주세요.'
-        )
-
-        setCurrentUser(null)
-        setSelectedOrder(null)
-        setPage('login')
-        return
-      }
-
-      alert(
-        error.message ||
-          '주문 정보를 불러오지 못했습니다.'
-      )
+    // 진행 중 주문 없음
+    if (!currentOrder) {
+      setSelectedOrder(null)
+      setPage('myOrders')
+      return
     }
+
+    setSelectedOrder(
+      currentOrder
+    )
+
+    // ====================================
+    // 결제 완료 / 현장 인증 전
+    // ====================================
+
+    if (
+      currentOrder.status ===
+      'PAID'
+    ) {
+      setPage(
+        'orderComplete'
+      )
+      return
+    }
+
+    // ====================================
+    // 도착 인증 완료 / 조리 중
+    // ====================================
+
+    if (
+      currentOrder.status ===
+      'COOKING'
+    ) {
+      setPage('waiting')
+      return
+    }
+
+    // ====================================
+    // 혹시 서버에서 RECEIVED가 반환된 경우
+    // ====================================
+
+    if (
+      currentOrder.status ===
+      'RECEIVED'
+    ) {
+      setPage('foodReady')
+      return
+    }
+
+    // 그 외 상태는 전체 주문내역으로
+    setPage('myOrders')
+  } catch (error) {
+    console.error(
+      '현재 주문 조회 실패:',
+      error
+    )
+
+    if (
+      error.code ===
+      'UNAUTHORIZED'
+    ) {
+      alert(
+        '로그인이 만료되었습니다. 다시 로그인해주세요.'
+      )
+
+      setCurrentUser(null)
+      setSelectedOrder(null)
+      setPage('login')
+      return
+    }
+
+    alert(
+      error.message ||
+        '주문 정보를 불러오지 못했습니다.'
+    )
   }
+}
 
   // ========================================
   // 알림
@@ -501,29 +502,32 @@ function App() {
   ) {
     content = (
       <OrderConfirm
-        order={
-          selectedOrder
-        }
+  order={
+    selectedOrder
+  }
 
-        onBack={() => {
-          setPage('store')
-        }}
+  onBack={() => {
+    setPage('store')
+  }}
 
-        onPay={(
-          createdOrder
-        ) => {
-          // 서버에서 반환한
-          // 실제 주문 정보 저장
+  onPay={(
+    createdOrder
+  ) => {
+    setSelectedOrder(
+      createdOrder
+    )
 
-          setSelectedOrder(
-            createdOrder
-          )
+    setPage(
+      'orderComplete'
+    )
+  }}
 
-          setPage(
-            'orderComplete'
-          )
-        }}
-      />
+  onCharge={() => {
+    setPage(
+      'mileageCharge'
+    )
+  }}
+/>
     )
   }
 
@@ -845,51 +849,91 @@ function App() {
   // ========================================
 
   else if (
-    page === 'foodReady'
-  ) {
-    content = (
-      <FoodReady
-        order={
-          selectedOrder
+  page === 'foodReady'
+) {
+  content = (
+    <FoodReady
+      order={
+        selectedOrder
+      }
+
+      onHome={() => {
+        setSelectedOrder(
+          null
+        )
+
+        setPage('home')
+      }}
+    />
+  )
+}
+
+// ========================================
+// 내 주문
+// ========================================
+
+else if (
+  page === 'myOrders'
+) {
+  content = (
+    <MyOrders
+      onBack={() => {
+        setPage('home')
+      }}
+
+      onSelectOrder={(order) => {
+        setSelectedOrder(order)
+
+        if (
+          order.status === 'PAID'
+        ) {
+          setPage('orderComplete')
+          return
         }
 
-        onHome={() => {
-          setSelectedOrder(
-            null
-          )
+        if (
+          order.status === 'COOKING'
+        ) {
+          setPage('waiting')
+          return
+        }
 
-          setPage('home')
-        }}
-      />
-    )
-  }
+        if (
+          order.status === 'RECEIVED'
+        ) {
+          setPage('foodReady')
+        }
+      }}
+    />
+  )
+}
 
-  // ========================================
-  // 알림
-  // ========================================
+// ========================================
+// 알림
+// ========================================
 
-  else if (
-    page ===
-    'notifications'
-  ) {
-    content = (
-      <Notifications />
-    )
-  }
+else if (
+  page ===
+  'notifications'
+) {
+  content = (
+    <Notifications />
+  )
+}
 
-  // ========================================
-  // 처음 실행
-  // ========================================
+// ========================================
+// 처음 실행
+// ========================================
 
-  else {
-    content = (
-      <Onboarding
-        onLogin={() => {
-          setPage('login')
-        }}
-      />
-    )
-  }
+else {
+  content = (
+    <Onboarding
+      onLogin={() => {
+        setPage('login')
+      }}
+    />
+  )
+}
 
   // ========================================
   // 관리자 페이지 여부

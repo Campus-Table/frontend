@@ -1,5 +1,4 @@
-const API_BASE_URL =
-  'https://api.campus-table.kro.kr'
+const API_BASE_URL = ''
 
 export class ApiError extends Error {
   constructor(

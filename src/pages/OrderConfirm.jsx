@@ -15,6 +15,7 @@ function OrderConfirm({
   order,
   onBack,
   onPay,
+  onCharge,
 }) {
   const [
     mileage,
@@ -77,7 +78,7 @@ function OrderConfirm({
         } else {
           setError(
             error.message ||
-              '마일리지 정보를 불러오지 못했습니다.'
+            '마일리지 정보를 불러오지 못했습니다.'
           )
         }
       } finally {
@@ -188,7 +189,7 @@ function OrderConfirm({
         mileage -
         Number(
           createdOrder?.totalPrice ??
-            orderPrice
+          orderPrice
         )
 
       setMileage(
@@ -260,7 +261,7 @@ function OrderConfirm({
         default:
           setError(
             error.message ||
-              '주문을 처리하지 못했습니다.'
+            '주문을 처리하지 못했습니다.'
           )
       }
     } finally {
@@ -392,24 +393,31 @@ function OrderConfirm({
                 {isLoadingMileage
                   ? '-'
                   : `${Math.max(
-                      remainingMileage,
-                      0
-                    ).toLocaleString()}P`}
+                    remainingMileage,
+                    0
+                  ).toLocaleString()}P`}
               </strong>
 
             </div>
 
-            {!isLoadingMileage &&
-              remainingMileage < 0 && (
-                <p className="mileage-warning">
-                  마일리지가 부족합니다.
-                </p>
-              )}
+            {!isLoadingMileage && (
+              <div className="mileage-charge-guide">
 
-            {error && (
-              <p className="mileage-warning">
-                {error}
-              </p>
+                {remainingMileage < 0 && (
+                  <p className="mileage-warning">
+                    마일리지가 부족합니다.
+                  </p>
+                )}
+
+                <button
+                  type="button"
+                  className="mileage-charge-button"
+                  onClick={onCharge}
+                >
+                  마일리지 충전하기
+                </button>
+
+              </div>
             )}
 
           </div>

@@ -8861,5 +8861,259 @@
   
   } 
   
-  
+  /* ========================================
+   MY ORDERS
+======================================== */
+
+.my-orders-page {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  background: #f7f9fc;
+  color: #071022;
+  text-align: left;
+}
+
+/* 상단 */
+.my-orders-header {
+  position: relative;
+  width: 100%;
+  padding: 38px 30px 28px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.my-orders-header h1 {
+  margin: 0;
+  text-align: center;
+  color: #071022;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.my-orders-back {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  background: transparent;
+  color: #42526b;
+  font-size: 38px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* 본문 */
+.my-orders-content {
+  width: 100%;
+  padding: 32px 30px;
+  box-sizing: border-box;
+}
+
+.my-orders-title {
+  margin-bottom: 26px;
+}
+
+.my-orders-title > p {
+  margin: 0 0 8px;
+  color: #2f55f4;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.my-orders-title h2 {
+  margin: 0 0 10px;
+  color: #071022;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.my-orders-title > span {
+  color: #657795;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* 주문 목록 */
+.my-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 주문 카드 */
+.my-order-card {
+  width: 100%;
+  padding: 22px;
+  border: 1px solid #e2e8f2;
+  border-radius: 22px;
+  box-sizing: border-box;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(20, 42, 90, 0.05);
+}
+
+.my-order-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.my-order-card-top strong {
+  color: #071022;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.my-order-card-top span {
+  flex-shrink: 0;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #edf3ff;
+  color: #2f55f4;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* 카드 내부 */
+.my-order-card-body {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.my-order-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: #eaf1ff;
+  font-size: 32px;
+}
+
+.my-order-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.my-order-info h3 {
+  margin: 0 0 8px;
+  color: #071022;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.my-order-info p {
+  margin: 0 0 8px;
+  color: #657795;
+  font-size: 14px;
+}
+
+.my-order-info strong {
+  display: block;
+  color: #071022;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+/* 로딩 / 오류 */
+.my-orders-message {
+  padding: 30px 20px;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #657795;
+  text-align: center;
+  font-size: 15px;
+}
+
+.my-orders-error {
+  color: #d14343;
+}
+
+/* 주문 내역 없음 */
+.my-orders-empty {
+  padding: 60px 20px;
+  border: 1px solid #e2e8f2;
+  border-radius: 22px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.my-orders-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #eaf1ff;
+  color: #2f55f4;
+  font-size: 34px;
+}
+
+.my-orders-empty h3 {
+  margin: 0 0 10px;
+  color: #071022;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.my-orders-empty p {
+  margin: 0;
+  color: #657795;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* 모바일 */
+@media (max-width: 430px) {
+  .my-orders-header {
+    padding: 30px 22px 24px;
+  }
+
+  .my-orders-back {
+    left: 22px;
+  }
+
+  .my-orders-header h1 {
+    font-size: 26px;
+  }
+
+  .my-orders-content {
+    padding: 26px 22px;
+  }
+
+  .my-orders-title h2 {
+    font-size: 25px;
+  }
+
+  .my-order-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .my-order-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 28px;
+  }
+} 
+
+
   
