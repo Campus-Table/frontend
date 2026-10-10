@@ -150,7 +150,7 @@ function MileagePayment({
 
         setError(
           err.message ||
-            '결제 승인에 실패했습니다.'
+          '결제 승인에 실패했습니다.'
         )
 
         setIsLoading(false)
@@ -206,7 +206,7 @@ function MileagePayment({
 
           setError(
             err.message ||
-              '결제를 준비하지 못했습니다.'
+            '결제를 준비하지 못했습니다.'
           )
         }
       } finally {
@@ -263,7 +263,7 @@ function MileagePayment({
         !customerKey ||
         !orderId ||
         Number(amount) !==
-          Number(chargeAmount)
+        Number(chargeAmount)
       ) {
         throw new Error(
           '결제 준비 정보가 올바르지 않습니다.'
@@ -316,7 +316,7 @@ function MileagePayment({
 
       setError(
         err.message ||
-          '결제를 진행하지 못했습니다.'
+        '결제를 진행하지 못했습니다.'
       )
 
       setIsPaying(false)

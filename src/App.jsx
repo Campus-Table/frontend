@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 
@@ -60,26 +60,31 @@ import {
   getMileage,
 } from './api/mileageApi'
 
+import {
+  getCurrentUser,
+} from './api/authApi'
+
+
 function App() {
   // ========================================
   // 현재 페이지
   // ========================================
 
   const [
-  page,
-  setPage,
-] = useState(() => {
-  const pathname = window.location.pathname
+    page,
+    setPage,
+  ] = useState(() => {
+    const pathname = window.location.pathname
 
-  if (
-    pathname === '/mileage/success' ||
-    pathname === '/mileage/fail'
-  ) {
-    return 'mileagePayment'
-  }
+    if (
+      pathname === '/mileage/success' ||
+      pathname === '/mileage/fail'
+    ) {
+      return 'mileagePayment'
+    }
 
-  return 'onboarding'
-})
+    return 'onboarding'
+  })
   // ========================================
   // 로그인 사용자
   // ========================================
@@ -88,6 +93,58 @@ function App() {
     currentUser,
     setCurrentUser,
   ] = useState(null)
+
+
+  // ========================================
+  // 로그인 세션 복원
+  // ========================================
+
+  useEffect(() => {
+    const restoreSession = async () => {
+      try {
+        const user = await getCurrentUser()
+
+        setCurrentUser(user)
+
+        // Toss 결제 후 돌아온 경우에는
+        // MileagePayment가 결제 승인 처리를 해야 하므로
+        // 현재 페이지를 변경하지 않음
+        const pathname = window.location.pathname
+
+        if (
+          pathname === '/mileage/success' ||
+          pathname === '/mileage/fail'
+        ) {
+          return
+        }
+
+        // 로그인 세션이 살아 있다면
+        // 사용자 권한에 맞는 첫 화면으로 이동
+        if (user?.role === 'ADMIN') {
+          setPage('adminDashboard')
+        } else {
+          setPage('home')
+        }
+      } catch (error) {
+        // 로그인하지 않은 상태라면
+        // 기존 온보딩 화면을 그대로 유지
+        if (
+          error?.status === 401 ||
+          error?.code === 'UNAUTHORIZED'
+        ) {
+          setCurrentUser(null)
+          return
+        }
+
+        console.error(
+          '로그인 세션 복원 실패:',
+          error
+        )
+      }
+    }
+
+    restoreSession()
+  }, [])
 
   // ========================================
   // 선택한 가게
@@ -105,7 +162,40 @@ function App() {
   const [
     selectedOrder,
     setSelectedOrder,
-  ] = useState(null)
+  ] = useState(() => {
+    try {
+      const savedOrder =
+        sessionStorage.getItem(
+          'campus-table-selected-order'
+        )
+
+      return savedOrder
+        ? JSON.parse(savedOrder)
+        : null
+    } catch (error) {
+      console.error(
+        '주문 정보 복원 실패:',
+        error
+      )
+
+      return null
+    }
+  })
+
+  useEffect(() => {
+    if (selectedOrder) {
+      sessionStorage.setItem(
+        'campus-table-selected-order',
+        JSON.stringify(
+          selectedOrder
+        )
+      )
+    } else {
+      sessionStorage.removeItem(
+        'campus-table-selected-order'
+      )
+    }
+  }, [selectedOrder])
 
   // ========================================
   // 마일리지
@@ -149,87 +239,87 @@ function App() {
   // 현재 진행 중인 주문을 다시 조회
   // ========================================
   const goOrders = async () => {
-  try {
-    const currentOrder =
-      await getCurrentOrder()
+    try {
+      const currentOrder =
+        await getCurrentOrder()
 
-    // 진행 중 주문 없음
-    if (!currentOrder) {
-      setSelectedOrder(null)
+      // 진행 중 주문 없음
+      if (!currentOrder) {
+        setSelectedOrder(null)
+        setPage('myOrders')
+        return
+      }
+
+      setSelectedOrder(
+        currentOrder
+      )
+
+      // ====================================
+      // 결제 완료 / 현장 인증 전
+      // ====================================
+
+      if (
+        currentOrder.status ===
+        'PAID'
+      ) {
+        setPage(
+          'orderComplete'
+        )
+        return
+      }
+
+      // ====================================
+      // 도착 인증 완료 / 조리 중
+      // ====================================
+
+      if (
+        currentOrder.status ===
+        'COOKING'
+      ) {
+        setPage('waiting')
+        return
+      }
+
+      // ====================================
+      // 혹시 서버에서 RECEIVED가 반환된 경우
+      // ====================================
+
+      if (
+        currentOrder.status ===
+        'RECEIVED'
+      ) {
+        setPage('foodReady')
+        return
+      }
+
+      // 그 외 상태는 전체 주문내역으로
       setPage('myOrders')
-      return
-    }
-
-    setSelectedOrder(
-      currentOrder
-    )
-
-    // ====================================
-    // 결제 완료 / 현장 인증 전
-    // ====================================
-
-    if (
-      currentOrder.status ===
-      'PAID'
-    ) {
-      setPage(
-        'orderComplete'
+    } catch (error) {
+      console.error(
+        '현재 주문 조회 실패:',
+        error
       )
-      return
-    }
 
-    // ====================================
-    // 도착 인증 완료 / 조리 중
-    // ====================================
+      if (
+        error.code ===
+        'UNAUTHORIZED'
+      ) {
+        alert(
+          '로그인이 만료되었습니다. 다시 로그인해주세요.'
+        )
 
-    if (
-      currentOrder.status ===
-      'COOKING'
-    ) {
-      setPage('waiting')
-      return
-    }
+        setCurrentUser(null)
+        setSelectedOrder(null)
+        setPage('login')
+        return
+      }
 
-    // ====================================
-    // 혹시 서버에서 RECEIVED가 반환된 경우
-    // ====================================
-
-    if (
-      currentOrder.status ===
-      'RECEIVED'
-    ) {
-      setPage('foodReady')
-      return
-    }
-
-    // 그 외 상태는 전체 주문내역으로
-    setPage('myOrders')
-  } catch (error) {
-    console.error(
-      '현재 주문 조회 실패:',
-      error
-    )
-
-    if (
-      error.code ===
-      'UNAUTHORIZED'
-    ) {
       alert(
-        '로그인이 만료되었습니다. 다시 로그인해주세요.'
-      )
-
-      setCurrentUser(null)
-      setSelectedOrder(null)
-      setPage('login')
-      return
-    }
-
-    alert(
-      error.message ||
+        error.message ||
         '주문 정보를 불러오지 못했습니다.'
-    )
+      )
+    }
   }
-}
 
   // ========================================
   // 알림
@@ -502,32 +592,32 @@ function App() {
   ) {
     content = (
       <OrderConfirm
-  order={
-    selectedOrder
-  }
+        order={
+          selectedOrder
+        }
 
-  onBack={() => {
-    setPage('store')
-  }}
+        onBack={() => {
+          setPage('store')
+        }}
 
-  onPay={(
-    createdOrder
-  ) => {
-    setSelectedOrder(
-      createdOrder
-    )
+        onPay={(
+          createdOrder
+        ) => {
+          setSelectedOrder(
+            createdOrder
+          )
 
-    setPage(
-      'orderComplete'
-    )
-  }}
+          setPage(
+            'orderComplete'
+          )
+        }}
 
-  onCharge={() => {
-    setPage(
-      'mileageCharge'
-    )
-  }}
-/>
+        onCharge={() => {
+          setPage(
+            'mileageCharge'
+          )
+        }}
+      />
     )
   }
 
@@ -592,6 +682,19 @@ function App() {
           // ==================================
 
           try {
+            // Toss 결제 후 돌아오면
+            // 충전 금액을 다시 저장
+            if (
+              paymentResult?.amount !=
+              null
+            ) {
+              setChargeAmount(
+                Number(
+                  paymentResult.amount
+                )
+              )
+            }
+
             if (
               paymentResult?.balance !=
               null
@@ -608,7 +711,7 @@ function App() {
               setMileage(
                 Number(
                   result?.balance ??
-                    0
+                  0
                 )
               )
             }
@@ -711,7 +814,7 @@ function App() {
             const newBalance =
               Number(
                 result?.balance ??
-                  0
+                0
               )
 
             setMileage(
@@ -731,9 +834,9 @@ function App() {
             Number(
               cancelledOrder
                 ?.totalPrice ??
-                selectedOrder
-                  ?.totalPrice ??
-                0
+              selectedOrder
+                ?.totalPrice ??
+              0
             )
           )
 
@@ -849,91 +952,91 @@ function App() {
   // ========================================
 
   else if (
-  page === 'foodReady'
-) {
-  content = (
-    <FoodReady
-      order={
-        selectedOrder
-      }
-
-      onHome={() => {
-        setSelectedOrder(
-          null
-        )
-
-        setPage('home')
-      }}
-    />
-  )
-}
-
-// ========================================
-// 내 주문
-// ========================================
-
-else if (
-  page === 'myOrders'
-) {
-  content = (
-    <MyOrders
-      onBack={() => {
-        setPage('home')
-      }}
-
-      onSelectOrder={(order) => {
-        setSelectedOrder(order)
-
-        if (
-          order.status === 'PAID'
-        ) {
-          setPage('orderComplete')
-          return
+    page === 'foodReady'
+  ) {
+    content = (
+      <FoodReady
+        order={
+          selectedOrder
         }
 
-        if (
-          order.status === 'COOKING'
-        ) {
-          setPage('waiting')
-          return
-        }
+        onHome={() => {
+          setSelectedOrder(
+            null
+          )
 
-        if (
-          order.status === 'RECEIVED'
-        ) {
-          setPage('foodReady')
-        }
-      }}
-    />
-  )
-}
+          setPage('home')
+        }}
+      />
+    )
+  }
 
-// ========================================
-// 알림
-// ========================================
+  // ========================================
+  // 내 주문
+  // ========================================
 
-else if (
-  page ===
-  'notifications'
-) {
-  content = (
-    <Notifications />
-  )
-}
+  else if (
+    page === 'myOrders'
+  ) {
+    content = (
+      <MyOrders
+        onBack={() => {
+          setPage('home')
+        }}
 
-// ========================================
-// 처음 실행
-// ========================================
+        onSelectOrder={(order) => {
+          setSelectedOrder(order)
 
-else {
-  content = (
-    <Onboarding
-      onLogin={() => {
-        setPage('login')
-      }}
-    />
-  )
-}
+          if (
+            order.status === 'PAID'
+          ) {
+            setPage('orderComplete')
+            return
+          }
+
+          if (
+            order.status === 'COOKING'
+          ) {
+            setPage('waiting')
+            return
+          }
+
+          if (
+            order.status === 'RECEIVED'
+          ) {
+            setPage('foodReady')
+          }
+        }}
+      />
+    )
+  }
+
+  // ========================================
+  // 알림
+  // ========================================
+
+  else if (
+    page ===
+    'notifications'
+  ) {
+    content = (
+      <Notifications />
+    )
+  }
+
+  // ========================================
+  // 처음 실행
+  // ========================================
+
+  else {
+    content = (
+      <Onboarding
+        onLogin={() => {
+          setPage('login')
+        }}
+      />
+    )
+  }
 
   // ========================================
   // 관리자 페이지 여부
@@ -941,13 +1044,13 @@ else {
 
   const isAdminPage =
     page ===
-      'adminDashboard' ||
+    'adminDashboard' ||
     page ===
-      'adminWaiting' ||
+    'adminWaiting' ||
     page ===
-      'adminStats' ||
+    'adminStats' ||
     page ===
-      'adminOccupancy'
+    'adminOccupancy'
 
   // ========================================
   // 학생 하단 네비게이션
@@ -956,19 +1059,19 @@ else {
   const showBottomNav =
     !isAdminPage &&
     page !==
-      'onboarding' &&
+    'onboarding' &&
     page !== 'login' &&
     page !== 'signup' &&
     page !==
-      'forgotPassword' &&
+    'forgotPassword' &&
     page !==
-      'orderConfirm' &&
+    'orderConfirm' &&
     page !==
-      'mileageCharge' &&
+    'mileageCharge' &&
     page !==
-      'mileagePayment' &&
+    'mileagePayment' &&
     page !==
-      'mileageChargeComplete'
+    'mileageChargeComplete'
 
   // ========================================
   // 관리자 하단 네비게이션
@@ -977,7 +1080,7 @@ else {
   const showAdminBottomNav =
     isAdminPage &&
     page !==
-      'adminOccupancy'
+    'adminOccupancy'
 
   // ========================================
   // 학생 하단 네비게이션 활성 메뉴
@@ -1002,19 +1105,19 @@ else {
 
   if (
     page ===
-      'orderConfirm' ||
+    'orderConfirm' ||
     page ===
-      'mileageCharge' ||
+    'mileageCharge' ||
     page ===
-      'mileagePayment' ||
+    'mileagePayment' ||
     page ===
-      'mileageChargeComplete' ||
+    'mileageChargeComplete' ||
     page ===
-      'orderComplete' ||
+    'orderComplete' ||
     page ===
-      'orderCancelComplete' ||
+    'orderCancelComplete' ||
     page ===
-      'arrivalVerify' ||
+    'arrivalVerify' ||
     page === 'waiting' ||
     page === 'foodReady'
   ) {
@@ -1053,7 +1156,7 @@ else {
       <div
         className={
           showBottomNav &&
-          !isAdminPage
+            !isAdminPage
             ? 'student-page-with-nav'
             : ''
         }

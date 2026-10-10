@@ -77,3 +77,7 @@ export function changePassword(
   })
 }
 
+export function getCurrentUser() {
+  return apiFetch('/api/users/me')
+} 
+
