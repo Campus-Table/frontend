@@ -17,6 +17,7 @@ import StoreDetail from './pages/StoreDetail'
 import OrderConfirm from './pages/OrderConfirm'
 import OrderComplete from './pages/OrderComplete'
 import MyOrders from './pages/MyOrders'
+import MyPage from './pages/MyPage'
 import OrderCancelComplete from './pages/OrderCancelComplete'
 
 import ArrivalVerify from './pages/ArrivalVerify'
@@ -327,6 +328,14 @@ function App() {
 
   const goNotifications = () => {
     setPage('notifications')
+  }
+
+  // ========================================
+  // 마이페이지
+  // ========================================
+
+  const goMyPage = () => {
+    setPage('mypage')
   }
 
   // ========================================
@@ -1012,6 +1021,44 @@ function App() {
   }
 
   // ========================================
+  // 마이페이지
+  // ========================================
+
+  else if (
+    page === 'mypage'
+  ) {
+    content = (
+      <MyPage
+        onLogout={() => {
+          setCurrentUser(null)
+          setSelectedOrder(null)
+
+          sessionStorage.removeItem(
+            'campus-table-selected-order'
+          )
+
+          setPage('login')
+        }}
+
+        onUnauthorized={() => {
+          setCurrentUser(null)
+          setSelectedOrder(null)
+
+          sessionStorage.removeItem(
+            'campus-table-selected-order'
+          )
+
+          alert(
+            '로그인이 만료되었습니다. 다시 로그인해주세요.'
+          )
+
+          setPage('login')
+        }}
+      />
+    )
+  }
+
+  // ========================================
   // 알림
   // ========================================
 
@@ -1178,6 +1225,9 @@ function App() {
             }
             onNotifications={
               goNotifications
+            }
+            onMyPage={
+              goMyPage
             }
           />
         )}

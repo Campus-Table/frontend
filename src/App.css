@@ -4022,7 +4022,7 @@
     height: 82px;
     transform: translateX(-50%);
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     align-items: center;
     padding: 8px 20px 10px;
     box-sizing: border-box;
