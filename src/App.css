@@ -2709,7 +2709,7 @@
     width: 100%;
     min-height: 145px;
     display: grid;
-    grid-template-columns: 120px minmax(0, 1fr) 38px;
+    grid-template-columns: 120px minmax(0, 1fr) 120px;
     align-items: center;
     gap: 18px;
     padding: 15px;
@@ -2767,25 +2767,6 @@
     font-weight: 800;
   }
   
-  .menu-select-circle {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #dbe3f0;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 800;
-  }
-  
-  .menu-select-circle.selected {
-    border-color: #2455f5;
-    background: #2455f5;
-    color: #ffffff;
-  }
   
   /*
     IMPORTANT:
@@ -9114,6 +9095,84 @@
     font-size: 28px;
   }
 } 
+/* ========================================
+   메뉴 수량 조절
+======================================== */
 
+.menu-quantity-control {
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
 
-  
+.quantity-button {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dbe3f0;
+  border-radius: 50%;
+  background: #ffffff;
+
+  color: #2455f5;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.quantity-button:hover:not(:disabled) {
+  background: #f2f5ff;
+}
+
+.quantity-button:disabled {
+  color: #c7cfdb;
+  background: #ffffff;
+  cursor: default;
+}
+
+.menu-quantity {
+  width: 24px;
+  flex-shrink: 0;
+
+  color: #071022;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 800;
+} 
+/* ========================================
+   주문 완료 - 전체 주문 요약
+======================================== */
+
+.complete-order-summary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: 14px;
+  padding: 0 4px;
+
+  box-sizing: border-box;
+
+  color: #071022;
+  font-size: 17px;
+}
+
+.complete-order-summary span {
+  font-weight: 600;
+}
+
+.complete-order-summary strong {
+  font-size: 18px;
+  font-weight: 800;
+} 

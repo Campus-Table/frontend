@@ -51,28 +51,6 @@ function OrderComplete({
     Number(
       order.totalPrice ??
       order.usedMileage ??
-      order.price ??
-      0
-    )
-
-  const firstItem =
-    order.items?.[0]
-
-  const menuName =
-    firstItem?.menuName ||
-    order.menuName ||
-    order.name ||
-    '선택 메뉴'
-
-  const quantity =
-    Number(
-      firstItem?.quantity ?? 1
-    )
-
-  const unitPrice =
-    Number(
-      firstItem?.unitPrice ??
-      order.price ??
       0
     )
 
@@ -80,10 +58,28 @@ function OrderComplete({
     order.storeName ||
     '매장'
 
-  const menuImage =
-    order.image ||
-    order.imageUrl ||
-    null
+  // ======================================================
+  // 주문 메뉴 목록
+  // ======================================================
+
+  const orderItems =
+    Array.isArray(order.items)
+      ? order.items
+      : []
+
+  // ======================================================
+  // 전체 주문 수량
+  // ======================================================
+
+  const totalQuantity =
+    orderItems.reduce(
+      (sum, item) =>
+        sum +
+        Number(
+          item.quantity || 0
+        ),
+      0
+    )
 
   // ======================================================
   // 가격 표시
@@ -93,6 +89,34 @@ function OrderComplete({
     return `${Number(
       price || 0
     ).toLocaleString('ko-KR')}원`
+  }
+
+  // ======================================================
+  // 메뉴 가격 계산
+  //
+  // 서버 응답에서는 unitPrice를 사용할 수 있고,
+  // 주문 전 프론트 데이터에서는 price를 사용함.
+  // 둘 다 대응.
+  // ======================================================
+
+  const getItemUnitPrice = (item) => {
+    return Number(
+      item.unitPrice ??
+      item.price ??
+      0
+    )
+  }
+
+  // ======================================================
+  // 메뉴 이미지
+  // ======================================================
+
+  const getItemImage = (item) => {
+    return (
+      item.imageUrl ||
+      item.image ||
+      null
+    )
   }
 
   // ======================================================
@@ -203,47 +227,104 @@ function OrderComplete({
             주문 메뉴
         ===================================== */}
 
-        <section className="complete-order-card">
+        <section className="complete-order-list">
 
-          {menuImage ? (
-            <img
-              src={menuImage}
-              alt={menuName}
-              className="complete-menu-image"
-            />
-          ) : (
-            <div className="complete-menu-image complete-menu-placeholder">
-              🍱
-            </div>
+          {orderItems.map(
+            (item, index) => {
+              const quantity =
+                Number(
+                  item.quantity ?? 1
+                )
+
+              const unitPrice =
+                getItemUnitPrice(
+                  item
+                )
+
+              const itemTotal =
+                unitPrice * quantity
+
+              const menuName =
+                item.menuName ||
+                item.name ||
+                '선택 메뉴'
+
+              const menuImage =
+                getItemImage(item)
+
+              return (
+                <div
+                  className="complete-order-card"
+                  key={
+                    item.menuId ??
+                    index
+                  }
+                >
+
+                  {menuImage ? (
+                    <img
+                      src={menuImage}
+                      alt={menuName}
+                      className="complete-menu-image"
+                    />
+                  ) : (
+                    <div className="complete-menu-image complete-menu-placeholder">
+                      🍱
+                    </div>
+                  )}
+
+                  <div className="complete-menu-info">
+
+                    <span className="complete-store-name">
+                      {storeName}
+                    </span>
+
+                    <h3>
+                      {menuName}
+                    </h3>
+
+                    <div className="complete-menu-bottom">
+
+                      <span>
+                        수량 {quantity}개
+                      </span>
+
+                      <strong>
+                        {formatPrice(
+                          itemTotal
+                        )}
+                      </strong>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              )
+            }
           )}
 
-          <div className="complete-menu-info">
+        </section>
 
-            <span className="complete-store-name">
-              {storeName}
+        {/* =====================================
+            전체 주문 요약
+        ===================================== */}
+
+        {orderItems.length > 1 && (
+          <div className="complete-order-summary">
+
+            <span>
+              총 {totalQuantity}개
             </span>
 
-            <h3>
-              {menuName}
-            </h3>
-
-            <div className="complete-menu-bottom">
-
-              <span>
-                수량 {quantity}개
-              </span>
-
-              <strong>
-                {formatPrice(
-                  unitPrice * quantity
-                )}
-              </strong>
-
-            </div>
+            <strong>
+              {formatPrice(
+                usedMileage
+              )}
+            </strong>
 
           </div>
-
-        </section>
+        )}
 
         {/* =====================================
             조리 시작 전 안내
@@ -396,4 +477,5 @@ function OrderComplete({
   )
 }
 
-export default OrderComplete
+export default OrderComplete  
+

@@ -9,18 +9,13 @@ import { apiFetch } from './client'
 
 export function createOrder(
   storeId,
-  menuId
+  items
 ) {
   return apiFetch('/api/orders', {
     method: 'POST',
     body: JSON.stringify({
       storeId,
-      items: [
-        {
-          menuId,
-          quantity: 1,
-        },
-      ],
+      items,
     }),
   })
 }

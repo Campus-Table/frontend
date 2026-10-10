@@ -13,10 +13,15 @@ function StoreDetail({
   const [store, setStore] = useState(null)
   const [menus, setMenus] = useState([])
 
+  // ======================================================
+  // 메뉴별 선택 수량
+  // 예: { 1: 2, 3: 1 }
+  // ======================================================
+
   const [
-    selectedMenuId,
-    setSelectedMenuId,
-  ] = useState(null)
+    menuQuantities,
+    setMenuQuantities,
+  ] = useState({})
 
   const [isLoading, setIsLoading] =
     useState(true)
@@ -35,7 +40,7 @@ function StoreDetail({
       try {
         setIsLoading(true)
         setError('')
-        setSelectedMenuId(null)
+        setMenuQuantities({})
 
         const [
           storeData,
@@ -109,14 +114,45 @@ function StoreDetail({
   }, [storeId])
 
   // ======================================================
-  // 선택된 메뉴
+  // 선택된 메뉴 목록
   // ======================================================
 
-  const selectedMenu =
-    menus.find(
-      (menu) =>
-        menu.id === selectedMenuId
-    ) || null
+  const selectedMenus =
+    menus
+      .filter(
+        (menu) =>
+          (menuQuantities[menu.id] || 0) >
+          0
+      )
+      .map((menu) => ({
+        ...menu,
+        quantity:
+          menuQuantities[menu.id] || 0,
+      }))
+
+  // ======================================================
+  // 총 선택 수량
+  // ======================================================
+
+  const totalQuantity =
+    selectedMenus.reduce(
+      (sum, menu) =>
+        sum + menu.quantity,
+      0
+    )
+
+  // ======================================================
+  // 총 주문 금액
+  // ======================================================
+
+  const totalPrice =
+    selectedMenus.reduce(
+      (sum, menu) =>
+        sum +
+        Number(menu.price || 0) *
+          menu.quantity,
+      0
+    )
 
   // ======================================================
   // 가격 표시
@@ -136,15 +172,96 @@ function StoreDetail({
   }
 
   // ======================================================
-  // 메뉴 선택
+  // 수량 증가
   // ======================================================
 
-  const handleMenuSelect = (menu) => {
-    if (!menu.available) {
+  const handleIncrease = (
+    event,
+    menu
+  ) => {
+    event.stopPropagation()
+
+    if (menu.available === false) {
       return
     }
 
-    setSelectedMenuId(menu.id)
+    setMenuQuantities(
+      (previous) => ({
+        ...previous,
+
+        [menu.id]:
+          (previous[menu.id] || 0) + 1,
+      })
+    )
+  }
+
+  // ======================================================
+  // 수량 감소
+  // ======================================================
+
+  const handleDecrease = (
+    event,
+    menu
+  ) => {
+    event.stopPropagation()
+
+    if (menu.available === false) {
+      return
+    }
+
+    setMenuQuantities((previous) => {
+      const currentQuantity =
+        previous[menu.id] || 0
+
+      if (currentQuantity <= 0) {
+        return previous
+      }
+
+      const nextQuantity =
+        currentQuantity - 1
+
+      const next = {
+        ...previous,
+      }
+
+      if (nextQuantity === 0) {
+        delete next[menu.id]
+      } else {
+        next[menu.id] =
+          nextQuantity
+      }
+
+      return next
+    })
+  }
+
+  // ======================================================
+  // 메뉴 카드 선택
+  //
+  // 수량이 0인 메뉴 카드를 누르면 1개 선택
+  // 이미 선택된 메뉴는 +/- 버튼으로 수량 조절
+  // ======================================================
+
+  const handleMenuSelect = (menu) => {
+    if (menu.available === false) {
+      return
+    }
+
+    setMenuQuantities(
+      (previous) => {
+        const currentQuantity =
+          previous[menu.id] || 0
+
+        if (currentQuantity > 0) {
+          return previous
+        }
+
+        return {
+          ...previous,
+          [menu.id]: 1,
+        }
+      }
+    )
   }
 
   // ======================================================
@@ -152,21 +269,33 @@ function StoreDetail({
   // ======================================================
 
   const handleOrder = () => {
-    if (!store || !selectedMenu) {
+    if (
+      !store ||
+      selectedMenus.length === 0
+    ) {
       return
     }
 
-    if (!selectedMenu.available) {
-      return
-    }
+    const items =
+      selectedMenus.map((menu) => ({
+        menuId: menu.id,
+        menuName: menu.name,
+        price: Number(
+          menu.price || 0
+        ),
+        quantity: menu.quantity,
+      }))
 
     if (onOrder) {
       onOrder({
         storeId: store.id,
         storeName: store.name,
-        menuId: selectedMenu.id,
-        menuName: selectedMenu.name,
-        price: selectedMenu.price,
+
+        // 여러 메뉴 주문 정보
+        items,
+
+        totalQuantity,
+        totalPrice,
       })
     }
   }
@@ -190,13 +319,16 @@ function StoreDetail({
             ‹
           </button>
 
-          <h2>가게 정보</h2>
+          <h2>
+            가게 정보
+          </h2>
 
           <div className="header-space" />
 
         </header>
 
         <div className="auto-update">
+
           <span className="auto-update-icon">
             ⓘ
           </span>
@@ -204,6 +336,7 @@ function StoreDetail({
           <span>
             가게 정보를 불러오는 중이에요.
           </span>
+
         </div>
 
       </div>
@@ -229,13 +362,16 @@ function StoreDetail({
             ‹
           </button>
 
-          <h2>가게 정보</h2>
+          <h2>
+            가게 정보
+          </h2>
 
           <div className="header-space" />
 
         </header>
 
         <div className="auto-update">
+
           <span className="auto-update-icon">
             ⓘ
           </span>
@@ -244,6 +380,7 @@ function StoreDetail({
             {error ||
               '가게를 찾을 수 없습니다.'}
           </span>
+
         </div>
 
       </div>
@@ -268,7 +405,9 @@ function StoreDetail({
           ‹
         </button>
 
-        <h2>{store.name}</h2>
+        <h2>
+          {store.name}
+        </h2>
 
         <div className="header-space" />
 
@@ -321,34 +460,54 @@ function StoreDetail({
             메뉴를 선택해주세요
           </h2>
 
-          <span>
-            단일 선택
-          </span>
-
         </div>
 
         <div className="menu-list">
 
           {menus.map((menu) => {
+            const quantity =
+              menuQuantities[menu.id] || 0
+
             const isSelected =
-              selectedMenuId === menu.id
+              quantity > 0
 
             const isAvailable =
               menu.available !== false
 
             return (
-              <button
-                type="button"
+              <div
                 key={menu.id}
                 className={`menu-card ${
                   isSelected
                     ? 'selected'
                     : ''
+                } ${
+                  !isAvailable
+                    ? 'disabled'
+                    : ''
                 }`}
-                disabled={!isAvailable}
+                role="button"
+                tabIndex={
+                  isAvailable ? 0 : -1
+                }
                 onClick={() =>
                   handleMenuSelect(menu)
                 }
+                onKeyDown={(event) => {
+                  if (
+                    isAvailable &&
+                    (
+                      event.key === 'Enter' ||
+                      event.key === ' '
+                    )
+                  ) {
+                    event.preventDefault()
+
+                    handleMenuSelect(
+                      menu
+                    )
+                  }
+                }}
               >
 
                 {/* 메뉴 이미지 */}
@@ -388,21 +547,60 @@ function StoreDetail({
 
                 </div>
 
-                {/* 선택 표시 */}
+                {/* ==================================================
+                    수량 조절
+                ================================================== */}
 
-                <div
-                  className={`menu-select-circle ${
-                    isSelected
-                      ? 'selected'
-                      : ''
-                  }`}
-                >
-                  {isSelected
-                    ? '✓'
-                    : ''}
-                </div>
+                {isAvailable && (
+                  <div
+                    className="menu-quantity-control"
+                    onClick={(event) =>
+                      event.stopPropagation()
+                    }
+                  >
 
-              </button>
+                    <button
+                      type="button"
+                      className="quantity-button"
+                      onClick={(event) =>
+                        handleDecrease(
+                          event,
+                          menu
+                        )
+                      }
+                      disabled={
+                        quantity === 0
+                      }
+                      aria-label={`${menu.name} 수량 감소`}
+                    >
+                      −
+                    </button>
+
+                    <span
+                      className="menu-quantity"
+                      aria-label={`${menu.name} 수량 ${quantity}개`}
+                    >
+                      {quantity}
+                    </span>
+
+                    <button
+                      type="button"
+                      className="quantity-button"
+                      onClick={(event) =>
+                        handleIncrease(
+                          event,
+                          menu
+                        )
+                      }
+                      aria-label={`${menu.name} 수량 증가`}
+                    >
+                      +
+                    </button>
+
+                  </div>
+                )}
+
+              </div>
             )
           })}
 
@@ -432,14 +630,19 @@ function StoreDetail({
             type="button"
             className="preorder-button"
             disabled={
-              !selectedMenu ||
-              selectedMenu.available === false
+              selectedMenus.length === 0
             }
             onClick={handleOrder}
           >
 
             <span className="preorder-text">
-              선주문하기
+
+              {selectedMenus.length === 0
+                ? '선주문하기'
+                : `${totalQuantity}개 · ${totalPrice.toLocaleString(
+                    'ko-KR'
+                  )}원 선주문하기`}
+
             </span>
 
             <span className="preorder-arrow">
@@ -457,4 +660,3 @@ function StoreDetail({
 }
 
 export default StoreDetail 
-

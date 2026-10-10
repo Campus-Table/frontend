@@ -78,7 +78,7 @@ function OrderConfirm({
         } else {
           setError(
             error.message ||
-            '마일리지 정보를 불러오지 못했습니다.'
+              '마일리지 정보를 불러오지 못했습니다.'
           )
         }
       } finally {
@@ -131,11 +131,42 @@ function OrderConfirm({
   }
 
   // ======================================================
-  // 결제 가능 여부
+  // 주문 메뉴 목록
+  // ======================================================
+
+  const orderItems =
+    Array.isArray(order.items)
+      ? order.items
+      : []
+
+  // ======================================================
+  // 전체 주문 금액
   // ======================================================
 
   const orderPrice =
-    Number(order.price || 0)
+    orderItems.reduce(
+      (sum, item) =>
+        sum +
+        Number(item.price || 0) *
+          Number(item.quantity || 0),
+      0
+    )
+
+  // ======================================================
+  // 전체 주문 수량
+  // ======================================================
+
+  const totalQuantity =
+    orderItems.reduce(
+      (sum, item) =>
+        sum +
+        Number(item.quantity || 0),
+      0
+    )
+
+  // ======================================================
+  // 결제 가능 여부
+  // ======================================================
 
   const remainingMileage =
     mileage - orderPrice
@@ -143,6 +174,8 @@ function OrderConfirm({
   const canPay =
     !isLoadingMileage &&
     !error &&
+    orderItems.length > 0 &&
+    orderPrice > 0 &&
     remainingMileage >= 0 &&
     !isPaying
 
@@ -176,21 +209,31 @@ function OrderConfirm({
       setIsPaying(true)
       setError('')
 
+      // 서버에는 menuId와 quantity만 전달
+      const requestItems =
+        orderItems.map((item) => ({
+          menuId: item.menuId,
+          quantity: Number(
+            item.quantity
+          ),
+        }))
+
       const createdOrder =
         await createOrder(
           order.storeId,
-          order.menuId
+          requestItems
         )
 
       // 서버에서 주문 생성과 동시에
-      // 마일리지를 차감하므로
-      // 프론트에서는 별도 차감 API를 호출하지 않음.
-      const newRemainingMileage =
-        mileage -
+      // 마일리지가 차감됨
+      const usedMileage =
         Number(
           createdOrder?.totalPrice ??
-          orderPrice
+            orderPrice
         )
+
+      const newRemainingMileage =
+        mileage - usedMileage
 
       setMileage(
         newRemainingMileage
@@ -201,9 +244,15 @@ function OrderConfirm({
           ...order,
           ...createdOrder,
 
-          usedMileage:
-            createdOrder?.totalPrice ??
-            orderPrice,
+          // 화면에서 선택했던 메뉴 정보도
+          // 다음 화면에서 사용할 수 있도록 유지
+          items:
+            createdOrder?.items ??
+            orderItems,
+
+          totalQuantity,
+
+          usedMileage,
 
           remainingMileage:
             newRemainingMileage,
@@ -230,7 +279,7 @@ function OrderConfirm({
 
         case 'MENU_UNAVAILABLE':
           setError(
-            '현재 판매하지 않는 메뉴입니다.'
+            '현재 판매하지 않는 메뉴가 포함되어 있습니다.'
           )
           break
 
@@ -261,7 +310,7 @@ function OrderConfirm({
         default:
           setError(
             error.message ||
-            '주문을 처리하지 못했습니다.'
+              '주문을 처리하지 못했습니다.'
           )
       }
     } finally {
@@ -307,39 +356,79 @@ function OrderConfirm({
             주문 메뉴
           </h3>
 
-          <div className="order-menu-card">
+          {orderItems.map(
+            (item, index) => {
 
-            <div className="order-menu-image">
-              🍽️
-            </div>
+              const itemTotal =
+                Number(
+                  item.price || 0
+                ) *
+                Number(
+                  item.quantity || 0
+                )
 
-            <div className="order-menu-info">
+              return (
+                <div
+                  className="order-menu-card"
+                  key={
+                    item.menuId ??
+                    index
+                  }
+                >
 
-              <span className="order-store-name">
-                {order.storeName}
+                  <div className="order-menu-image">
+                    🍽️
+                  </div>
+
+                  <div className="order-menu-info">
+
+                    <span className="order-store-name">
+                      {order.storeName}
+                    </span>
+
+                    <h4>
+                      {item.menuName}
+                    </h4>
+
+                    <div className="order-menu-bottom">
+
+                      <span>
+                        수량{' '}
+                        {Number(
+                          item.quantity
+                        )}개
+                      </span>
+
+                      <strong>
+                        {formatPrice(
+                          itemTotal
+                        )}
+                      </strong>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              )
+            }
+          )}
+
+          {orderItems.length > 1 && (
+            <div className="order-menu-summary">
+
+              <span>
+                총 {totalQuantity}개
               </span>
 
-              <h4>
-                {order.menuName}
-              </h4>
-
-              <div className="order-menu-bottom">
-
-                <span>
-                  수량 1개
-                </span>
-
-                <strong>
-                  {formatPrice(
-                    orderPrice
-                  )}
-                </strong>
-
-              </div>
+              <strong>
+                {formatPrice(
+                  orderPrice
+                )}
+              </strong>
 
             </div>
-
-          </div>
+          )}
 
         </section>
 
