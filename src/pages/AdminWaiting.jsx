@@ -8,7 +8,11 @@ import {
   getAdminWaitings,
 } from '../api/adminApi'
 
-function AdminWaiting() {
+import AdminAccountMenu from '../components/AdminAccountMenu'
+
+function AdminWaiting({
+  onLogout,
+}) {
   const [
     waitings,
     setWaitings,
@@ -308,9 +312,11 @@ function AdminWaiting() {
             Campus Table
           </strong>
 
-          <span className="admin-badge">
-            관리자
-          </span>
+          <AdminAccountMenu
+            onLogout={
+              onLogout
+            }
+          />
 
         </div>
 

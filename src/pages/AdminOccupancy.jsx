@@ -8,9 +8,12 @@ import {
     analyzeOccupancy,
     saveManualOccupancy,
   } from '../api/adminApi'
+
+  import AdminAccountMenu from '../components/AdminAccountMenu'
   
   function AdminOccupancy({
     onBack,
+    onLogout,
   }) {
     const [
       cafeteriaId,
@@ -320,16 +323,24 @@ import {
       <div className="admin-occupancy-page">
   
         <header className="admin-simple-header">
-  
-          <button
-            type="button"
-            className="admin-back-button"
-            onClick={onBack}
-          >
-            ‹
-          </button>
-  
-        </header>
+
+      <button
+        type="button"
+        className="admin-back-button"
+        onClick={
+          onBack
+        }
+      >
+        ‹
+      </button>
+
+      <AdminAccountMenu
+        onLogout={
+          onLogout
+        }
+      />
+
+      </header>
   
         <main className="admin-occupancy-content">
   

@@ -81,3 +81,8 @@ export function getCurrentUser() {
   return apiFetch('/api/users/me')
 } 
 
+export function logout() {
+  return apiFetch('/api/auth/logout', {
+    method: 'POST',
+  })
+}

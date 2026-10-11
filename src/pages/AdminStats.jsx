@@ -12,7 +12,11 @@ import {
   getOccupancyHistory,
 } from '../api/adminApi'
 
-function AdminStats() {
+import AdminAccountMenu from '../components/AdminAccountMenu'
+
+function AdminStats({
+  onLogout,
+}) {
   const [
     dashboard,
     setDashboard,
@@ -325,9 +329,11 @@ function AdminStats() {
             Campus Table
           </strong>
 
-          <span className="admin-badge">
-            관리자
-          </span>
+          <AdminAccountMenu
+            onLogout={
+              onLogout
+            }
+          />
 
         </div>
 

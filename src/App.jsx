@@ -63,6 +63,7 @@ import {
 
 import {
   getCurrentUser,
+  logout,
 } from './api/authApi'
 
 
@@ -373,6 +374,38 @@ function App() {
   let content
 
   // ========================================
+  // 관리자 로그아웃
+  // ========================================
+
+  const handleAdminLogout =
+    async () => {
+      try {
+        // 서버 로그아웃 API 호출
+        await logout()
+
+        // 현재 로그인 사용자 정보 초기화
+        setCurrentUser(null)
+
+        // 로그인 화면으로 이동
+        setPage('login')
+      } catch (error) {
+        console.error(
+          '관리자 로그아웃 실패:',
+          error
+        )
+
+        alert(
+          error.message ||
+            '로그아웃에 실패했습니다.'
+        )
+
+        // AdminAccountMenu에서
+        // 로그아웃 실패를 알 수 있도록 다시 전달
+        throw error
+      }
+    }
+
+  // ========================================
   // 관리자 대시보드
   // ========================================
 
@@ -382,11 +415,19 @@ function App() {
   ) {
     content = (
       <AdminDashboard
+        // 현재 대기 현황 화면으로 이동
         onWaiting={
           goAdminWaiting
         }
+
+        // 인원 현황 관리 화면으로 이동
         onOccupancy={
           goAdminOccupancy
+        }
+
+        // 관리자 로그아웃
+        onLogout={
+          handleAdminLogout
         }
       />
     )
@@ -401,7 +442,12 @@ function App() {
     'adminWaiting'
   ) {
     content = (
-      <AdminWaiting />
+      <AdminWaiting
+        // 관리자 로그아웃
+        onLogout={
+          handleAdminLogout
+        }
+      />
     )
   }
 
@@ -414,7 +460,12 @@ function App() {
     'adminStats'
   ) {
     content = (
-      <AdminStats />
+      <AdminStats
+        // 관리자 로그아웃
+        onLogout={
+          handleAdminLogout
+        }
+      />
     )
   }
 
@@ -428,11 +479,17 @@ function App() {
   ) {
     content = (
       <AdminOccupancy
+        // 관리자 대시보드로 이동
         onBack={() => {
           setPage(
             'adminDashboard'
           )
         }}
+
+        // 관리자 로그아웃
+        onLogout={
+          handleAdminLogout
+        }
       />
     )
   }

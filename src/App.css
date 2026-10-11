@@ -4775,6 +4775,105 @@
       font-weight: 800;
       letter-spacing: -0.8px;
     }
+
+    /* ========================================
+      ADMIN ACCOUNT MENU
+    ======================================== */
+
+    .admin-account-menu {
+      position: relative;
+      margin-left: auto;
+    }
+
+    .admin-account-button {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      margin-left: 0;
+      border: none;
+
+      font-family: inherit;
+
+      cursor: pointer;
+
+      transition:
+        background 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .admin-account-button:hover,
+    .admin-account-button.open {
+      background: #282d55;
+      color: #ffffff;
+    }
+
+    .admin-account-arrow {
+      display: inline-block;
+
+      font-size: 9px;
+
+      transition:
+        transform 0.18s ease;
+    }
+
+    .admin-account-arrow.open {
+      transform: rotate(180deg);
+    }
+
+    .admin-account-dropdown {
+      position: absolute;
+
+      top: calc(100% + 8px);
+      right: 0;
+
+      z-index: 500;
+
+      width: 110px;
+
+      padding: 6px;
+
+      border: 1px solid
+        rgba(255, 255, 255, 0.08);
+
+      border-radius: 11px;
+
+      background: #ffffff;
+
+      box-shadow:
+        0 8px 24px
+        rgba(0, 0, 0, 0.18);
+    }
+
+    .admin-logout-menu-button {
+      width: 100%;
+
+      padding: 10px 12px;
+
+      border: none;
+      border-radius: 8px;
+
+      background: transparent;
+
+      color: #e34f5f;
+
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 700;
+
+      text-align: left;
+
+      cursor: pointer;
+    }
+
+    .admin-logout-menu-button:hover {
+      background: #fff1f2;
+    }
+
+    .admin-logout-menu-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   
     /* ========================================
        ADMIN CONTENT

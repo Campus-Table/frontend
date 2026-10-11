@@ -11,9 +11,12 @@ import {
   regenerateArrivalCode,
 } from '../api/adminApi'
 
+import AdminAccountMenu from '../components/AdminAccountMenu'
+
 function AdminDashboard({
   onWaiting,
   onOccupancy,
+  onLogout,
 }) {
   const [
     cafeteriaId,
@@ -239,9 +242,11 @@ function AdminDashboard({
           Campus Table
         </strong>
 
-        <span className="admin-badge">
-          관리자
-        </span>
+        <AdminAccountMenu
+          onLogout={
+            onLogout
+          }
+        />
 
       </div>
 
