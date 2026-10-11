@@ -346,9 +346,21 @@ import {
   
           <section className="occupancy-title-section">
   
-            <div className="occupancy-title-icon">
-              ♙
-            </div>
+          <div className="occupancy-title-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="9" cy="8" r="3" />
+              <circle cx="17" cy="9" r="2.5" />
+              <path d="M3.5 20c.5-4 2.5-6 5.5-6s5 2 5.5 6" />
+              <path d="M14 15c3.5 0 5.5 1.7 6 5" />
+            </svg>
+          </div>
   
             <h1>
               사진으로 인원 분석
@@ -382,7 +394,28 @@ import {
                 <>
   
                   <span className="occupancy-upload-icon">
-                    ▣
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect
+                        x="3"
+                        y="4"
+                        width="18"
+                        height="16"
+                        rx="2"
+                      />
+                      <circle
+                        cx="9"
+                        cy="9"
+                        r="2"
+                      />
+                      <path d="M21 15l-5-5L5 20" />
+                    </svg>
                   </span>
   
                   <strong>

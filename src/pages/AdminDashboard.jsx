@@ -12,6 +12,7 @@ import {
 } from '../api/adminApi'
 
 import AdminAccountMenu from '../components/AdminAccountMenu'
+import utensilsIcon from '../assets/utensils.svg'
 
 function AdminDashboard({
   onWaiting,
@@ -234,9 +235,9 @@ function AdminDashboard({
 
       <div className="admin-brand">
 
-        <div className="admin-brand-icon">
-          ♙
-        </div>
+      <div className="admin-brand-icon">
+        <img src={utensilsIcon} alt="Campus Table" />
+      </div>
 
         <strong>
           Campus Table
@@ -321,9 +322,19 @@ function AdminDashboard({
 
           <article className="admin-summary-card">
 
-            <div className="admin-summary-icon">
-              ♙
-            </div>
+          <div className="admin-summary-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="7" r="4" />
+              <path d="M5 21c.8-4.5 3.2-7 7-7s6.2 2.5 7 7" />
+            </svg>
+          </div>
 
             <p>
               현재 이용자
@@ -344,9 +355,19 @@ function AdminDashboard({
 
           <article className="admin-summary-card">
 
-            <div className="admin-summary-icon">
-              ◷
-            </div>
+          <div className="admin-summary-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+          </div>
 
             <p>
               전체 대기
@@ -365,9 +386,21 @@ function AdminDashboard({
 
           <article className="admin-summary-card">
 
-            <div className="admin-summary-icon">
-              ▤
-            </div>
+          <div className="admin-summary-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 3h12v18l-2-1.5L14 21l-2-1.5L10 21l-2-1.5L6 21V3Z" />
+              <path d="M9 8h6" />
+              <path d="M9 12h6" />
+              <path d="M9 16h4" />
+            </svg>
+          </div>
 
             <p>
               오늘 주문
@@ -433,7 +466,19 @@ function AdminDashboard({
         >
 
           <div className="occupancy-manage-icon">
-            ♧
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="9" cy="8" r="3" />
+              <circle cx="17" cy="9" r="2.5" />
+              <path d="M3.5 20c.5-4 2.5-6 5.5-6s5 2 5.5 6" />
+              <path d="M14 15c3.5 0 5.5 1.7 6 5" />
+            </svg>
           </div>
 
           <div className="occupancy-manage-text">

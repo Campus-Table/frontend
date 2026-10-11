@@ -82,13 +82,21 @@ function FoodReady({
         ===================================== */}
         <section className="food-ready-message">
 
-          <div className="food-ready-icon-wrap">
-
-            <div className="food-ready-icon">
-              ♧
-            </div>
-
+        <div className="food-ready-icon-wrap">
+          <div className="food-ready-icon">
+            <svg
+              viewBox="0 0 24 24"
+              width="34"
+              height="34"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+            >
+              <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+              <path d="M10 21h4" />
+            </svg>
           </div>
+        </div>
 
           <span className="food-ready-label">
             READY TO PICK UP

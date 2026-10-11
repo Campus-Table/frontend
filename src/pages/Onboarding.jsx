@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import utensilsIcon from '../assets/utensils.svg'
 
 function Onboarding({ onLogin }) {
   const [showAbout, setShowAbout] = useState(false)
@@ -13,7 +14,13 @@ function Onboarding({ onLogin }) {
 
       {/* Campus Table 로고 */}
       <header className="brand">
-        <div className="brand-icon">♙</div>
+        <div className="brand-icon">
+          <img
+            src={utensilsIcon}
+            alt="Campus Table 로고"
+            className="brand-icon-image"
+          />
+        </div>
         <h1>Campus Table</h1>
       </header>
 

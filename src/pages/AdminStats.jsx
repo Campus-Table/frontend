@@ -13,6 +13,7 @@ import {
 } from '../api/adminApi'
 
 import AdminAccountMenu from '../components/AdminAccountMenu'
+import utensilsIcon from '../assets/utensils.svg'
 
 function AdminStats({
   onLogout,
@@ -321,9 +322,9 @@ function AdminStats({
 
         <div className="admin-brand">
 
-          <div className="admin-brand-icon">
-            ♙
-          </div>
+        <div className="admin-brand-icon">
+          <img src={utensilsIcon} alt="Campus Table" />
+        </div>
 
           <strong>
             Campus Table

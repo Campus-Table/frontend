@@ -131,28 +131,38 @@ function Notifications() {
   //
   // 서버 type 6종
   // ========================================
-  const getNotificationIcon = (
-    type
-  ) => {
+  const getNotificationIcon = (type) => {
     switch (type) {
       case 'ORDER_PAID':
         return '✓'
-
+  
       case 'WAITING_NUMBER_ISSUED':
         return '▣'
-
+  
       case 'COOKING_STARTED':
         return '◷'
-
+  
       case 'FOOD_READY':
-        return '♧'
-
+        return (
+          <svg
+            viewBox="0 0 24 24"
+            width="26"
+            height="26"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          >
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
+            <path d="M10 21h4" />
+          </svg>
+        )
+  
       case 'ORDER_CANCELLED':
         return '×'
-
+  
       case 'MILEAGE_CHARGED':
         return '₩'
-
+  
       default:
         return '•'
     }
@@ -338,9 +348,7 @@ function Notifications() {
                         : 'notification-icon'
                     }
                   >
-                    {getNotificationIcon(
-                      notification.type
-                    )}
+                    {getNotificationIcon(notification.type)}
                   </div>
 
                   {/* =========================

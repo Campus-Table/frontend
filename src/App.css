@@ -1,2567 +1,1064 @@
 /* =========================
-
    전체 화면
-
    ========================= */
-
-
-
    .landing {
-
     position: relative;
-  
-  
-  
     width: 100%;
-  
     max-width: 500px;
-  
     min-height: 100vh;
-  
-  
-  
     margin: 0 auto;
-  
     padding: 42px 30px 28px;
-  
-  
-  
     display: flex;
-  
     flex-direction: column;
-  
-  
-  
     background: linear-gradient(
-  
       180deg,
-  
       #eef4ff 0%,
-  
       #f4f7ff 60%,
-  
       #ffffff 100%
-  
     );
-  
-  
-  
     overflow: hidden;
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      우측 상단 학생 / 관리자
-  
      ========================= */
-  
-  
-  
   .top-menu {
-  
     position: absolute;
-  
     top: 22px;
-  
     right: 30px;
-  
-  
-  
     display: flex;
-  
-  
-  
     padding: 4px;
-  
-  
-  
     background: #edf2fa;
-  
     border-radius: 12px;
-  
   }
-  
-  
-  
+
   .top-menu-button {
-  
     padding: 8px 15px;
-  
-  
-  
     border: none;
-  
     border-radius: 9px;
-  
-  
-  
     background: transparent;
-  
     color: #758198;
-  
-  
-  
     font-size: 14px;
-  
     font-weight: 600;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
+
   .top-menu-button.active {
-  
     background: #ffffff;
-  
     color: #1749ed;
-  
-  
-  
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      Campus Table 로고
-  
      ========================= */
-  
-  
-  
   .brand {
-  
     display: flex;
-  
     align-items: center;
-  
-  
-  
     gap: 13px;
-  
-  
-  
     margin-top: 45px;
-  
   }
-  
-  
-  
+
   .brand h1 {
-  
     margin: 0;
-  
-  
-  
     font-size: 23px;
-  
     line-height: 1;
-  
-  
-  
     font-weight: 800;
-  
     letter-spacing: -0.8px;
-  
-  
-  
     color: #050505;
-  
   }
-  
-  
-  
+
   .brand-icon {
-  
     width: 46px;
-  
     height: 46px;
-  
-  
-  
     flex-shrink: 0;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: center;
-  
-  
-  
     border-radius: 14px;
-  
-  
-  
     background: #1f4df1;
-  
     color: #ffffff;
-  
-  
-  
     font-size: 20px;
-  
   }
-  
-  
-  
-  
-  
+
+  .brand-icon-image {
+    width: 25px;
+    height: 25px;
+    display: block;
+    object-fit: contain;
+  }
+
   /* =========================
-  
      혼잡도 그래프
-  
      ========================= */
-  
-  
-  
   .crowd-graphic {
-  
     display: flex;
-  
     justify-content: space-between;
-  
     align-items: flex-end;
-  
-  
-  
     gap: 14px;
-  
-  
-  
     margin-top: 140px;
-  
   }
-  
-  
-  
+
   .bar {
-  
     width: 67px;
-  
     height: 145px;
-  
-  
-  
     padding: 9px;
-  
-  
-  
     display: flex;
-  
     align-items: flex-end;
-  
-  
-  
     background: rgba(255, 255, 255, 0.82);
-  
-  
-  
     border: 1px solid #e5e9f2;
-  
     border-radius: 28px;
-  
-  
-  
     box-shadow: 0 2px 5px rgba(30, 50, 90, 0.06);
-  
   }
-  
-  
-  
+
   .fill {
-  
     width: 100%;
-  
-  
-  
     border-radius: 18px;
-  
-  
-  
     background: #d4e3fc;
-  
   }
-  
-  
-  
+
   .fill-1 {
-  
     height: 38%;
-  
   }
-  
-  
-  
+
   .fill-2 {
-  
     height: 58%;
-  
   }
-  
-  
-  
+
   .fill-3 {
-  
     height: 82%;
-  
     background: #1f4df1;
-  
   }
-  
-  
-  
+
   .fill-4 {
-  
     height: 50%;
-  
   }
-  
-  
-  
+
   .fill-5 {
-  
     height: 66%;
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      소개 문구
-  
      ========================= */
-  
-  
-  
   .intro {
-  
     margin-top: 38px;
-  
   }
-  
-  
-  
+
   .badge {
-  
     display: inline-flex;
-  
     align-items: center;
-  
-  
-  
     padding: 8px 14px;
-  
-  
-  
     border-radius: 20px;
-  
-  
-  
     background: #dceaff;
-  
     color: #1750ed;
-  
-  
-  
     font-size: 13px;
-  
     line-height: 1;
-  
     font-weight: 700;
-  
   }
-  
-  
-  
+
   .intro h2 {
-  
     margin: 17px 0 16px;
-  
-  
-  
     color: #050505;
-  
-  
-  
     font-size: 35px;
-  
     line-height: 1.22;
-  
     font-weight: 800;
-  
-  
-  
     letter-spacing: -1.8px;
-  
   }
-  
-  
-  
+
   .intro h2 span {
-  
     color: #1749ed;
-  
   }
-  
-  
-  
+
   .intro p {
-  
     margin: 0;
-  
-  
-  
     color: #64738e;
-  
-  
-  
     font-size: 16px;
-  
     line-height: 1.65;
-  
-  
-  
     letter-spacing: -0.3px;
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      로그인 영역
-  
      ========================= */
-  
-  
-  
   .actions {
-  
     margin-top: auto;
-  
     padding-top: 55px;
-  
-  
-  
     display: flex;
-  
     flex-direction: column;
-  
     align-items: center;
-  
-  
-  
     gap: 16px;
-  
   }
-  
-  
-  
+
   .login-button {
-  
     width: 100%;
-  
     height: 58px;
-  
-  
-  
     padding: 0;
-  
-  
-  
     border: none;
-  
     border-radius: 17px;
-  
-  
-  
     background: #1f4df1;
-  
     color: #ffffff;
-  
-  
-  
     font-size: 17px;
-  
     font-weight: 500;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
+
   .login-button:hover {
-  
     background: #1742dc;
-  
   }
-  
-  
-  
+
   .about-button {
-  
     padding: 4px 10px;
-  
-  
-  
     border: none;
-  
-  
-  
     background: transparent;
-  
     color: #40516c;
-  
-  
-  
     font-size: 16px;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      모달 뒤 어두운 배경
-  
      ========================= */
-  
-  
-  
   .modal-overlay {
-  
     position: absolute;
-  
-  
-  
     top: 0;
-  
     left: 0;
-  
-  
-  
     width: 100%;
-  
     height: 100%;
-  
-  
-  
     z-index: 100;
-  
-  
-  
     display: flex;
-  
     align-items: flex-end;
-  
-  
-  
     padding: 16px;
-  
-  
-  
     background: rgba(24, 34, 55, 0.48);
-  
-  
-  
     backdrop-filter: blur(4px);
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      하단 소개창
-  
      ========================= */
-  
-  
-  
   .about-modal {
-  
     position: relative;
-  
-  
-  
     width: 100%;
-  
-  
-  
     padding: 25px 20px 20px;
-  
-  
-  
     background: #ffffff;
-  
-  
-  
     border-radius: 28px 28px 22px 22px;
-  
-  
-  
     box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08);
-  
   }
-  
-  
-  
-  
-  
+
   /* 닫기 X */
-  
-  
-  
   .close-button {
-  
     position: absolute;
-  
-  
-  
     top: 20px;
-  
     right: 20px;
-  
-  
-  
     width: 42px;
-  
     height: 42px;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: center;
-  
-  
-  
     border: none;
-  
     border-radius: 50%;
-  
-  
-  
     background: #f1f5fc;
-  
     color: #71809a;
-  
-  
-  
     font-size: 25px;
-  
     font-weight: 300;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
-  
-  
+
   /* ABOUT */
-  
-  
-  
   .about-label {
-  
     margin-bottom: 7px;
-  
-  
-  
     color: #1f4df1;
-  
-  
-  
     font-size: 13px;
-  
     font-weight: 800;
-  
   }
-  
-  
-  
-  
-  
+
   /* 제목 */
-  
-  
-  
   .about-title {
-  
     margin: 0 50px 25px 0;
-  
-  
-  
     color: #111827;
-  
-  
-  
     font-size: 24px;
-  
     line-height: 1.3;
-  
     font-weight: 800;
-  
-  
-  
     letter-spacing: -1px;
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      기능 목록
-  
      ========================= */
-  
-  
-  
   .feature-list {
-  
     display: flex;
-  
     flex-direction: column;
-  
-  
-  
     gap: 18px;
-  
   }
-  
-  
-  
+
   .feature-item {
-  
     display: flex;
-  
     align-items: center;
-  
-  
-  
     gap: 14px;
-  
   }
-  
-  
-  
+
   .feature-icon {
-  
     width: 48px;
-  
     height: 48px;
-  
-  
-  
     flex-shrink: 0;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: center;
-  
-  
-  
     border-radius: 13px;
-  
-  
-  
     background: #eff5ff;
-  
     color: #1450ef;
-  
-  
-  
     font-size: 21px;
-  
     font-weight: 600;
-  
   }
-  
-  
-  
+
   .feature-text {
-  
     flex: 1;
-  
   }
-  
-  
-  
+
   .feature-text h3 {
-  
     margin: 0 0 3px;
-  
-  
-  
     color: #172033;
-  
-  
-  
     font-size: 15px;
-  
     line-height: 1.3;
-  
     font-weight: 800;
-  
   }
-  
-  
-  
+
   .feature-text p {
-  
     margin: 0;
-  
-  
-  
     color: #7b8ba7;
-  
-  
-  
     font-size: 12px;
-  
     line-height: 1.4;
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      시작하기 버튼
-  
      ========================= */
-  
-  
-  
   .start-button {
-  
     width: 100%;
-  
     height: 56px;
-  
-  
-  
     margin-top: 25px;
-  
-  
-  
     border: none;
-  
     border-radius: 16px;
-  
-  
-  
     background: #1f4df1;
-  
     color: #ffffff;
-  
-  
-  
     font-size: 17px;
-  
     font-weight: 600;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
+
   .start-button:hover {
-  
     background: #1742dc;
-  
   }
-  
-  
-  
-  
-  
+
   /* =========================
-  
      모바일 화면
-  
      ========================= */
-  
-  
-  
   @media (max-width: 500px) {
-  
-  
-  
     .landing {
-  
       max-width: none;
-  
-  
-  
       padding: 32px 25px 24px;
-  
     }
-  
-  
-  
+
     .top-menu {
-  
       top: 18px;
-  
       right: 25px;
-  
     }
-  
-  
-  
+
     .brand {
-  
       margin-top: 42px;
-  
     }
-  
-  
-  
+
     .crowd-graphic {
-  
       margin-top: 130px;
-  
-  
-  
       gap: 10px;
-  
     }
-  
-  
-  
+
     .bar {
-  
       width: 60px;
-  
       height: 135px;
-  
     }
-  
-  
-  
+
     .intro h2 {
-  
       font-size: 32px;
-  
     }
-  
-  
-  
+
     .modal-overlay {
-  
       padding: 14px;
-  
     }
-  
   }
-  
-  
-  
+
   /* ========================================
-  
      LOGIN PAGE
-  
-  \======================================== */
-  
-  
-  
+  ======================================== */
   .login-page {
-  
     width: 100%;
-  
     min-height: 100vh;
-  
     box-sizing: border-box;
-  
     padding: 34px 40px 50px;
-  
     background: #ffffff;
-  
     color: #0a1020;
-  
     text-align: left;
-  
   }
-  
-  
-  
+
   .login-back {
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: center;
-  
-  
-  
     width: 40px;
-  
     height: 40px;
-  
-  
-  
     margin: 0 0 50px 0;
-  
     padding: 0;
-  
-  
-  
     border: none;
-  
     background: transparent;
-  
-  
-  
     color: #334155;
-  
     font-size: 38px;
-  
     font-weight: 300;
-  
     line-height: 1;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
+
   .login-brand {
-  
     display: flex;
-  
     align-items: center;
-  
     gap: 14px;
-  
-  
-  
     margin-bottom: 48px;
-  
   }
-  
-  
-  
+
   .login-brand-icon {
-  
     width: 46px;
-  
     height: 46px;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: center;
-  
-  
-  
     background: #2451ed;
-  
     color: white;
-  
-  
-  
     border-radius: 13px;
-  
-  
-  
     font-size: 23px;
-  
   }
-  
-  
-  
+
+  .login-brand-icon img {
+    width: 25px;
+    height: 25px;
+    display: block;
+  }
+
   .login-brand h1 {
-  
     margin: 0;
-  
-  
-  
     color: #071022;
-  
-  
-  
     font-size: 24px;
-  
     font-weight: 800;
-  
     letter-spacing: -0.7px;
-  
   }
-  
-  
-  
+
   .login-intro {
-  
     margin-bottom: 42px;
-  
   }
-  
-  
-  
+
   .login-label {
-  
     margin: 0 0 12px;
-  
-  
-  
     color: #164bf3;
-  
-  
-  
     font-size: 15px;
-  
     font-weight: 800;
-  
     letter-spacing: 0.4px;
-  
   }
-  
-  
-  
+
   .login-intro h2 {
-  
     margin: 0 0 13px;
-  
-  
-  
     color: #070b16;
-  
-  
-  
     font-size: 37px;
-  
     line-height: 1.15;
-  
     font-weight: 800;
-  
     letter-spacing: -1.5px;
-  
   }
-  
-  
-  
+
   .login-description {
-  
     margin: 0;
-  
-  
-  
     color: #66758f;
-  
-  
-  
     font-size: 16px;
-  
     line-height: 1.6;
-  
   }
-  
-  
-  
+
   .login-form {
-  
     width: 100%;
-  
   }
-  
-  
-  
+
   .input-group {
-  
     margin-bottom: 26px;
-  
   }
-  
-  
-  
+
   .input-group label {
-  
     display: block;
-  
-  
-  
     margin-bottom: 10px;
-  
-  
-  
     color: #172033;
-  
-  
-  
     font-size: 16px;
-  
     font-weight: 700;
-  
   }
-  
-  
-  
+
   .input-group input {
-  
     width: 100%;
-  
     height: 70px;
-  
-  
-  
     box-sizing: border-box;
-  
-  
-  
     padding: 0 20px;
-  
-  
-  
     border: 1px solid #dce3ee;
-  
     border-radius: 20px;
-  
-  
-  
     outline: none;
-  
-  
-  
     background: #f8fafc;
-  
     color: #172033;
-  
-  
-  
     font-family: inherit;
-  
     font-size: 17px;
-  
-  
-  
     transition:
-  
       border-color 0.2s ease,
-  
       box-shadow 0.2s ease;
-  
   }
-  
-  
-  
+
   .input-group input::placeholder {
-  
     color: #9aacc9;
-  
     font-weight: 600;
-  
   }
-  
-  
-  
+
   .input-group input:focus {
-  
     border-color: #2451ed;
-  
     box-shadow: 0 0 0 3px rgba(36, 81, 237, 0.1);
-  
   }
-  
-  
-  
+
   .login-submit {
-  
     width: 100%;
-  
     height: 62px;
-  
-  
-  
     margin-top: 14px;
-  
-  
-  
     border: none;
-  
     border-radius: 18px;
-  
-  
-  
     background: #2451ed;
-  
     color: white;
-  
-  
-  
     font-family: inherit;
-  
     font-size: 19px;
-  
     font-weight: 700;
-  
-  
-  
     cursor: pointer;
-  
-  
-  
     box-shadow: 0 10px 25px rgba(36, 81, 237, 0.16);
-  
   }
-  
-  
-  
+
   .login-submit:hover {
-  
     background: #1946df;
-  
   }
-  
-  
-  
+
   .login-submit:active {
-  
     transform: scale(0.99);
-  
   }
-  
-  
-  
+
   .login-info {
-  
     width: 100%;
-  
-  
-  
     box-sizing: border-box;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     gap: 10px;
-  
-  
-  
     margin-top: 25px;
-  
     padding: 20px 18px;
-  
-  
-  
     border-radius: 18px;
-  
-  
-  
     background: #f7f9fc;
-  
     color: #66758f;
-  
-  
-  
     font-size: 14px;
-  
     line-height: 1.5;
-  
   }
-  
-  
-  
+
   .info-icon {
-  
     flex-shrink: 0;
-  
-  
-  
     color: #7186a8;
-  
     font-size: 17px;
-  
   }
-  
-  
-  
+
   .prototype-back {
-  
     display: block;
-  
-  
-  
     margin: 27px auto 0;
-  
     padding: 8px;
-  
-  
-  
     border: none;
-  
     background: transparent;
-  
-  
-  
     color: #98a6bf;
-  
-  
-  
     font-family: inherit;
-  
     font-size: 16px;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
+
   .prototype-back:hover {
-  
     color: #2451ed;
-  
   }
-  
-  
-  
-  
-  
+
   /* 작은 화면 대응 */
-  
   @media (max-width: 600px) {
-  
     .login-page {
-  
       padding: 28px 28px 40px;
-  
     }
-  
-  
-  
+
     .login-back {
-  
       margin-bottom: 42px;
-  
     }
-  
-  
-  
+
     .login-brand {
-  
       margin-bottom: 42px;
-  
     }
-  
-  
-  
+
     .login-intro h2 {
-  
       font-size: 34px;
-  
     }
-  
-  
-  
+
     .input-group input {
-  
       height: 66px;
-  
     }
-  
   }
-  
-  
-  
+
   /* 로그인 화면 모바일 폭 고정 */
-  
   .login-page {
-  
     width: 100%;
-  
     max-width: 720px;
-  
     min-height: 100vh;
-  
     margin: 0 auto;
-  
     box-sizing: border-box;
-  
-  
-  
     padding: 34px 40px 50px;
-  
-  
-  
     background: #ffffff;
-  
     color: #0a1020;
-  
     text-align: left;
-  
   }
-  
-  
-  
+
   /* ========================================
-  
      화면 크기 최종 통일
-  
      Onboarding / Login 공통 모바일 규격
-  
-  \======================================== */
-  
-  
-  
+  ======================================== */
   .landing,
-  
   .login-page {
-  
     width: 100%;
-  
     max-width: 600px;
-  
     min-height: 100vh;
-  
     margin: 0 auto;
-  
     box-sizing: border-box;
-  
   }
-  
-  
-  
+
   /* 로그인 화면 */
-  
   .login-page {
-  
     padding: 28px 34px 42px;
-  
   }
-  
-  
-  
+
   /* 뒤로가기 */
-  
   .login-back {
-  
     width: 34px;
-  
     height: 34px;
-  
     margin-bottom: 40px;
-  
     font-size: 34px;
-  
   }
-  
-  
-  
+
   /* 로고 영역 */
-  
   .login-brand {
-  
     gap: 13px;
-  
     margin-bottom: 42px;
-  
   }
-  
-  
-  
+
   .login-brand-icon {
-  
     width: 45px;
-  
     height: 45px;
-  
     border-radius: 12px;
-  
     font-size: 20px;
-  
   }
-  
-  
-  
+
   .login-brand h1 {
-  
     font-size: 23px;
-  
   }
-  
-  
-  
+
   /* WELCOME BACK + 제목 */
-  
   .login-intro {
-  
     margin-bottom: 36px;
-  
   }
-  
-  
-  
+
   .login-label {
-  
     margin-bottom: 9px;
-  
     font-size: 14px;
-  
   }
-  
-  
-  
+
   .login-intro h2 {
-  
     margin-bottom: 10px;
-  
     font-size: 34px;
-  
   }
-  
-  
-  
+
   .login-description {
-  
     font-size: 15px;
-  
   }
-  
-  
-  
+
   /* 입력칸 */
-  
   .input-group {
-  
     margin-bottom: 22px;
-  
   }
-  
-  
-  
+
   .input-group label {
-  
     margin-bottom: 9px;
-  
     font-size: 15px;
-  
   }
-  
-  
-  
+
   .input-group input {
-  
     height: 64px;
-  
     padding: 0 18px;
-  
     border-radius: 18px;
-  
     font-size: 16px;
-  
   }
-  
-  
-  
+
   /* 로그인 버튼 */
-  
   .login-submit {
-  
     height: 60px;
-  
     margin-top: 10px;
-  
     border-radius: 17px;
-  
     font-size: 18px;
-  
   }
-  
-  
-  
+
   /* 안내 박스 */
-  
   .login-info {
-  
     margin-top: 22px;
-  
     padding: 18px 16px;
-  
     border-radius: 17px;
-  
     font-size: 13px;
-  
   }
-  
-  
-  
+
   /* 프로토타입 바로 둘러보기 */
-  
   .prototype-back {
-  
     margin-top: 23px;
-  
     font-size: 15px;
-  
   }
-  
-  
-  
+
   /* ========================================
-  
      STUDENT HOME
-  
-  \======================================== */
-  
-  
-  
+  ======================================== */
   .student-home {
-  
     position: relative;
-  
     width: 100%;
-  
     max-width: 600px;
-  
     min-height: 100vh;
-  
     margin: 0 auto;
-  
     padding-bottom: 90px;
-  
     box-sizing: border-box;
-  
     background: #f8faff;
-  
     color: #091126;
-  
     text-align: left;
-  
   }
-  
-  
-  
+
   /* HEADER */
-  
-  
-  
   .student-header {
-  
     height: 105px;
-  
     padding: 30px 34px 20px;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: space-between;
-  
-  
-  
     box-sizing: border-box;
-  
     background: white;
-  
   }
-  
-  
-  
+
   .student-brand {
-  
     display: flex;
-  
     align-items: center;
-  
     gap: 13px;
-  
   }
-  
-  
-  
+
   .student-brand-icon {
-  
     width: 45px;
-  
     height: 45px;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: center;
-  
-  
-  
     border-radius: 13px;
-  
-  
-  
     background: #2451ed;
-  
     color: white;
-  
-  
-  
     font-size: 20px;
-  
   }
-  
-  
-  
+
+  .student-brand-icon img {
+    width: 25px;
+    height: 25px;
+    display: block;
+  }
+
   .student-brand h1 {
-  
     margin: 0;
-  
-  
-  
     color: #071022;
-  
-  
-  
     font-size: 23px;
-  
     font-weight: 800;
-  
     letter-spacing: -0.7px;
-  
   }
-  
-  
-  
+
   .header-notification {
-  
     position: relative;
-  
-  
-  
     width: 45px;
-  
     height: 45px;
-  
-  
-  
-    border: none;
-  
-    border-radius: 50%;
-  
-  
-  
-    background: #f5f7fb;
-  
-    color: #34435e;
-  
-  
-  
-    font-size: 22px;
-  
-  
-  
-    cursor: pointer;
-  
-  }
-  
-  
-  
-  .notification-dot {
-  
-    position: absolute;
-  
-  
-  
-    top: 7px;
-  
-    right: 7px;
-  
-  
-  
-    width: 8px;
-  
-    height: 8px;
-  
-  
-  
-    border: 2px solid white;
-  
-    border-radius: 50%;
-  
-  
-  
-    background: #2451ed;
-  
-  }
-  
-  
-  
-  
-  
-  /* CROWD STATUS */
-  
-  
-  
-  .crowd-section {
-  
-    margin: 0 34px;
-  
-    padding: 26px;
-  
-  
-  
-    border-radius: 30px;
-  
-  
-  
-    background: #020718;
-  
-    color: white;
-  
-  }
-  
-  
-  
-  .crowd-top {
-  
     display: flex;
-  
-    justify-content: space-between;
-  
-    align-items: flex-start;
-  
-  }
-  
-  
-  
-  .crowd-small {
-  
-    margin: 0 0 10px;
-  
-  
-  
-    color: #9eb6ec;
-  
-  
-  
-    font-size: 13px;
-  
-    font-weight: 700;
-  
-  }
-  
-  
-  
-  .crowd-status {
-  
-    display: flex;
-  
     align-items: center;
-  
-    gap: 10px;
-  
-  
-  
-    font-size: 23px;
-  
-  }
-  
-  
-  
-  .crowd-red-dot {
-  
-    width: 13px;
-  
-    height: 13px;
-  
-  
-  
+    justify-content: center;
+    padding: 0;
+    border: none;
     border-radius: 50%;
-  
-  
-  
-    background: #ff3147;
-  
-  
-  
-    box-shadow: 0 0 0 5px rgba(255, 49, 71, 0.15);
-  
+    color: #2451ed;
+    cursor: pointer;
   }
-  
-  
-  
-  .update-badge {
-  
-    padding: 8px 13px;
-  
-  
-  
+
+  .header-notification-icon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .notification-dot {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 8px;
+    height: 8px;
+    border: 2px solid white;
+    border-radius: 50%;
+    background: #2451ed;
+  }
+
+  /* CROWD STATUS */
+  .crowd-section {
+    margin: 0 34px;
+    padding: 26px;
     border-radius: 30px;
-  
-  
-  
-    background: #171d36;
-  
-    color: #d8e2ff;
-  
-  
-  
-    font-size: 12px;
-  
-    font-weight: 700;
-  
+    background: #020718;
+    color: white;
   }
-  
-  
-  
-  .crowd-divider {
-  
-    height: 1px;
-  
-  
-  
-    margin: 30px 0 22px;
-  
-  
-  
-    background: #252b3d;
-  
-  }
-  
-  
-  
-  .crowd-bottom {
-  
+
+  .crowd-top {
     display: flex;
-  
-    align-items: flex-end;
-  
     justify-content: space-between;
-  
+    align-items: flex-start;
   }
-  
-  
-  
-  .crowd-bottom p {
-  
-    margin: 0 0 5px;
-  
-  
-  
+
+  .crowd-small {
+    margin: 0 0 10px;
     color: #9eb6ec;
-  
-  
-  
     font-size: 13px;
-  
+    font-weight: 700;
   }
-  
-  
-  
-  .crowd-bottom > div > span {
-  
+
+  .crowd-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 23px;
+  }
+
+  .crowd-red-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #ff3147;
+    box-shadow: 0 0 0 5px rgba(255, 49, 71, 0.15);
+  }
+
+  .update-badge {
+    padding: 8px 13px;
+    border-radius: 30px;
+    background: #171d36;
     color: #d8e2ff;
-  
     font-size: 12px;
-  
+    font-weight: 700;
   }
-  
-  
-  
+
+  .crowd-divider {
+    height: 1px;
+    margin: 30px 0 22px;
+    background: #252b3d;
+  }
+
+  .crowd-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .crowd-bottom p {
+    margin: 0 0 5px;
+    color: #9eb6ec;
+    font-size: 13px;
+  }
+
+  .crowd-bottom > div > span {
+    color: #d8e2ff;
+    font-size: 12px;
+  }
+
   .crowd-number {
-  
     color: #4383ff;
-  
-  
-  
     font-size: 45px;
-  
     line-height: 1;
-  
     font-weight: 800;
-  
   }
-  
-  
-  
+
   .crowd-number span {
-  
     margin-left: 4px;
-  
-  
-  
     color: #b8c7e7;
-  
-  
-  
     font-size: 15px;
-  
   }
-  
-  
-  
+
   .auto-update {
-  
     padding: 15px 40px 23px;
   
-  
+    display: flex;
+    align-items: center;
+    gap: 6px;
   
     background: white;
-  
     color: #9aaac5;
   
-  
-  
     font-size: 12px;
-  
   }
-  
-  
-  
-  
-  
+
   /* STORES */
-  
-  
-  
   .store-section {
-  
     padding: 30px 34px 110px;
-  
   }
-  
-  
-  
+
   .store-section-header {
-  
     display: flex;
-  
     align-items: flex-end;
-  
     justify-content: space-between;
-  
-  
-  
     margin-bottom: 20px;
-  
   }
-  
-  
-  
+
   .section-label {
-  
     margin: 0 0 7px;
-  
-  
-  
     color: #1750f4;
-  
-  
-  
     font-size: 13px;
-  
     font-weight: 800;
-  
   }
-  
-  
-  
+
   .store-section-header h2 {
-  
     margin: 0;
-  
-  
-  
     color: #081023;
-  
-  
-  
     font-size: 25px;
-  
     font-weight: 800;
-  
     letter-spacing: -1px;
-  
   }
-  
-  
-  
+
   .store-count {
-  
     padding-bottom: 3px;
-  
-  
-  
     color: #9aaac7;
-  
-  
-  
     font-size: 13px;
-  
   }
-  
-  
-  
+
   .store-grid {
-  
     display: grid;
-  
     grid-template-columns: repeat(2, 1fr);
-  
     gap: 15px;
-  
   }
-  
-  
-  
+
   .store-card {
-  
     overflow: hidden;
-  
-  
-  
     padding: 0;
-  
-  
-  
     border: 1px solid #e8edf5;
-  
     border-radius: 24px;
-  
-  
-  
     background: white;
-  
-  
-  
     text-align: left;
-  
     font-family: inherit;
-  
-  
-  
     box-shadow: 0 4px 12px rgba(15, 35, 80, 0.05);
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
+
   .store-image {
-  
     height: 155px;
-  
-  
-  
     display: flex;
-  
     align-items: center;
-  
     justify-content: center;
-  
-  
-  
     background:
-  
       linear-gradient(
-  
         135deg,
-  
         #e6edfa,
-  
         #d2def3
-  
       );
-  
-  
-  
     font-size: 65px;
-  
   }
-  
-  
-  
+
   .store-info {
-  
     padding: 17px;
-  
   }
-  
-  
-  
+
   .store-category {
-  
     margin: 0 0 7px;
-  
-  
-  
     color: #1750f4;
-  
-  
-  
     font-size: 12px;
-  
     font-weight: 700;
-  
   }
-  
-  
-  
+
   .store-info h3 {
-  
     margin: 0 0 8px;
-  
-  
-  
     color: #071022;
-  
-  
-  
     font-size: 20px;
-  
     font-weight: 800;
-  
   }
-  
-  
-  
+
   .store-menu {
-  
     margin: 0 0 7px;
-  
-  
-  
     color: #71809b;
-  
-  
-  
     font-size: 13px;
-  
   }
-  
-  
-  
+
   .store-price {
-  
     color: #071022;
-  
-  
-  
     font-size: 16px;
-  
   }
-  
-  
-  
-  
-  
+
   /* BOTTOM NAVIGATION */
-  
-  
-  
   .student-bottom-nav {
-  
     position: fixed;
-  
-  
-  
     left: 50%;
-  
     bottom: 0;
-  
-  
-  
     width: 100%;
-  
     max-width: 600px;
-  
     height: 82px;
-  
-  
-  
     transform: translateX(-50%);
-  
-  
-  
     display: grid;
-  
     grid-template-columns: repeat(3, 1fr);
-  
-  
-  
     border-top: 1px solid #e6ebf3;
-  
-  
-  
     background: rgba(255, 255, 255, 0.96);
-  
-  
-  
     z-index: 50;
-  
   }
-  
-  
-  
+
   .nav-item {
-  
     display: flex;
-  
     flex-direction: column;
-  
     align-items: center;
-  
     justify-content: center;
-  
     gap: 3px;
-  
-  
-  
     border: none;
-  
-  
-  
     background: transparent;
-  
     color: #9aabc7;
-  
-  
-  
     font-family: inherit;
-  
     font-size: 13px;
-  
-  
-  
     cursor: pointer;
-  
   }
-  
-  
-  
+
   .nav-icon {
-  
     font-size: 23px;
-  
     line-height: 1;
-  
   }
-  
-  
-  
+
   .nav-item.active {
-  
     color: #2451ed;
-  
     font-weight: 700;
-  
   }
-  
-  
-  
-  
-  
+
   /* 작은 화면 */
-  
-  
-  
   @media (max-width: 600px) {
-  
     .student-header {
-  
       padding-left: 25px;
-  
       padding-right: 25px;
-  
     }
-  
-  
-  
+
     .crowd-section {
-  
       margin-left: 25px;
-  
       margin-right: 25px;
-  
     }
-  
-  
-  
+
     .store-section {
-  
       padding-left: 25px;
-  
       padding-right: 25px;
-  
     }
-  
-  
-  
+
     .store-image {
-  
       height: 135px;
-  
     }
-  
   }
-  
   
   /* ========================================
      STORE DETAIL
@@ -4070,7 +2567,11 @@
   
   .student-page-with-nav {
     width: 100%;
+    max-width: 600px;
     min-height: 100vh;
+  
+    margin: 0 auto;
+  
     padding-bottom: 95px;
     box-sizing: border-box;
   }
@@ -4083,7 +2584,8 @@
   .student-page-with-nav .order-complete-page,
   .student-page-with-nav .arrival-verify-page,
   .student-page-with-nav .waiting-page,
-  .student-page-with-nav .temporary-notification-page {
+  .student-page-with-nav .food-ready-page,
+  .student-page-with-nav .notifications-page {
     padding-bottom: 115px;
   }
   
@@ -4559,6 +3061,12 @@
     font-size: 23px;
     font-weight: 700;
   }
+
+  .notification-icon-image {
+    width: 26px;
+    height: 26px;
+    display: block;
+  }
   
   /* 텍스트 영역 */
   .notification-body {
@@ -4736,13 +3244,19 @@
       width: 39px;
       height: 39px;
       flex-shrink: 0;
+    
       display: flex;
       align-items: center;
       justify-content: center;
+    
       border-radius: 11px;
       background: #4a4fe8;
-      color: #ffffff;
-      font-size: 18px;
+    }
+    
+    .admin-brand-icon img {
+      width: 22px;
+      height: 22px;
+      display: block;
     }
   
     .admin-brand strong {
@@ -5770,8 +4284,16 @@
     }
   
     .occupancy-upload-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #8d96a9;
-      font-size: 19px;
+    }
+    
+    .occupancy-upload-icon svg {
+      width: 26px;
+      height: 26px;
+      display: block;
     }
   
     .occupancy-upload-area strong {
@@ -7490,7 +6012,7 @@
   .mileage-complete-page,
   .order-complete-page {
     width: 100%;
-    max-width: 430px;
+    max-width: 600px;
     min-height: 100dvh;
     margin: 0 auto;
     background: #ffffff;
@@ -8151,7 +6673,7 @@
     transform: translateX(-50%);
   
     width: 100%;
-    max-width: 430px;
+    max-width: 600px;
   
     background: #ffffff;
     box-sizing: border-box;
@@ -8565,24 +7087,22 @@
   } 
   
   /* =========================================================
-     학생 주문 / 마일리지 전체 화면 폭 최종 통일
-     ========================================================= */
-  
+   학생 주문 / 마일리지 전체 화면 폭 최종 통일
+   ========================================================= */
+
   .order-payment-page,
   .mileage-charge-page,
   .mileage-payment-page,
   .mileage-complete-page,
   .charge-complete-page,
   .order-complete-page,
-  .order-cancel-complete-page,
-  .arrival-verify-page,
-  .waiting-page {
+  .order-cancel-complete-page {
     width: 100%;
     max-width: 430px;
     min-height: 100dvh;
-  
+
     margin: 0 auto;
-  
+
     box-sizing: border-box;
     position: relative;
     overflow-x: hidden;
@@ -8620,9 +7140,7 @@
     .mileage-complete-page,
     .charge-complete-page,
     .order-complete-page,
-    .order-cancel-complete-page,
-    .arrival-verify-page,
-    .waiting-page {
+    .order-cancel-complete-page {
       max-width: none;
     }
   
@@ -8634,7 +7152,7 @@
   
   .food-ready-page {
     width: 100%;
-    max-width: 430px;
+    max-width: 600px;
     min-height: 100dvh;
   
     margin: 0 auto;
@@ -9275,3 +7793,739 @@
   font-size: 18px;
   font-weight: 800;
 } 
+
+/* ========================================
+   ORDER COMPLETE - 600px 화면 비율 최종 보정
+======================================== */
+
+.order-complete-page {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 30px 170px;
+  margin: 0 auto;
+
+  box-sizing: border-box;
+}
+
+/* 전체 콘텐츠 */
+.order-complete-content {
+  width: 100%;
+  padding-top: 72px;
+
+  box-sizing: border-box;
+}
+
+/* 완료 영역 */
+.complete-message {
+  margin-bottom: 36px;
+}
+
+/* 체크 아이콘 */
+.complete-check {
+  width: 76px;
+  height: 76px;
+
+  font-size: 34px;
+
+  margin-bottom: 32px;
+
+  box-shadow:
+    0 0 0 12px #eef2ff;
+}
+
+/* 제목 */
+.complete-message h1 {
+  margin: 0 0 10px;
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* 결제 마일리지 */
+.complete-message p {
+  font-size: 15px;
+}
+
+/* 주문 메뉴 카드 */
+.complete-order-card {
+  width: 100%;
+  min-height: 130px;
+
+  padding: 20px;
+  gap: 18px;
+
+  border-radius: 22px;
+}
+
+/* 메뉴 이미지 */
+.complete-menu-image {
+  width: 92px;
+  height: 92px;
+
+  border-radius: 18px;
+
+  font-size: 38px;
+}
+
+/* 가게명 */
+.complete-store-name {
+  font-size: 13px;
+}
+
+/* 메뉴명 */
+.complete-menu-info h3 {
+  margin: 6px 0 12px;
+
+  font-size: 20px;
+}
+
+/* 수량 */
+.complete-menu-bottom span {
+  font-size: 14px;
+}
+
+/* 가격 */
+.complete-menu-bottom strong {
+  font-size: 16px;
+}
+
+/* 조리 안내 박스 */
+.cooking-notice-card {
+  margin-top: 20px;
+
+  padding: 22px;
+
+  border-radius: 20px;
+}
+
+/* 조리 안내 제목 */
+.cooking-notice-top {
+  gap: 10px;
+
+  font-size: 16px;
+}
+
+.cooking-notice-top strong {
+  font-size: 17px;
+}
+
+.cooking-clock {
+  font-size: 20px;
+}
+
+/* 조리 안내 설명 */
+.cooking-notice-card p {
+  margin: 12px 0 0 30px;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* 하단 안내 */
+.visit-notice {
+  margin-top: 24px;
+
+  font-size: 13px;
+}
+
+.visit-notice p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* 하단 버튼 영역 */
+.complete-bottom-area {
+  width: 100%;
+  max-width: 600px;
+
+  padding: 12px 30px 14px;
+}
+
+/* 현장 인증 버튼 */
+.complete-verify-button {
+  width: 100%;
+  height: 58px;
+
+  border-radius: 15px;
+
+  font-size: 17px;
+}
+
+/* ========================================
+   ADMIN UI SIZE FINAL ADJUSTMENT
+======================================== */
+
+/* 관리자 헤더 */
+.admin-header {
+  padding: 30px 30px 32px;
+}
+
+.admin-brand {
+  gap: 13px;
+  margin-bottom: 28px;
+}
+
+.admin-brand-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 13px;
+}
+
+.admin-brand-icon img {
+  width: 25px;
+  height: 25px;
+}
+
+.admin-brand strong {
+  font-size: 22px;
+}
+
+.admin-badge {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.admin-date {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.admin-header h1 {
+  font-size: 28px;
+}
+
+/* 관리자 본문 */
+.admin-content {
+  padding: 24px 28px 130px;
+}
+
+/* 상단 요약 카드 */
+.admin-summary-grid {
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.admin-summary-card {
+  padding: 18px 15px;
+  border-radius: 18px;
+}
+
+.admin-summary-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+.admin-summary-card p {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.admin-summary-card strong {
+  font-size: 25px;
+}
+
+.admin-summary-card strong span {
+  font-size: 13px;
+}
+
+.admin-summary-card small {
+  margin-top: 9px;
+  font-size: 11px;
+}
+
+/* 오늘의 현장 번호 */
+.arrival-code-card {
+  padding: 23px 24px;
+  border-radius: 20px;
+}
+
+.arrival-code-label {
+  font-size: 11px;
+}
+
+.arrival-code-description {
+  font-size: 13px;
+}
+
+.arrival-code-number {
+  font-size: 34px;
+}
+
+.arrival-code-button {
+  padding: 9px 14px;
+  font-size: 12px;
+}
+
+/* 인원 현황 관리 카드 */
+.occupancy-manage-card {
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 17px 18px;
+  border-radius: 18px;
+}
+
+.occupancy-manage-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 20px;
+}
+
+.occupancy-manage-text strong {
+  font-size: 15px;
+}
+
+.occupancy-manage-text span {
+  font-size: 12px;
+}
+
+/* 섹션 제목 */
+.admin-section-label {
+  font-size: 12px;
+}
+
+.admin-section-title h2,
+.stats-card h2,
+.store-share-section h2 {
+  font-size: 21px;
+}
+
+.admin-text-button {
+  font-size: 12px;
+}
+
+/* 하단 네비게이션 */
+.admin-bottom-nav {
+  height: 82px;
+  padding: 8px 20px 10px;
+}
+
+.admin-nav-item {
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.admin-nav-icon {
+  font-size: 24px;
+}
+
+/* ========================================
+   PAGE POSITION STABILIZE
+======================================== */
+
+html {
+  scrollbar-gutter: stable;
+}
+
+.admin-page {
+  overflow-x: hidden;
+}
+
+/* ========================================
+   ADMIN STORE CARD SIZE
+======================================== */
+
+.admin-store-list {
+  gap: 14px;
+}
+
+.admin-store-card {
+  padding: 20px;
+  border-radius: 19px;
+}
+
+.admin-store-top {
+  gap: 14px;
+}
+
+.admin-store-name {
+  gap: 10px;
+}
+
+.admin-store-dot {
+  width: 8px;
+  height: 8px;
+}
+
+.admin-store-name strong {
+  font-size: 17px;
+}
+
+.admin-store-top > span {
+  font-size: 12px;
+}
+
+.admin-store-wait-label {
+  margin: 18px 0 5px;
+  font-size: 12px;
+}
+
+.admin-store-wait strong {
+  font-size: 28px;
+}
+
+.admin-store-wait strong span {
+  margin-left: 4px;
+  font-size: 13px;
+}
+
+.admin-store-wait button {
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+}
+
+.admin-card-divider {
+  margin: 16px 0;
+}
+
+.admin-menu-summary {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* ========================================
+   ADMIN WAITING PAGE SIZE
+======================================== */
+
+.admin-waiting-summary {
+  margin-bottom: 18px;
+  padding: 19px 20px;
+  border-radius: 18px;
+}
+
+.admin-waiting-summary p {
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.admin-waiting-summary strong {
+  font-size: 24px;
+}
+
+.admin-live-badge {
+  padding: 7px 11px;
+  font-size: 11px;
+}
+
+.admin-waiting-list {
+  gap: 14px;
+}
+
+.admin-waiting-card {
+  padding: 20px;
+  border-radius: 19px;
+}
+
+.admin-waiting-number {
+  font-size: 27px;
+}
+
+.admin-verified-badge {
+  padding: 7px 11px;
+  font-size: 11px;
+}
+
+.admin-waiting-card h3 {
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.admin-waiting-divider {
+  margin: 17px 0;
+}
+
+.admin-waiting-time-grid > div + div {
+  padding-left: 18px;
+}
+
+.admin-waiting-time-grid p {
+  margin-bottom: 7px;
+  font-size: 11px;
+}
+
+.admin-waiting-time-grid strong {
+  font-size: 14px;
+}
+
+/* ========================================
+   ADMIN STATS PAGE SIZE
+======================================== */
+
+/* 상단 요약 카드 */
+.stats-summary-grid {
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.stats-summary-card {
+  padding: 20px;
+  border-radius: 19px;
+}
+
+.stats-summary-card p {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.stats-summary-card strong {
+  font-size: 28px;
+}
+
+.stats-summary-card strong span {
+  font-size: 13px;
+}
+
+.stats-summary-card small {
+  margin-top: 10px;
+  font-size: 11px;
+}
+
+/* 시간대별 이용 인원 카드 */
+.stats-card {
+  margin-top: 16px;
+  padding: 21px;
+  border-radius: 19px;
+}
+
+.stats-card-header {
+  gap: 15px;
+}
+
+.stats-card h2 {
+  font-size: 21px;
+}
+
+/* 데이터 출처 배지 */
+.stats-source-badge {
+  padding: 7px 10px;
+  font-size: 10px !important;
+}
+
+/* 시간대별 그래프 */
+.usage-chart {
+  height: 180px;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.usage-bar-area {
+  height: 140px;
+}
+
+.usage-column > span {
+  margin-top: 9px;
+  font-size: 10px;
+}
+
+/* 가게별 주문 비중 */
+.store-share-section {
+  margin-top: 28px;
+}
+
+.store-share-section h2 {
+  font-size: 21px;
+}
+
+.store-share-card {
+  margin-top: 15px;
+  padding: 21px;
+  border-radius: 19px;
+}
+
+/* 비율 막대 */
+.share-bar {
+  height: 12px;
+}
+
+/* 가게별 범례 */
+.share-legend {
+  margin-top: 18px;
+  gap: 13px 16px;
+}
+
+.share-item {
+  gap: 8px;
+  font-size: 12px;
+}
+
+.share-item strong {
+  font-size: 12px;
+}
+
+.share-dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* 데이터 없음 문구 */
+.stats-empty {
+  padding: 20px 0;
+  font-size: 13px;
+}
+
+.admin-summary-icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.occupancy-manage-icon svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+/* ========================================
+   ADMIN OCCUPANCY PAGE SIZE ADJUSTMENT
+======================================== */
+
+/* 상단 헤더 */
+.admin-simple-header {
+  height: 72px;
+  padding: 0 28px;
+}
+
+.admin-back-button {
+  width: 42px;
+  height: 42px;
+  font-size: 34px;
+}
+
+/* 전체 본문 */
+.admin-occupancy-content {
+  padding: 24px 28px 60px;
+}
+
+/* 상단 소개 카드 */
+.occupancy-title-section {
+  margin-bottom: 22px;
+  padding: 21px;
+  border-radius: 19px;
+}
+
+.occupancy-title-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+}
+
+.occupancy-title-icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.occupancy-title-section h1 {
+  margin-bottom: 9px;
+  font-size: 22px;
+}
+
+.occupancy-title-section p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* 사진 분석 카드 */
+.occupancy-upload-card {
+  padding: 21px;
+  border-radius: 19px;
+}
+
+.occupancy-upload-area {
+  min-height: 165px;
+  gap: 9px;
+  border-radius: 15px;
+}
+
+.occupancy-upload-icon {
+  font-size: 24px;
+}
+
+.occupancy-upload-area strong {
+  font-size: 14px;
+}
+
+.occupancy-upload-area small {
+  font-size: 11px;
+}
+
+/* 인원 분석 버튼 */
+.occupancy-analyze-button {
+  height: 52px;
+  margin-top: 14px;
+  border-radius: 13px;
+  font-size: 14px;
+}
+
+/* 분석 결과 */
+.occupancy-analysis-result {
+  gap: 16px;
+  margin-top: 14px;
+  padding: 16px 17px;
+  border-radius: 13px;
+}
+
+.occupancy-analysis-result span {
+  font-size: 12px;
+}
+
+.occupancy-analysis-result strong {
+  font-size: 23px;
+}
+
+.occupancy-analysis-result small {
+  font-size: 11px;
+}
+
+/* 직접 인원 입력 카드 */
+.occupancy-manual-section {
+  margin-top: 22px;
+  padding: 21px;
+  border-radius: 19px;
+}
+
+.occupancy-manual-section h2 {
+  margin-bottom: 7px;
+  font-size: 20px;
+}
+
+.occupancy-manual-section > p {
+  margin-bottom: 21px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.occupancy-manual-section label {
+  margin-bottom: 9px;
+  font-size: 13px;
+}
+
+.occupancy-manual-section input {
+  height: 50px;
+  padding: 0 15px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* 저장 버튼 */
+.occupancy-save-button {
+  height: 50px;
+  margin-top: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* 성공 / 오류 메시지 */
+.admin-success-message,
+.admin-error-message {
+  margin-top: 15px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+}

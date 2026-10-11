@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { login } from '../api/authApi'
+import utensilsIcon from '../assets/utensils.svg'
 
 function Login({
   onBack,
@@ -101,7 +102,10 @@ function Login({
       {/* 로고 */}
       <header className="login-brand">
         <div className="login-brand-icon">
-          ♙
+          <img
+            src={utensilsIcon}
+            alt="Campus Table"
+          />
         </div>
 
         <h1>Campus Table</h1>
