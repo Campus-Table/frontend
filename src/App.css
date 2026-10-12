@@ -3766,55 +3766,85 @@
   
     .admin-modal-overlay {
       position: fixed;
-      inset: 0;
+    
+      top: 0;
+      bottom: 0;
+      left: 50%;
+    
+      width: 100%;
+      max-width: 600px;
+    
+      transform: translateX(-50%);
+    
       z-index: 300;
+    
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      padding-bottom: 72px;
+    
+      padding: 20px 20px 24px;
+      box-sizing: border-box;
+    
       background: rgba(5, 6, 23, 0.64);
+    
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
     }
-  
+    
     .admin-confirm-modal {
       width: 100%;
-      max-width: 600px;
-      padding: 27px 27px 24px;
-      border-radius: 24px 24px 0 0;
+      max-width: 540px;
+    
+      padding: 28px 26px 24px;
+    
+      box-sizing: border-box;
+    
+      border-radius: 24px;
+    
       background: #ffffff;
+    
       text-align: left;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.18);
     }
   
     .admin-confirm-modal h2 {
       margin: 0 0 10px;
+    
       color: #151b2c;
-      font-size: 19px;
+    
+      font-size: 22px;
       font-weight: 800;
       letter-spacing: -0.5px;
     }
-  
+    
     .admin-confirm-modal p {
       margin: 0 0 24px;
+    
       color: #8a93a5;
-      font-size: 11px;
+    
+      font-size: 13px;
       line-height: 1.6;
     }
   
     .admin-modal-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 9px;
+      gap: 12px;
+      margin-top: 4px;
     }
-  
+    
     .admin-modal-buttons button {
-      height: 48px;
+      height: 50px;
+    
       border: none;
-      border-radius: 12px;
+      border-radius: 13px;
+    
       font-family: inherit;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
+    
       cursor: pointer;
     }
   
