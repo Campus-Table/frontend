@@ -31,6 +31,7 @@ import Notifications from './pages/Notifications'
 
 import MileageCharge from './pages/MileageCharge'
 import MileagePayment from './pages/MileagePayment'
+import { getTossReturn } from './utils/tossRedirect'
 import MileageChargeComplete from './pages/MileageChargeComplete'
 
 // ========================================
@@ -76,12 +77,8 @@ function App() {
     page,
     setPage,
   ] = useState(() => {
-    const pathname = window.location.pathname
-
-    if (
-      pathname === '/mileage/success' ||
-      pathname === '/mileage/fail'
-    ) {
+    // Toss 결제 후 돌아온 경우(루트 + 쿼리, 또는 예전 경로 방식)
+    if (getTossReturn()) {
       return 'mileagePayment'
     }
 
@@ -111,12 +108,7 @@ function App() {
         // Toss 결제 후 돌아온 경우에는
         // MileagePayment가 결제 승인 처리를 해야 하므로
         // 현재 페이지를 변경하지 않음
-        const pathname = window.location.pathname
-
-        if (
-          pathname === '/mileage/success' ||
-          pathname === '/mileage/fail'
-        ) {
+        if (getTossReturn()) {
           return
         }
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { loadTossPayments } from '@tosspayments/tosspayments-sdk'
+import { getTossReturn } from '../utils/tossRedirect'
 
 import {
   prepareMileageCharge,
@@ -17,19 +18,25 @@ function MileagePayment({
   const [isPaying, setIsPaying] = useState(false)
   const [error, setError] = useState('')
 
+  // 최초 진입 시점에 한 번만 판단한다. (처리 중 주소창의 쿼리를 지우기 때문에
+  // 이후에 다시 읽으면 값이 사라져 다른 effect가 결제 준비를 시작해버린다)
+  const [tossReturn] = useState(getTossReturn)
+  const [returnParams] = useState(
+    () => new URLSearchParams(window.location.search)
+  )
+
   // ======================================================
   // 토스 결제 성공/실패 URL 처리
   // ======================================================
 
   useEffect(() => {
-    const pathname = window.location.pathname
-    const params = new URLSearchParams(window.location.search)
+    const params = returnParams
 
     // ------------------------------------------------------
     // 결제 실패
     // ------------------------------------------------------
 
-    if (pathname === '/mileage/fail') {
+    if (tossReturn === 'fail') {
       const message =
         params.get('message') ||
         '결제가 취소되었거나 실패했습니다.'
@@ -51,7 +58,7 @@ function MileagePayment({
     // 결제 성공
     // ------------------------------------------------------
 
-    if (pathname !== '/mileage/success') {
+    if (tossReturn !== 'success') {
       return
     }
 
@@ -163,22 +170,16 @@ function MileagePayment({
     return () => {
       cancelled = true
     }
-  }, [onPaymentComplete])
+  }, [onPaymentComplete, tossReturn, returnParams])
 
   // ======================================================
   // 토스 결제 준비
   // ======================================================
 
   useEffect(() => {
-    const pathname =
-      window.location.pathname
-
     // Toss에서 돌아온 상태라면
     // 새로운 결제 준비 요청을 보내지 않음
-    if (
-      pathname === '/mileage/success' ||
-      pathname === '/mileage/fail'
-    ) {
+    if (tossReturn) {
       return
     }
 
@@ -233,7 +234,7 @@ function MileagePayment({
     return () => {
       cancelled = true
     }
-  }, [chargeAmount])
+  }, [chargeAmount, tossReturn])
 
   // ======================================================
   // Toss 결제창 실행
@@ -302,11 +303,13 @@ function MileagePayment({
         orderName:
           'Campus Table 마일리지 충전',
 
+        // 정적 호스팅에 /mileage/* 경로 파일이 없으므로 루트로 돌아온다
+        // (성공/실패는 쿼리로 구분: utils/tossRedirect.js)
         successUrl:
-          `${window.location.origin}/mileage/success`,
+          `${window.location.origin}/`,
 
         failUrl:
-          `${window.location.origin}/mileage/fail`,
+          `${window.location.origin}/`,
       })
     } catch (err) {
       console.error(
