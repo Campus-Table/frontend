@@ -4,6 +4,10 @@ import {
   getMyOrders,
 } from '../api/orderApi'
 
+import {
+  attachImagesToOrders,
+} from '../utils/orderImages'
+
 function MyOrders({
   onBack,
   onSelectOrder,
@@ -18,16 +22,22 @@ function MyOrders({
     useState('')
 
   useEffect(() => {
+    let cancelled = false
+
     const loadOrders = async () => {
       try {
         setLoading(true)
         setError('')
 
+        // ==========================================
+        // 1. 주문 내역 조회
+        // ==========================================
+
         const result =
           await getMyOrders()
 
         // API가 배열을 직접 반환하는 경우와
-        // { orders: [...] } 형태를 모두 처리
+        // { orders: [...] } 형태 모두 처리
         const orderList =
           Array.isArray(result)
             ? result
@@ -37,8 +47,32 @@ function MyOrders({
               ? result.orders
               : []
 
-        setOrders(orderList)
+        // ==========================================
+        // 2. 각 주문의 storeId를 이용해서
+        //    해당 매장의 메뉴 목록 조회
+        //
+        // 3. 주문 item의 menuId와
+        //    메뉴 API의 id를 비교해서
+        //    imageUrl 자동 연결
+        // ==========================================
+
+        const ordersWithImages =
+          await attachImagesToOrders(
+            orderList
+          )
+
+        if (cancelled) {
+          return
+        }
+
+        setOrders(
+          ordersWithImages
+        )
       } catch (error) {
+        if (cancelled) {
+          return
+        }
+
         console.error(
           '주문 내역 조회 실패:',
           error
@@ -49,12 +83,22 @@ function MyOrders({
             '주문 내역을 불러오지 못했습니다.'
         )
       } finally {
-        setLoading(false)
+        if (!cancelled) {
+          setLoading(false)
+        }
       }
     }
 
     loadOrders()
+
+    return () => {
+      cancelled = true
+    }
   }, [])
+
+  // ======================================================
+  // 주문 상태 표시
+  // ======================================================
 
   const getStatusText = (
     status
@@ -77,9 +121,55 @@ function MyOrders({
     }
   }
 
+  // ======================================================
+  // 메뉴 이름
+  // ======================================================
+
+  const getMenuName = (order) => {
+    const firstItem =
+      Array.isArray(order.items)
+        ? order.items[0]
+        : null
+
+    return (
+      order.menuName ||
+      firstItem?.menuName ||
+      firstItem?.name ||
+      firstItem?.menu?.name ||
+      '주문 메뉴'
+    )
+  }
+
+  // ======================================================
+  // 메뉴 이미지
+  //
+  // orderImages.js에서 menuId를 이용해
+  // imageUrl을 붙여준 값을 사용
+  // ======================================================
+
+  const getMenuImage = (order) => {
+    const firstItem =
+      Array.isArray(order.items)
+        ? order.items[0]
+        : null
+
+    return (
+      order.imageUrl ||
+      order.menuImageUrl ||
+      firstItem?.imageUrl ||
+      firstItem?.image ||
+      firstItem?.menuImageUrl ||
+      firstItem?.menu?.imageUrl ||
+      firstItem?.menu?.image ||
+      null
+    )
+  }
+
   return (
     <main className="my-orders-page">
+
       <header className="my-orders-header">
+
         <button
           type="button"
           className="my-orders-back"
@@ -89,20 +179,34 @@ function MyOrders({
           ‹
         </button>
 
-        <h1>내 주문</h1>
+        <h1>
+          내 주문
+        </h1>
+
       </header>
 
       <section className="my-orders-content">
-        <div className="my-orders-title">
-          <p>ORDER HISTORY</p>
 
-          <h2>주문 내역</h2>
+        <div className="my-orders-title">
+
+          <p>
+            ORDER HISTORY
+          </p>
+
+          <h2>
+            주문 내역
+          </h2>
 
           <span>
             주문한 메뉴와 진행 상태를
             확인하세요.
           </span>
+
         </div>
+
+        {/* =====================================
+            로딩
+        ===================================== */}
 
         {loading && (
           <div className="my-orders-message">
@@ -111,16 +215,25 @@ function MyOrders({
           </div>
         )}
 
+        {/* =====================================
+            오류
+        ===================================== */}
+
         {!loading && error && (
           <div className="my-orders-message my-orders-error">
             {error}
           </div>
         )}
 
+        {/* =====================================
+            주문 없음
+        ===================================== */}
+
         {!loading &&
           !error &&
           orders.length === 0 && (
             <div className="my-orders-empty">
+
               <div className="my-orders-empty-icon">
                 ♙
               </div>
@@ -133,13 +246,19 @@ function MyOrders({
                 메뉴를 주문하면 이곳에서
                 확인할 수 있어요.
               </p>
+
             </div>
           )}
+
+        {/* =====================================
+            주문 목록
+        ===================================== */}
 
         {!loading &&
           !error &&
           orders.length > 0 && (
             <div className="my-orders-list">
+
               {orders.map(
                 (order, index) => {
                   const orderId =
@@ -153,12 +272,10 @@ function MyOrders({
                     '주문 매장'
 
                   const menuName =
-                    order.menuName ??
-                    order.items?.[0]
-                      ?.menuName ??
-                    order.items?.[0]
-                      ?.name ??
-                    '주문 메뉴'
+                    getMenuName(order)
+
+                  const menuImage =
+                    getMenuImage(order)
 
                   const totalAmount =
                     order.totalAmount ??
@@ -176,7 +293,9 @@ function MyOrders({
                         )
                       }
                     >
+
                       <div className="my-order-card-top">
+
                         <strong>
                           {storeName}
                         </strong>
@@ -186,14 +305,30 @@ function MyOrders({
                             order.status
                           )}
                         </span>
+
                       </div>
 
                       <div className="my-order-card-body">
+
+                        {/* =====================================
+                            실제 음식 사진
+                        ===================================== */}
+
                         <div className="my-order-icon">
-                          🍽️
+
+                          {menuImage ? (
+                            <img
+                              src={menuImage}
+                              alt={menuName}
+                            />
+                          ) : (
+                            '🍽️'
+                          )}
+
                         </div>
 
                         <div className="my-order-info">
+
                           <h3>
                             {menuName}
                           </h3>
@@ -218,15 +353,21 @@ function MyOrders({
                               P
                             </strong>
                           )}
+
                         </div>
+
                       </div>
+
                     </button>
                   )
                 }
               )}
+
             </div>
           )}
+
       </section>
+
     </main>
   )
 }

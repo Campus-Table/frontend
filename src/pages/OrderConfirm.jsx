@@ -244,16 +244,78 @@ function OrderConfirm({
         newRemainingMileage
       )
 
+      // ==================================================
+      // 서버 주문 응답 + 기존 화면 메뉴 정보를 합침
+      //
+      // 서버 응답에 imageUrl이 없어도
+      // StoreDetail에서 전달받은 imageUrl이 유지되도록 처리
+      // ==================================================
+
+      const createdItems =
+        Array.isArray(createdOrder?.items)
+          ? createdOrder.items
+          : []
+
+      const preservedItems =
+        orderItems.map((originalItem) => {
+          const serverItem =
+            createdItems.find(
+              (item) =>
+                Number(
+                  item.menuId ??
+                    item.menu?.id ??
+                    item.id
+                ) ===
+                Number(originalItem.menuId)
+            )
+
+          return {
+            ...originalItem,
+            ...(serverItem || {}),
+
+            // 서버에서 이미지가 오면 서버 이미지 사용,
+            // 없으면 기존 메뉴 이미지 유지
+            imageUrl:
+              serverItem?.imageUrl ||
+              serverItem?.menu?.imageUrl ||
+              originalItem.imageUrl ||
+              '',
+
+            // 메뉴명도 서버 응답에 없으면 기존 값 유지
+            menuName:
+              serverItem?.menuName ||
+              serverItem?.menu?.name ||
+              originalItem.menuName,
+
+            price: Number(
+              serverItem?.price ??
+                serverItem?.menu?.price ??
+                originalItem.price ??
+                0
+            ),
+
+            quantity: Number(
+              serverItem?.quantity ??
+                originalItem.quantity ??
+                0
+            ),
+          }
+        })
+
       if (onPay) {
         onPay({
           ...order,
           ...createdOrder,
 
-          // 화면에서 선택했던 메뉴 정보도
-          // 다음 화면에서 사용할 수 있도록 유지
-          items:
-            createdOrder?.items ??
-            orderItems,
+          // 이미지가 유지된 메뉴 목록을 다음 화면으로 전달
+          items: preservedItems,
+
+          // 가게 이미지도 기존 주문 정보에서 유지
+          storeImageUrl:
+            createdOrder?.storeImageUrl ||
+            createdOrder?.store?.imageUrl ||
+            order.storeImageUrl ||
+            '',
 
           totalQuantity,
 
@@ -268,50 +330,50 @@ function OrderConfirm({
         '주문 생성 실패:',
         error
       )
-    
+
       switch (error.code) {
         case 'INSUFFICIENT_MILEAGE':
           setPaymentError(
             '마일리지가 부족합니다. 충전 후 다시 시도해주세요.'
           )
           break
-    
+
         case 'ACTIVE_ORDER_EXISTS':
           setPaymentError(
             '이미 진행 중인 주문이 있어요. 기존 주문이 완료된 후 다시 주문해주세요.'
           )
           break
-    
+
         case 'MENU_UNAVAILABLE':
           setPaymentError(
             '현재 판매하지 않는 메뉴가 포함되어 있습니다.'
           )
           break
-    
+
         case 'MENU_NOT_FOUND':
           setPaymentError(
             '메뉴 정보를 찾을 수 없습니다.'
           )
           break
-    
+
         case 'STORE_NOT_FOUND':
           setPaymentError(
             '가게 정보를 찾을 수 없습니다.'
           )
           break
-    
+
         case 'VALIDATION_FAILED':
           setPaymentError(
             '주문 정보를 다시 확인해주세요.'
           )
           break
-    
+
         case 'UNAUTHORIZED':
           setPaymentError(
             '로그인이 필요합니다.'
           )
           break
-    
+
         default:
           setPaymentError(
             error.message ||
@@ -381,8 +443,17 @@ function OrderConfirm({
                   }
                 >
 
+                  {/* 메뉴 이미지 */}
+
                   <div className="order-menu-image">
-                    🍽️
+                    {item.imageUrl ? (
+                      <img
+                        src={item.imageUrl}
+                        alt={item.menuName}
+                      />
+                    ) : (
+                      '🍽️'
+                    )}
                   </div>
 
                   <div className="order-menu-info">
@@ -487,9 +558,9 @@ function OrderConfirm({
                 {isLoadingMileage
                   ? '-'
                   : `${Math.max(
-                    remainingMileage,
-                    0
-                  ).toLocaleString()}P`}
+                      remainingMileage,
+                      0
+                    ).toLocaleString()}P`}
               </strong>
 
             </div>
@@ -550,7 +621,7 @@ function OrderConfirm({
 
           </div>
         )}
-        
+
         <div className="order-notice">
 
           <div className="order-notice-icon">
@@ -596,3 +667,4 @@ function OrderConfirm({
 }
 
 export default OrderConfirm 
+

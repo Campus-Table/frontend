@@ -1,14 +1,35 @@
-import { useState } from 'react'
+import {
+  useEffect,
+  useState,
+} from 'react'
 
 import {
   cancelOrder,
 } from '../api/orderApi'
+
+import {
+  attachImagesToOrder,
+} from '../utils/orderImages'
 
 function OrderComplete({
   order,
   onVerify,
   onCancel,
 }) {
+  // ======================================================
+  // 이미지가 보완된 현재 주문
+  // ======================================================
+
+  const [
+    currentOrder,
+    setCurrentOrder,
+  ] = useState(order)
+
+  const [
+    isLoadingImage,
+    setIsLoadingImage,
+  ] = useState(false)
+
   const [
     showCancelModal,
     setShowCancelModal,
@@ -25,10 +46,78 @@ function OrderComplete({
   ] = useState('')
 
   // ======================================================
+  // order가 들어오거나 변경될 때
+  // 메뉴 API를 조회해서 imageUrl 자동 연결
+  //
+  // 주문 API
+  // storeId + menuId
+  //
+  // ↓
+  //
+  // /api/stores/{storeId}/menus
+  //
+  // ↓
+  //
+  // menuId === menu.id
+  //
+  // ↓
+  //
+  // imageUrl 연결
+  // ======================================================
+
+  useEffect(() => {
+    let cancelled = false
+
+    const loadOrderImage =
+      async () => {
+        if (!order) {
+          setCurrentOrder(order)
+          return
+        }
+
+        try {
+          setIsLoadingImage(true)
+
+          const orderWithImages =
+            await attachImagesToOrder(
+              order
+            )
+
+          if (cancelled) {
+            return
+          }
+
+          setCurrentOrder(
+            orderWithImages
+          )
+        } catch (error) {
+          console.error(
+            '주문 메뉴 이미지 연결 실패:',
+            error
+          )
+
+          if (!cancelled) {
+            setCurrentOrder(order)
+          }
+        } finally {
+          if (!cancelled) {
+            setIsLoadingImage(false)
+          }
+        }
+      }
+
+    loadOrderImage()
+
+    return () => {
+      cancelled = true
+    }
+  }, [order])
+
+  // ======================================================
   // 주문 정보 없음
   // ======================================================
 
-  if (!order) {
+  if (!currentOrder) {
     return (
       <main className="order-complete-page">
 
@@ -45,17 +134,19 @@ function OrderComplete({
   // ======================================================
 
   const orderId =
-    order.orderId
+    currentOrder.orderId ??
+    currentOrder.id
 
   const usedMileage =
     Number(
-      order.totalPrice ??
-      order.usedMileage ??
+      currentOrder.totalPrice ??
+      currentOrder.usedMileage ??
       0
     )
 
   const storeName =
-    order.storeName ||
+    currentOrder.storeName ||
+    currentOrder.store?.name ||
     '매장'
 
   // ======================================================
@@ -63,8 +154,10 @@ function OrderComplete({
   // ======================================================
 
   const orderItems =
-    Array.isArray(order.items)
-      ? order.items
+    Array.isArray(
+      currentOrder.items
+    )
+      ? currentOrder.items
       : []
 
   // ======================================================
@@ -93,39 +186,66 @@ function OrderComplete({
 
   // ======================================================
   // 메뉴 가격 계산
-  //
-  // 서버 응답에서는 unitPrice를 사용할 수 있고,
-  // 주문 전 프론트 데이터에서는 price를 사용함.
-  // 둘 다 대응.
   // ======================================================
 
-  const getItemUnitPrice = (item) => {
+  const getItemUnitPrice = (
+    item
+  ) => {
     return Number(
       item.unitPrice ??
       item.price ??
+      item.menu?.price ??
       0
     )
   }
 
   // ======================================================
-  // 메뉴 이미지
+  // 메뉴 이름
   // ======================================================
 
-  const getItemImage = (item) => {
+  const getItemName = (
+    item
+  ) => {
+    return (
+      item.menuName ||
+      item.name ||
+      item.menu?.name ||
+      '선택 메뉴'
+    )
+  }
+
+  // ======================================================
+  // 메뉴 이미지
+  //
+  // attachImagesToOrder에서 붙여준
+  // imageUrl까지 사용
+  // ======================================================
+
+  const getItemImage = (
+    item
+  ) => {
     return (
       item.imageUrl ||
       item.image ||
+      item.menuImageUrl ||
+      item.menu?.imageUrl ||
+      item.menu?.image ||
       null
     )
   }
 
   // ======================================================
   // 도착 인증 화면 이동
+  //
+  // 반드시 currentOrder를 넘겨야
+  // 새로 연결한 imageUrl도 다음 화면까지 전달됨
   // ======================================================
 
   const handleVerify = () => {
     if (onVerify) {
-      onVerify(order)
+      onVerify(
+        currentOrder
+      )
     }
   }
 
@@ -135,7 +255,10 @@ function OrderComplete({
 
   const handleCancelConfirm =
     async () => {
-      if (!orderId || isCancelling) {
+      if (
+        !orderId ||
+        isCancelling
+      ) {
         return
       }
 
@@ -144,12 +267,18 @@ function OrderComplete({
         setCancelError('')
 
         const cancelledOrder =
-          await cancelOrder(orderId)
+          await cancelOrder(
+            orderId
+          )
 
-        setShowCancelModal(false)
+        setShowCancelModal(
+          false
+        )
 
         if (onCancel) {
-          onCancel(cancelledOrder)
+          onCancel(
+            cancelledOrder
+          )
         }
       } catch (error) {
         console.error(
@@ -218,7 +347,8 @@ function OrderComplete({
 
           <p>
             결제 마일리지{' '}
-            {usedMileage.toLocaleString()}P
+            {usedMileage.toLocaleString()}
+            P
           </p>
 
         </section>
@@ -233,7 +363,8 @@ function OrderComplete({
             (item, index) => {
               const quantity =
                 Number(
-                  item.quantity ?? 1
+                  item.quantity ??
+                    1
                 )
 
               const unitPrice =
@@ -242,29 +373,41 @@ function OrderComplete({
                 )
 
               const itemTotal =
-                unitPrice * quantity
+                unitPrice *
+                quantity
 
               const menuName =
-                item.menuName ||
-                item.name ||
-                '선택 메뉴'
+                getItemName(
+                  item
+                )
 
               const menuImage =
-                getItemImage(item)
+                getItemImage(
+                  item
+                )
 
               return (
                 <div
                   className="complete-order-card"
                   key={
                     item.menuId ??
+                    item.id ??
                     index
                   }
                 >
 
+                  {/* =====================================
+                      실제 음식 사진
+                  ===================================== */}
+
                   {menuImage ? (
                     <img
-                      src={menuImage}
-                      alt={menuName}
+                      src={
+                        menuImage
+                      }
+                      alt={
+                        menuName
+                      }
                       className="complete-menu-image"
                     />
                   ) : (
@@ -286,7 +429,8 @@ function OrderComplete({
                     <div className="complete-menu-bottom">
 
                       <span>
-                        수량 {quantity}개
+                        수량{' '}
+                        {quantity}개
                       </span>
 
                       <strong>
@@ -310,7 +454,8 @@ function OrderComplete({
             전체 주문 요약
         ===================================== */}
 
-        {orderItems.length > 1 && (
+        {orderItems.length >
+          1 && (
           <div className="complete-order-summary">
 
             <span>
@@ -346,9 +491,9 @@ function OrderComplete({
 
           <p>
             학생식당에 도착한 뒤 현장 번호로
-            도착 인증을 해주세요.
-            인증 후 대기번호가 발급되고
-            조리가 시작됩니다.
+            도착 인증을 해주세요. 인증 후
+            대기번호가 발급되고 조리가
+            시작됩니다.
           </p>
 
         </section>
@@ -370,6 +515,16 @@ function OrderComplete({
 
         </div>
 
+        {isLoadingImage && (
+          <div
+            style={{
+              display: 'none',
+            }}
+          >
+            메뉴 이미지 불러오는 중
+          </div>
+        )}
+
       </div>
 
       {/* =====================================
@@ -381,10 +536,14 @@ function OrderComplete({
         <button
           type="button"
           className="complete-cancel-button"
-          disabled={isCancelling}
+          disabled={
+            isCancelling
+          }
           onClick={() => {
             setCancelError('')
-            setShowCancelModal(true)
+            setShowCancelModal(
+              true
+            )
           }}
         >
           주문 취소
@@ -395,7 +554,9 @@ function OrderComplete({
           <button
             type="button"
             className="complete-verify-button"
-            onClick={handleVerify}
+            onClick={
+              handleVerify
+            }
           >
             학생식당 도착 후 인증하기
           </button>
@@ -412,8 +573,12 @@ function OrderComplete({
         <div
           className="cancel-modal-overlay"
           onClick={() => {
-            if (!isCancelling) {
-              setShowCancelModal(false)
+            if (
+              !isCancelling
+            ) {
+              setShowCancelModal(
+                false
+              )
             }
           }}
         >
@@ -433,7 +598,8 @@ function OrderComplete({
 
               <p>
                 도착 인증 전 주문을 취소하면
-                결제한 마일리지가 100% 환불됩니다.
+                결제한 마일리지가 100%
+                환불됩니다.
               </p>
 
               {cancelError && (
@@ -447,9 +613,13 @@ function OrderComplete({
             <button
               type="button"
               className="cancel-continue-button"
-              disabled={isCancelling}
+              disabled={
+                isCancelling
+              }
               onClick={() =>
-                setShowCancelModal(false)
+                setShowCancelModal(
+                  false
+                )
               }
             >
               계속 주문하기
@@ -458,7 +628,9 @@ function OrderComplete({
             <button
               type="button"
               className="cancel-confirm-button"
-              disabled={isCancelling}
+              disabled={
+                isCancelling
+              }
               onClick={
                 handleCancelConfirm
               }
@@ -477,5 +649,4 @@ function OrderComplete({
   )
 }
 
-export default OrderComplete  
-
+export default OrderComplete 

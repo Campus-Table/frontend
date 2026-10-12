@@ -7,18 +7,19 @@ import {
 
 import { getOrder } from '../api/orderApi'
 
+import {
+  attachImagesToOrder,
+} from '../utils/orderImages'
+
 // ========================================
 // 서버 KST 시간 파싱
-//
-// 예:
-// 2026-10-07T20:53:22.858744
 // ========================================
+
 function parseServerTime(value) {
   if (!value) {
     return null
   }
 
-  // 마이크로초 부분 제거
   const normalized =
     value.slice(0, 19)
 
@@ -41,6 +42,7 @@ function parseServerTime(value) {
 // ========================================
 // 가격 표시
 // ========================================
+
 function formatPrice(value) {
   const number =
     Number(value ?? 0)
@@ -50,13 +52,103 @@ function formatPrice(value) {
   )}원`
 }
 
+// ========================================
+// 기존 주문 정보와
+// 서버 최신 주문 데이터 합치기
+//
+// imageUrl이 있는 경우 잃어버리지 않도록 유지
+// ========================================
+
+function mergeOrderItems(
+  previousOrder,
+  newOrder
+) {
+  const previousItems =
+    Array.isArray(previousOrder?.items)
+      ? previousOrder.items
+      : []
+
+  const newItems =
+    Array.isArray(newOrder?.items)
+      ? newOrder.items
+      : []
+
+  const mergedItems =
+    newItems.map(
+      (newItem, index) => {
+        const previousItem =
+          previousItems.find(
+            (item) =>
+              Number(
+                item.menuId ??
+                  item.menu?.id ??
+                  item.id
+              ) ===
+              Number(
+                newItem.menuId ??
+                  newItem.menu?.id ??
+                  newItem.id
+              )
+          ) ??
+          previousItems[index]
+
+        return {
+          ...previousItem,
+          ...newItem,
+
+          menuName:
+            newItem.menuName ||
+            newItem.name ||
+            newItem.menu?.name ||
+            previousItem?.menuName ||
+            previousItem?.name ||
+            previousItem?.menu?.name ||
+            '메뉴 정보 없음',
+
+          imageUrl:
+            newItem.imageUrl ||
+            newItem.image ||
+            newItem.menuImageUrl ||
+            newItem.menu?.imageUrl ||
+            newItem.menu?.image ||
+            previousItem?.imageUrl ||
+            previousItem?.image ||
+            previousItem?.menuImageUrl ||
+            previousItem?.menu?.imageUrl ||
+            previousItem?.menu?.image ||
+            '',
+        }
+      }
+    )
+
+  // 서버 items가 없는 경우
+  // 기존 items 유지
+  return {
+    ...previousOrder,
+    ...newOrder,
+
+    items:
+      mergedItems.length > 0
+        ? mergedItems
+        : previousItems,
+
+    storeName:
+      newOrder?.storeName ||
+      newOrder?.store?.name ||
+      previousOrder?.storeName ||
+      previousOrder?.store?.name ||
+      '',
+  }
+}
+
 function Waiting({
   order,
   onReady,
 }) {
   // ========================================
-  // 서버에서 받은 최신 주문 정보
+  // 현재 주문 정보
   // ========================================
+
   const [
     currentOrder,
     setCurrentOrder,
@@ -65,6 +157,7 @@ function Waiting({
   // ========================================
   // 화면용 남은 시간
   // ========================================
+
   const [
     remainingSeconds,
     setRemainingSeconds,
@@ -81,6 +174,7 @@ function Waiting({
   // ========================================
   // API 상태
   // ========================================
+
   const [
     isLoading,
     setIsLoading,
@@ -94,20 +188,62 @@ function Waiting({
   // ========================================
   // FoodReady 중복 이동 방지
   // ========================================
+
   const readyCalledRef =
     useRef(false)
 
   // ========================================
   // 주문 ID
   // ========================================
+
   const orderId =
-    order?.orderId ?? null
+    order?.orderId ??
+    order?.id ??
+    null
 
   // ========================================
   // 새 주문이 들어오면 초기화
+  //
+  // 처음 전달받은 order에도
+  // 메뉴 이미지를 연결
   // ========================================
+
   useEffect(() => {
-    setCurrentOrder(order)
+    let cancelled = false
+
+    const initializeOrder =
+      async () => {
+        if (!order) {
+          setCurrentOrder(order)
+          return
+        }
+
+        try {
+          const orderWithImages =
+            await attachImagesToOrder(
+              order
+            )
+
+          if (cancelled) {
+            return
+          }
+
+          setCurrentOrder(
+            orderWithImages
+          )
+        } catch (imageError) {
+          console.error(
+            '초기 주문 이미지 연결 실패:',
+            imageError
+          )
+
+          if (!cancelled) {
+            setCurrentOrder(order)
+          }
+        }
+      }
+
+    initializeOrder()
 
     setRemainingSeconds(
       Math.max(
@@ -123,14 +259,21 @@ function Waiting({
 
     readyCalledRef.current =
       false
+
+    return () => {
+      cancelled = true
+    }
   }, [order])
 
   // ========================================
   // 주문 상태 조회
   //
-  // 서버는 조회 시점에
-  // COOKING → RECEIVED 상태 전이를 처리
+  // getOrder()에는 imageUrl이 없을 수 있으므로
+  // attachImagesToOrder()를 이용해서
+  // storeId → 메뉴 API → menuId 매칭으로
+  // 실제 음식 이미지를 붙임
   // ========================================
+
   useEffect(() => {
     if (!orderId) {
       return
@@ -147,18 +290,52 @@ function Waiting({
             setIsLoading(true)
           }
 
+          // ==================================
+          // 1. 최신 주문 상태 조회
+          // ==================================
+
           const result =
             await getOrder(
               orderId
+            )
+
+          // ==================================
+          // 2. 주문에 실제 메뉴 이미지 연결
+          //
+          // result.storeId를 이용해서
+          // /api/stores/{storeId}/menus 호출
+          //
+          // item.menuId와 menu.id를 비교해서
+          // imageUrl 자동 연결
+          // ==================================
+
+          const orderWithImages =
+            await attachImagesToOrder(
+              result
             )
 
           if (cancelled) {
             return
           }
 
+          // ==================================
+          // 3. 기존 주문 데이터와 합침
+          //
+          // 서버 상태는 최신 상태로 갱신하고
+          // imageUrl도 유지
+          // ==================================
+
           setCurrentOrder(
-            result
+            (previousOrder) =>
+              mergeOrderItems(
+                previousOrder,
+                orderWithImages
+              )
           )
+
+          // ==================================
+          // 남은 시간 갱신
+          // ==================================
 
           if (
             typeof result
@@ -168,8 +345,7 @@ function Waiting({
             setRemainingSeconds(
               Math.max(
                 0,
-                result
-                  .remainingSeconds
+                result.remainingSeconds
               )
             )
           } else {
@@ -230,7 +406,7 @@ function Waiting({
         }
       }
 
-    // 화면에 들어오자마자 조회
+    // 화면 진입 즉시 조회
     loadOrder(true)
 
     // 7초마다 서버 상태 확인
@@ -249,9 +425,12 @@ function Waiting({
   }, [orderId])
 
   // ========================================
-  // 서버 상태가 RECEIVED가 되었을 때만
+  // RECEIVED가 되었을 때
   // FoodReady 화면으로 이동
+  //
+  // 이미지가 붙은 currentOrder를 전달
   // ========================================
+
   useEffect(() => {
     if (
       currentOrder?.status !==
@@ -274,9 +453,8 @@ function Waiting({
 
   // ========================================
   // 화면용 1초 카운트다운
-  //
-  // 실제 상태 전환에는 사용하지 않음
   // ========================================
+
   useEffect(() => {
     if (
       currentOrder?.status !==
@@ -307,9 +485,8 @@ function Waiting({
 
   // ========================================
   // 전체 예상 준비시간
-  //
-  // expectedReadyAt - arrivedAt
   // ========================================
+
   const totalSeconds =
     useMemo(() => {
       const arrivedAt =
@@ -360,6 +537,7 @@ function Waiting({
   // ========================================
   // 화면 시간 표시
   // ========================================
+
   const minutes =
     Math.floor(
       remainingSeconds / 60
@@ -376,6 +554,7 @@ function Waiting({
   // ========================================
   // 예상 전체 대기시간
   // ========================================
+
   const estimatedMinutes =
     Math.max(
       1,
@@ -387,6 +566,7 @@ function Waiting({
   // ========================================
   // 진행률
   // ========================================
+
   const progress =
     totalSeconds > 0
       ? (
@@ -409,13 +589,8 @@ function Waiting({
 
   // ========================================
   // 대기번호
-  //
-  // 서버:
-  // 2
-  //
-  // 화면:
-  // 002
   // ========================================
+
   const waitingNumber =
     currentOrder
       ?.waitingNumber != null
@@ -431,13 +606,18 @@ function Waiting({
   // ========================================
   // 가게 정보
   // ========================================
+
   const storeName =
     currentOrder
-      ?.storeName ?? ''
+      ?.storeName ??
+    currentOrder
+      ?.store?.name ??
+    ''
 
   // ========================================
   // 주문 메뉴
   // ========================================
+
   const items =
     Array.isArray(
       currentOrder?.items
@@ -450,13 +630,26 @@ function Waiting({
 
   const firstMenuName =
     firstItem?.menuName ??
+    firstItem?.name ??
+    firstItem?.menu?.name ??
     '메뉴 정보 없음'
 
   // ========================================
-  // 여러 메뉴를 주문했을 경우
-  //
-  // 제육볶음 외 2개
+  // 첫 번째 메뉴 이미지
   // ========================================
+
+  const firstMenuImage =
+    firstItem?.imageUrl ||
+    firstItem?.image ||
+    firstItem?.menuImageUrl ||
+    firstItem?.menu?.imageUrl ||
+    firstItem?.menu?.image ||
+    null
+
+  // ========================================
+  // 여러 메뉴 주문 표시
+  // ========================================
+
   const menuDisplayName =
     items.length > 1
       ? `${firstMenuName} 외 ${
@@ -467,6 +660,7 @@ function Waiting({
   // ========================================
   // 전체 수량
   // ========================================
+
   const totalQuantity =
     items.reduce(
       (
@@ -483,6 +677,7 @@ function Waiting({
   // ========================================
   // 주문 없음
   // ========================================
+
   if (!order) {
     return (
       <div className="waiting-page">
@@ -504,6 +699,7 @@ function Waiting({
   // ========================================
   // orderId 없음
   // ========================================
+
   if (!orderId) {
     return (
       <div className="waiting-page">
@@ -528,6 +724,7 @@ function Waiting({
       {/* =====================================
           상단 제목
       ===================================== */}
+
       <header className="waiting-header">
 
         <h1>
@@ -541,6 +738,7 @@ function Waiting({
         {/* =====================================
             오류
         ===================================== */}
+
         {error && (
           <div className="arrival-error-message">
 
@@ -558,6 +756,7 @@ function Waiting({
         {/* =====================================
             대기번호 / 시간 카드
         ===================================== */}
+
         <section className="waiting-status-card">
 
           <div className="waiting-status-top">
@@ -623,6 +822,7 @@ function Waiting({
         {/* =====================================
             시간 안내
         ===================================== */}
+
         <section className="waiting-info-card">
 
           <div className="waiting-info-icon">
@@ -647,10 +847,20 @@ function Waiting({
         {/* =====================================
             주문 메뉴
         ===================================== */}
+
         <section className="waiting-order-card">
 
           <div className="waiting-menu-image">
-            🍽️
+
+            {firstMenuImage ? (
+              <img
+                src={firstMenuImage}
+                alt={firstMenuName}
+              />
+            ) : (
+              '🍽️'
+            )}
+
           </div>
 
           <div className="waiting-menu-info">
@@ -685,9 +895,9 @@ function Waiting({
         {/* =====================================
             진행 상태
         ===================================== */}
+
         <section className="waiting-timeline">
 
-          {/* 도착 인증 완료 */}
           <div className="waiting-timeline-item complete">
 
             <div className="waiting-timeline-left">
@@ -714,7 +924,6 @@ function Waiting({
 
           </div>
 
-          {/* 음식 준비 중 */}
           <div className="waiting-timeline-item active">
 
             <div className="waiting-timeline-left">
@@ -749,9 +958,6 @@ function Waiting({
 
         </section>
 
-        {/* =====================================
-            첫 조회 로딩
-        ===================================== */}
         {isLoading && (
           <p className="waiting-loading">
             최신 주문 상태를 확인하고 있어요.
@@ -764,4 +970,4 @@ function Waiting({
   )
 }
 
-export default Waiting
+export default Waiting 

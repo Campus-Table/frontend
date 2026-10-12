@@ -284,12 +284,19 @@ function StoreDetail({
           menu.price || 0
         ),
         quantity: menu.quantity,
+
+        // 메뉴 사진도 주문 정보에 같이 전달
+        imageUrl: menu.imageUrl || '',
       }))
 
     if (onOrder) {
       onOrder({
         storeId: store.id,
         storeName: store.name,
+
+        // 가게 이미지도 필요한 경우 사용할 수 있도록 전달
+        storeImageUrl:
+          store.imageUrl || '',
 
         // 여러 메뉴 주문 정보
         items,
@@ -419,31 +426,31 @@ function StoreDetail({
 
       <section className="store-hero">
 
-      {store.imageUrl ? (
-        <img
-          className="store-hero-image"
-          src={store.imageUrl}
-          alt={store.name}
-        />
-      ) : (
-        <div className="store-hero-icon">
-          🍽️
+        {store.imageUrl ? (
+          <img
+            className="store-hero-image"
+            src={store.imageUrl}
+            alt={store.name}
+          />
+        ) : (
+          <div className="store-hero-icon">
+            🍽️
+          </div>
+        )}
+
+        <div className="store-hero-text">
+
+          <span>
+            {store.description ||
+              store.category ||
+              '학생식당'}
+          </span>
+
+          <h1>
+            {store.name}
+          </h1>
+
         </div>
-      )}
-
-      <div className="store-hero-text">
-
-        <span>
-          {store.description ||
-            store.category ||
-            '학생식당'}
-        </span>
-
-        <h1>
-          {store.name}
-        </h1>
-
-      </div>
 
       </section>
 
@@ -659,3 +666,4 @@ function StoreDetail({
 }
 
 export default StoreDetail 
+
