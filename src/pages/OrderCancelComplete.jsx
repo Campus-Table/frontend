@@ -7,9 +7,20 @@ function OrderCancelComplete({
 
       <section className="cancel-complete-content">
 
-        <div className="cancel-complete-icon">
-          ▤
-        </div>
+      <div className="cancel-complete-icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 3h12v18l-2-1.5L14 21l-2-1.5L10 21l-2-1.5L6 21V3Z" />
+          <path d="M9.5 9.5l5 5" />
+          <path d="M14.5 9.5l-5 5" />
+        </svg>
+      </div>
 
         <h1>
           주문이 취소됐어요

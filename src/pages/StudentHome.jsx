@@ -168,6 +168,24 @@ function StudentHome({
     }
   }
 
+  /* 혼잡도 상태별 점 색상 */
+  const getCongestionColorClass = () => {
+    switch (status?.congestionLevel) {
+      case 'RELAXED':
+        return 'green'
+
+      case 'NORMAL':
+        return 'yellow'
+
+      case 'CROWDED':
+      case 'VERY_CROWDED':
+        return 'red'
+
+      default:
+        return 'gray'
+    }
+  }
+
   const getCongestionMessage = () => {
     switch (status?.congestionLevel) {
       case 'RELAXED':
@@ -320,7 +338,9 @@ function StudentHome({
               </p>
 
               <div className="crowd-status">
-                <span className="crowd-red-dot" />
+              <span
+                className={`crowd-dot ${getCongestionColorClass()}`}
+              />
 
                 <strong>
                   {getCongestionText()}

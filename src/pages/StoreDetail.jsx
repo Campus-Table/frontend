@@ -419,32 +419,31 @@ function StoreDetail({
 
       <section className="store-hero">
 
+      {store.imageUrl ? (
+        <img
+          className="store-hero-image"
+          src={store.imageUrl}
+          alt={store.name}
+        />
+      ) : (
         <div className="store-hero-icon">
-
-          {store.imageUrl ? (
-            <img
-              src={store.imageUrl}
-              alt={store.name}
-            />
-          ) : (
-            '🍽️'
-          )}
-
+          🍽️
         </div>
+      )}
 
-        <div className="store-hero-text">
+      <div className="store-hero-text">
 
-          <span>
-            {store.description ||
-              store.category ||
-              '학생식당'}
-          </span>
+        <span>
+          {store.description ||
+            store.category ||
+            '학생식당'}
+        </span>
 
-          <h1>
-            {store.name}
-          </h1>
+        <h1>
+          {store.name}
+        </h1>
 
-        </div>
+      </div>
 
       </section>
 

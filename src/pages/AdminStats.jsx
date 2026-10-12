@@ -145,28 +145,17 @@ function AdminStats({
               : []
           )
 
-          // 0~23시 중
-          // 디자인에 필요한 09~16시만
+          // 0~23시 전체 시간대 표시
           const allHours =
-            Array.isArray(
-              hourlyData
-            )
+            Array.isArray(hourlyData)
               ? hourlyData
               : []
 
           setHourlyUsage(
-            allHours.filter(
-              (item) => {
-                const hour =
-                  Number(
-                    item.hour
-                  )
-
-                return (
-                  hour >= 9 &&
-                  hour <= 16
-                )
-              }
+            [...allHours].sort(
+              (a, b) =>
+                Number(a.hour) -
+                Number(b.hour)
             )
           )
 
@@ -433,7 +422,6 @@ function AdminStats({
                 <div className="stats-card-header">
 
                   <div>
-
                     <p className="admin-section-label">
                       TODAY
                     </p>
@@ -441,21 +429,21 @@ function AdminStats({
                     <h2>
                       시간대별 이용 인원
                     </h2>
-
                   </div>
 
-                  {dataSource &&
-                    sourceLabel[
-                      dataSource
-                    ] && (
-                      <span className="stats-source-badge">
-                        {
-                          sourceLabel[
-                            dataSource
-                          ]
-                        }
-                      </span>
-                    )}
+                  <div className="usage-legend">
+
+                    <div className="usage-legend-item">
+                      <span className="usage-legend-dot peak" />
+                      <span>최고 이용 시간</span>
+                    </div>
+
+                    <div className="usage-legend-item">
+                      <span className="usage-legend-dot normal" />
+                      <span>일반 시간</span>
+                    </div>
+
+                  </div>
 
                 </div>
 

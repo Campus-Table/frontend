@@ -37,6 +37,11 @@ function OrderConfirm({
     setError,
   ] = useState('')
 
+  const [
+    paymentError,
+    setPaymentError,
+  ] = useState('')
+
   // ======================================================
   // 현재 마일리지 조회
   // ======================================================
@@ -207,7 +212,7 @@ function OrderConfirm({
 
     try {
       setIsPaying(true)
-      setError('')
+      setPaymentError('')
 
       // 서버에는 menuId와 quantity만 전달
       const requestItems =
@@ -263,54 +268,54 @@ function OrderConfirm({
         '주문 생성 실패:',
         error
       )
-
+    
       switch (error.code) {
         case 'INSUFFICIENT_MILEAGE':
-          setError(
-            '마일리지가 부족합니다.'
+          setPaymentError(
+            '마일리지가 부족합니다. 충전 후 다시 시도해주세요.'
           )
           break
-
+    
         case 'ACTIVE_ORDER_EXISTS':
-          setError(
-            '이미 진행 중인 주문이 있습니다.'
+          setPaymentError(
+            '이미 진행 중인 주문이 있어요. 기존 주문이 완료된 후 다시 주문해주세요.'
           )
           break
-
+    
         case 'MENU_UNAVAILABLE':
-          setError(
+          setPaymentError(
             '현재 판매하지 않는 메뉴가 포함되어 있습니다.'
           )
           break
-
+    
         case 'MENU_NOT_FOUND':
-          setError(
+          setPaymentError(
             '메뉴 정보를 찾을 수 없습니다.'
           )
           break
-
+    
         case 'STORE_NOT_FOUND':
-          setError(
+          setPaymentError(
             '가게 정보를 찾을 수 없습니다.'
           )
           break
-
+    
         case 'VALIDATION_FAILED':
-          setError(
+          setPaymentError(
             '주문 정보를 다시 확인해주세요.'
           )
           break
-
+    
         case 'UNAUTHORIZED':
-          setError(
+          setPaymentError(
             '로그인이 필요합니다.'
           )
           break
-
+    
         default:
-          setError(
+          setPaymentError(
             error.message ||
-              '주문을 처리하지 못했습니다.'
+              '주문을 처리하지 못했습니다. 다시 시도해주세요.'
           )
       }
     } finally {
@@ -517,6 +522,35 @@ function OrderConfirm({
             주문 안내
         ================================================== */}
 
+        {paymentError && (
+          <div className="order-payment-error">
+
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="9"
+              />
+              <path d="M12 8v5" />
+              <path d="M12 16h.01" />
+            </svg>
+
+            <span>
+              {paymentError}
+            </span>
+
+          </div>
+        )}
+        
         <div className="order-notice">
 
           <div className="order-notice-icon">

@@ -132,39 +132,86 @@ function Notifications() {
   // 서버 type 6종
   // ========================================
   const getNotificationIcon = (type) => {
+    const commonProps = {
+      viewBox: '0 0 24 24',
+      width: 24,
+      height: 24,
+      fill: 'none',
+      stroke: 'currentColor',
+      strokeWidth: 1.8,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+    }
+
     switch (type) {
+      /* 선주문 결제 완료 */
       case 'ORDER_PAID':
-        return '✓'
-  
+        return (
+          <svg {...commonProps}>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M8 12.5l2.5 2.5L16 9.5" />
+          </svg>
+        )
+
+      /* 대기번호 발급 */
       case 'WAITING_NUMBER_ISSUED':
-        return '▣'
-  
+        return (
+          <svg {...commonProps}>
+            <path d="M6 3h12v18l-2-1.5L14 21l-2-1.5L10 21l-2-1.5L6 21V3Z" />
+            <path d="M9 8h6" />
+            <path d="M9 12h6" />
+            <path d="M9 16h3" />
+          </svg>
+        )
+
+      /* 조리 시작 */
       case 'COOKING_STARTED':
-        return '◷'
-  
+        return (
+          <svg {...commonProps}>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3 2" />
+          </svg>
+        )
+
+      /* 음식 수령 안내 */
       case 'FOOD_READY':
         return (
-          <svg
-            viewBox="0 0 24 24"
-            width="26"
-            height="26"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-          >
+          <svg {...commonProps}>
             <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9" />
             <path d="M10 21h4" />
           </svg>
         )
-  
+
+      /* 주문 취소 */
       case 'ORDER_CANCELLED':
-        return '×'
-  
+        return (
+          <svg {...commonProps}>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M9 9l6 6" />
+            <path d="M15 9l-6 6" />
+          </svg>
+        )
+
+      /* 마일리지 충전 */
       case 'MILEAGE_CHARGED':
-        return '₩'
-  
+        return (
+          <svg {...commonProps}>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M7.5 8.5l2.2 7 2.3-7 2.3 7 2.2-7" />
+            <path d="M7 11h10" />
+            <path d="M7 14h10" />
+          </svg>
+        )
+
+      /* 기타 */
       default:
-        return '•'
+        return (
+          <svg {...commonProps}>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 8h.01" />
+            <path d="M11 11h1v5h1" />
+          </svg>
+        )
     }
   }
 

@@ -838,12 +838,45 @@
     font-size: 23px;
   }
 
-  .crowd-red-dot {
+  .crowd-dot {
     width: 13px;
     height: 13px;
+  
+    flex-shrink: 0;
+  
     border-radius: 50%;
+  
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  
+  /* 여유 */
+  .crowd-dot.green {
+    background: #22c55e;
+    box-shadow:
+      0 0 0 5px rgba(34, 197, 94, 0.15);
+  }
+  
+  /* 보통 */
+  .crowd-dot.yellow {
+    background: #f5b82e;
+    box-shadow:
+      0 0 0 5px rgba(245, 184, 46, 0.16);
+  }
+  
+  /* 혼잡 / 매우 혼잡 */
+  .crowd-dot.red {
     background: #ff3147;
-    box-shadow: 0 0 0 5px rgba(255, 49, 71, 0.15);
+    box-shadow:
+      0 0 0 5px rgba(255, 49, 71, 0.15);
+  }
+  
+  /* 정보 불러오는 중 */
+  .crowd-dot.gray {
+    background: #94a3b8;
+    box-shadow:
+      0 0 0 5px rgba(148, 163, 184, 0.15);
   }
 
   .update-badge {
@@ -1118,53 +1151,95 @@
   
   .store-hero {
     position: relative;
+  
     width: 100%;
     height: 220px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #d9e2f1, #b7c8e2);
-  }
   
-  .store-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
+    overflow: hidden;
+  
     background: linear-gradient(
-      to top,
-      rgba(3, 8, 22, 0.72),
-      transparent 65%
+      135deg,
+      #d9e2f1,
+      #b7c8e2
     );
   }
   
-  .store-hero-icon {
+  /* 실제 가게 배너 사진 */
+  .store-hero-image {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 90px;
+    inset: 0;
+  
+    width: 100%;
+    height: 100%;
+  
+    display: block;
+  
+    object-fit: cover;
+    object-position: center;
+  
+    z-index: 0;
   }
   
+  /* 사진이 없을 때 이모지 */
+  .store-hero-icon {
+    position: absolute;
+  
+    top: 50%;
+    left: 50%;
+  
+    transform: translate(-50%, -50%);
+  
+    font-size: 90px;
+  
+    z-index: 0;
+  }
+  
+  /* 이미지 위 어두운 그라데이션 */
+  .store-hero::after {
+    content: "";
+  
+    position: absolute;
+    inset: 0;
+  
+    background: linear-gradient(
+      to top,
+      rgba(3, 8, 22, 0.68),
+      rgba(3, 8, 22, 0.08) 65%,
+      transparent
+    );
+  
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  /* 배너 위 설명 + 가게명 */
   .store-hero-text {
     position: absolute;
+  
     left: 27px;
     bottom: 25px;
+  
     z-index: 2;
+  
     color: #ffffff;
   }
   
   .store-hero-text span {
     display: block;
+  
     margin-bottom: 5px;
+  
     color: #ffffff;
+  
     font-size: 13px;
     font-weight: 600;
   }
   
   .store-hero-text h1 {
     margin: 0;
+  
     color: #ffffff;
+  
     font-size: 28px;
     font-weight: 800;
     letter-spacing: -0.8px;
@@ -6932,28 +7007,6 @@
     box-sizing: border-box;
   }
   
-  /* 아이콘 */
-  
-  .cancel-complete-icon {
-    width: 72px;
-    height: 72px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    margin-bottom: 28px;
-  
-    border-radius: 50%;
-  
-    background: #f0f3f8;
-  
-    color: #718096;
-  
-    font-size: 30px;
-    font-weight: 600;
-  }
-  
   /* 제목 */
   
   .cancel-complete-content h1 {
@@ -7052,11 +7105,17 @@
   
     border-radius: 50%;
   
-    background: #f0f3f8;
-    color: #718096;
+    /* 메인 파란색의 연한 배경 */
+    background: #eef2ff;
   
-    font-size: 30px;
-    font-weight: 600;
+    /* Campus Table 메인 파란색 */
+    color: #2451ed;
+  }
+  
+  .cancel-complete-icon svg {
+    width: 32px;
+    height: 32px;
+    display: block;
   }
   
   
@@ -8599,4 +8658,226 @@ html {
   border-radius: 28px 28px 22px 22px;
 
   box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================
+   IMAGE SIZE NORMALIZATION
+======================================== */
+
+/* 학생 홈 - 가게 카드 이미지 */
+.store-image {
+  width: 100%;
+  height: 155px;
+  overflow: hidden;
+}
+
+.store-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 가게 상세 - 메뉴 이미지 */
+.menu-image-placeholder {
+  width: 120px;
+  height: 110px;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.menu-image-placeholder img {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 시간대별 이용 인원 - 00~23시 전체 표시 */
+.usage-chart {
+  gap: 3px;
+}
+
+.usage-column {
+  min-width: 0;
+  flex: 1;
+}
+
+.usage-column > span {
+  margin-top: 7px;
+  font-size: 8px;
+  white-space: nowrap;
+}
+
+.usage-bar {
+  min-width: 4px;
+  border-radius: 5px 5px 2px 2px;
+}
+
+/* ========================================
+   ADMIN USAGE CHART LEGEND
+======================================== */
+
+.usage-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.usage-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  color: #8f99ac;
+  font-size: 10px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.usage-legend-dot {
+  width: 8px;
+  height: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.usage-legend-dot.peak {
+  background: #5650e9;
+}
+
+.usage-legend-dot.normal {
+  background: #dfe4f4;
+}
+
+.notification-icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* ========================================
+   ORDER CONFIRM - MENU SPACING
+======================================== */
+
+/* 메뉴 카드끼리 간격 */
+.order-menu-card + .order-menu-card {
+  margin-top: 14px;
+}
+
+/* 메뉴 총 수량 / 총 결제 금액 */
+.order-menu-summary {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-top: 18px;
+  padding: 0 4px;
+
+  box-sizing: border-box;
+}
+
+/* 총 N개 */
+.order-menu-summary span {
+  color: #7f8da5;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* 총 가격 */
+.order-menu-summary strong {
+  flex-shrink: 0;
+
+  color: #071022;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  text-align: right;
+}
+
+/* ========================================
+   ORDER PAYMENT ERROR
+======================================== */
+
+.order-payment-error {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10px;
+
+  margin: -12px 0 22px;
+  padding: 15px 16px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #ffd4d8;
+  border-radius: 15px;
+
+  background: #fff5f6;
+  color: #e5484d;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.order-payment-error svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.order-payment-error span {
+  min-width: 0;
+}
+
+/* ========================================
+   주문 취소 버튼 hover
+======================================== */
+
+.cancel-confirm-button {
+  border-radius: 12px;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.cancel-confirm-button:hover:not(:disabled) {
+  background: #fff1f2;
+  color: #e5484d;
+
+  font-weight: 700;
+}
+
+.cancel-confirm-button:active:not(:disabled) {
+  background: #ffe4e6;
+  color: #dc2626;
+
+  transform: scale(0.99);
+  opacity: 1;
+}
+
+.cancel-confirm-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
